@@ -13,9 +13,9 @@ import FixedCTA from '@/components/FixedCTA';
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <Navbar />
-      <main>
+      <main className="overflow-hidden">
         <Hero />
         <HowItWorks />
         <VoiceOptions />
