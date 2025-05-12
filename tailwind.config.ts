@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -24,6 +25,11 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				neon: {
+					DEFAULT: '#FF5A5F',
+					hover: '#FF3E45',
+				},
+				dark: '#1C1C1C',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -63,11 +69,6 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
-			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
-			},
 			keyframes: {
 				'accordion-down': {
 					from: {
@@ -84,12 +85,33 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'phone-ring': {
+					'0%, 100%': { transform: 'rotate(0deg)' },
+					'5%, 15%, 25%': { transform: 'rotate(-5deg)' },
+					'10%, 20%, 30%': { transform: 'rotate(5deg)' },
+				},
+				'pulse-ring': {
+					'0%': { transform: 'scale(0.95)', opacity: '1' },
+					'50%': { transform: 'scale(1.05)', opacity: '0.8' },
+					'100%': { transform: 'scale(0.95)', opacity: '1' },
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'phone-ring': 'phone-ring 1s ease-in-out infinite',
+				'pulse-ring': 'pulse-ring 2s ease-in-out infinite'
+			},
+			fontFamily: {
+				'poppins': ['Poppins', 'sans-serif'],
+				'outfit': ['Outfit', 'sans-serif']
+			},
+			borderRadius: {
+				lg: 'var(--radius)',
+				md: 'calc(var(--radius) - 2px)',
+				sm: 'calc(var(--radius) - 4px)'
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
