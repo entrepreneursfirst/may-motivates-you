@@ -122,11 +122,15 @@ const PhoneAnimation = () => {
 
           {/* Screen content */}
           <div className="absolute inset-[11%] z-20 flex flex-col items-center justify-center px-4">
-            <img 
-              src={currentAgent.image} 
-              alt={currentAgent.name}
-              className="w-20 h-20 rounded-full mb-3 object-cover"
-            />
+            {/* White circle background for the headshot */}
+            <div className="bg-white w-24 h-24 rounded-full flex items-center justify-center mb-3">
+              <img 
+                src={currentAgent.image} 
+                alt={currentAgent.name}
+                className="w-20 h-20 rounded-full object-cover"
+              />
+            </div>
+            
             <p className="text-center text-base font-semibold">
               {currentAgent.name} {currentAgent.emoji}
             </p>

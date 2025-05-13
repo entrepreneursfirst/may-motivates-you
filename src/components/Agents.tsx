@@ -92,7 +92,7 @@ const Agents = () => {
                 key={index}
                 className="flex-shrink-0 w-[280px] bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
               >
-                <div className="relative h-64 overflow-hidden bg-gradient-to-br from-commitify-blue/10 to-commitify-purple/10">
+                <div className="relative h-64 overflow-hidden">
                   <img 
                     src={agent.image} 
                     alt={agent.name}
