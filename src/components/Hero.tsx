@@ -109,7 +109,7 @@ const Hero = () => {
               Momentum comes and goes.
             </h1>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Our AI agents help bring it back <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">back.</span>
+              Our AI agents help bring it <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">back.</span>
             </h2>
             
             {/* Button area with smooth horizontal expansion */}
