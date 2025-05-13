@@ -90,17 +90,19 @@ const Agents = () => {
             {agents.map((agent, index) => (
               <div 
                 key={index}
-                className="flex-shrink-0 w-[280px] bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
+                className="flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl"
               >
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-64 overflow-hidden bg-white">
+                  {/* Transparent background for headshots */}
                   <img 
                     src={agent.image} 
                     alt={agent.name}
-                    className="w-full h-full object-cover object-top"
+                    className="w-full h-full object-cover object-top mix-blend-normal"
                   />
                 </div>
                 
-                <div className="p-6">
+                {/* Yellow gradient background for the text area */}
+                <div className="p-6 bg-gradient-to-br from-yellow-100 via-amber-200 to-yellow-300">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-2xl">{agent.emoji}</span>
                     <h3 className="font-bold text-xl">{agent.name}</h3>
@@ -110,7 +112,7 @@ const Agents = () => {
                     {agent.description}
                   </p>
                   
-                  <div className="bg-commitify-background p-3 rounded-lg italic text-sm">
+                  <div className="bg-white/70 p-3 rounded-lg italic text-sm">
                     "{agent.quote}"
                   </div>
                 </div>

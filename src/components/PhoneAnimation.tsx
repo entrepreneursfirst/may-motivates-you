@@ -1,15 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { PhoneCall, PhoneOff } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-
-type PhoneFormValues = {
-  phoneNumber: string;
-};
 
 interface PhoneAnimationProps {
   onAnswerCall?: () => void;
@@ -57,12 +48,6 @@ const PhoneAnimation = ({ onAnswerCall, onHangUp }: PhoneAnimationProps) => {
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [phonePressed, setPhonePressed] = useState(false);
 
-  const form = useForm<PhoneFormValues>({
-    defaultValues: {
-      phoneNumber: ""
-    }
-  });
-
   // Rotate through agents every 3 seconds
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -83,7 +68,7 @@ const PhoneAnimation = ({ onAnswerCall, onHangUp }: PhoneAnimationProps) => {
     setShowCallScreen(true);
   };
 
-  const handleSubmitPhone = (data: PhoneFormValues) => {
+  const handleSubmitPhone = (data: any) => {
     console.log("Phone number submitted:", data.phoneNumber);
     setIsRinging(false);
     setShowPhoneForm(false);

@@ -37,7 +37,6 @@ const Hero = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [selectedCountryCode, setSelectedCountryCode] = useState(countryCodes[0]);
   const [showWaitlistDialog, setShowWaitlistDialog] = useState(false);
-  const [phoneAnimationRef, setPhoneAnimationRef] = useState(null);
   
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
@@ -102,64 +101,69 @@ const Hero = () => {
             <p className="text-lg text-commitify-secondary">
               Commitify is the AI that calls when motivation runs out and procrastination kicks in.
             </p>
-            <div className="flex flex-wrap gap-4">
-              {isPhoneInputActive ? (
-                <div className="flex flex-wrap gap-2 items-center">
-                  <Popover>
-                    <PopoverTrigger asChild>
+            
+            {/* Updated button area with smoother transition */}
+            <div className="flex items-center gap-4">
+              <div className="flex transition-all duration-300 ease-in-out">
+                {isPhoneInputActive ? (
+                  <div className="flex items-center animate-fade-in">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button 
+                          className="bg-white border border-gray-300 text-gray-700 px-3 py-6 rounded-l-full hover:bg-gray-50 flex items-center min-w-[90px] justify-center gap-1"
+                        >
+                          {selectedCountryCode.code} <ChevronDown className="h-4 w-4" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0 max-h-[300px] overflow-y-auto">
+                        <div className="grid">
+                          {countryCodes.map((country) => (
+                            <div
+                              key={country.code}
+                              className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
+                              onClick={() => handleSelectCountry(country)}
+                            >
+                              <span className="font-medium">{country.code}</span>
+                              <span className="ml-2 text-sm text-gray-600">{country.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                    
+                    <Input
+                      type="tel"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      className="py-6 rounded-none border-l-0 border-r-0 w-[180px] sm:w-[220px]"
+                      placeholder="Phone number"
+                    />
+                    
+                    <div className="flex">
                       <Button 
-                        className="bg-white border border-gray-300 text-gray-700 px-3 py-6 rounded-l-full hover:bg-gray-50 flex items-center min-w-[90px] justify-center gap-1"
+                        onClick={handleSubmit}
+                        className="bg-commitify-yellow text-commitify-text hover:bg-commitify-yellow/90 px-4 py-6 rounded-none"
                       >
-                        {selectedCountryCode.code} <ChevronDown className="h-4 w-4" />
+                        <Check className="w-5 h-5" />
                       </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0 max-h-[300px] overflow-y-auto">
-                      <div className="grid">
-                        {countryCodes.map((country) => (
-                          <div
-                            key={country.code}
-                            className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleSelectCountry(country)}
-                          >
-                            <span className="font-medium">{country.code}</span>
-                            <span className="ml-2 text-sm text-gray-600">{country.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                  
-                  <Input
-                    type="tel"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="py-6 rounded-none border-l-0 border-r-0"
-                    placeholder="Enter your phone number"
-                  />
-                  
-                  <div className="flex">
-                    <Button 
-                      onClick={handleSubmit}
-                      className="bg-commitify-yellow text-commitify-text hover:bg-commitify-yellow/90 px-4 py-6 rounded-none"
-                    >
-                      <Check className="w-5 h-5" />
-                    </Button>
-                    <Button 
-                      onClick={handleCancel}
-                      className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-6 rounded-r-full"
-                    >
-                      <X className="w-5 h-5" />
-                    </Button>
+                      <Button 
+                        onClick={handleCancel}
+                        className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-6 rounded-r-full"
+                      >
+                        <X className="w-5 h-5" />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <Button 
-                  className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all"
-                  onClick={handlePhoneInput}
-                >
-                  Try it for $0
-                </Button>
-              )}
+                ) : (
+                  <Button 
+                    className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all"
+                    onClick={handlePhoneInput}
+                  >
+                    Try it for $0
+                  </Button>
+                )}
+              </div>
+              
               <Button 
                 variant="outline" 
                 className="border-2 border-commitify-blue text-commitify-blue hover:bg-commitify-blue/10 font-medium text-lg px-8 py-6 rounded-full"
