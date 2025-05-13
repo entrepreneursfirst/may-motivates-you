@@ -8,7 +8,7 @@ const agents = [
     name: "Life Coach",
     image: "/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png",
     emoji: "🧍‍♀️",
-    description: "Your personal growth guru who turns goals into daily wins.",
+    description: "Your personal growth guru who turns goals into daily wins with calm encouragement.",
     quote: "Let’s break this into steps — and nail the first one today."
   },
   {
@@ -36,7 +36,7 @@ const agents = [
     name: "Drill Sergeant",
     image: "/lovable-uploads/4d5b4382-c347-4c68-b807-b3d21cfef20c.png",
     emoji: "🎖️",
-    description: "No excuses, no delays — just orders, structure, and discipline.",
+    description: "No excuses, no delays — just clear orders, structure, and discipline.",
     quote: "YOU SAID 10AM. IT'S 10:03. WHY AREN'T YOU MOVING?"
   },
   {
