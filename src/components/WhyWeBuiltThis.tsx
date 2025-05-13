@@ -9,7 +9,7 @@ const WhyWeBuiltThis = () => {
         <img 
           src="/lovable-uploads/99634d53-7783-4dd8-a3d9-bf614fb19fcf.png"
           alt="Cool sticker"
-          className="absolute w-16 md:w-20 lg:w-24 left-12 top-10 md:left-16 md:top-15 z-0 opacity-90"
+          className="absolute w-16 md:w-20 lg:w-24 left-24 -top-8 md:left-32 md:-top-10 z-0 opacity-90"
         />
         
         <div className="bg-commitify-yellow/20 p-10 md:p-16 rounded-3xl relative overflow-hidden">
