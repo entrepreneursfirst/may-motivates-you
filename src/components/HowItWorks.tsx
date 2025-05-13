@@ -46,7 +46,7 @@ const HowItWorks = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Step 1 - Each section is now individually editable */}
           <div className="flex flex-col items-center text-center">
-            <div className="mb-8">
+            <div className="mb-8 flex items-center justify-center h-[350px]">
               <img 
                 src={step1.imageSrc} 
                 alt={step1.title} 
@@ -70,7 +70,7 @@ const HowItWorks = () => {
           
           {/* Step 2 */}
           <div className="flex flex-col items-center text-center">
-            <div className="mb-8">
+            <div className="mb-8 flex items-center justify-center h-[350px]">
               <img 
                 src={step2.imageSrc} 
                 alt={step2.title}
@@ -93,7 +93,7 @@ const HowItWorks = () => {
           
           {/* Step 3 - Making this stickman 10% smaller */}
           <div className="flex flex-col items-center text-center">
-            <div className="mb-8">
+            <div className="mb-8 flex items-center justify-center h-[350px]">
               <img 
                 src={step3.imageSrc} 
                 alt={step3.title} 
