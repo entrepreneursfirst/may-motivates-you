@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -106,15 +105,12 @@ const Hero = () => {
           
           {/* Text Content */}
           <div className="space-y-6">
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-[68px] font-extrabold leading-tight">
               Momentum comes and goes.
             </h1>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               Our AI agents help bring it back <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">back.</span>
             </h2>
-            <p className="text-lg text-commitify-secondary">
-              Commitify is the AI that calls when motivation runs out and procrastination kicks in.
-            </p>
             
             {/* Button area with smooth horizontal expansion */}
             <div className="flex items-center gap-4">
