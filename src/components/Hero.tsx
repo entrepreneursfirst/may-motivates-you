@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -113,8 +112,8 @@ const Hero = () => {
               Our AI agents help bring it <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">back.</span>
             </h2>
             
-            {/* Subtext - New addition */}
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 font-medium max-w-xl">
+            {/* Subtext - Adjusted size to match other sections */}
+            <p className="text-center text-commitify-secondary text-xl mb-4 max-w-3xl">
               Meet Commitify — the AI that calls when motivation runs out and procrastination kicks in.
             </p>
             
