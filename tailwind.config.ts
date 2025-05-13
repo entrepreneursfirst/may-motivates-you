@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -118,7 +119,7 @@ export default {
 				'wave-3': 'wave 3s ease-in-out infinite 1s',
 				'float': 'float 6s ease-in-out infinite',
 				'bounce-light': 'bounce-light 3s ease-in-out infinite',
-				'phone-tilt': 'phone-tilt 2s ease-in-out infinite',
+				'phone-tilt': 'phone-tilt 5s ease-in-out infinite', // Slowed down to 5s from 2s
 				'sheet-enter': 'sheet-enter 0.3s ease-out'
 			},
 			fontFamily: {
