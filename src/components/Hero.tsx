@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -105,7 +106,7 @@ const Hero = () => {
           
           {/* Text Content */}
           <div className="space-y-6">
-            <h1 className="text-5xl md:text-6xl lg:text-[68px] font-extrabold leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-[58px] font-extrabold leading-tight">
               Momentum comes and goes.
             </h1>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
@@ -145,14 +146,17 @@ const Hero = () => {
                       type="tel"
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
-                      className="py-6 rounded-none border-l-0 border-r-0 w-[180px] sm:w-[220px] shadow-[0_0_10px_rgba(178,107,202,0.5)] focus:shadow-[0_0_15px_rgba(178,107,202,0.7)]"
+                      className="py-6 rounded-none border-l-0 border-r-0 w-[180px] sm:w-[220px] 
+                        shadow-[0_0_15px_rgba(178,107,202,0.7)] focus:shadow-[0_0_25px_rgba(178,107,202,0.9)]
+                        border-commitify-purple/30 focus:border-commitify-purple/50 
+                        outline-none ring-2 ring-commitify-yellow/30 focus:ring-commitify-yellow/50"
                       placeholder="Phone number"
                     />
                     
                     <div className="flex">
                       <Button 
                         onClick={handleSubmit}
-                        className="bg-commitify-yellow text-commitify-text hover:bg-commitify-yellow/90 px-4 py-6 rounded-none"
+                        className="bg-commitify-yellow text-commitify-text hover:bg-commitify-yellow/90 px-4 py-6 rounded-none shadow-[0_0_10px_rgba(252,192,27,0.5)]"
                       >
                         <Check className="w-5 h-5" />
                       </Button>
@@ -184,8 +188,8 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Phone Animation */}
-          <div className="flex justify-center items-center mx-auto md:mx-0 md:justify-center lg:justify-end mt-12 lg:mt-0 pr-0 lg:pr-8 overflow-visible">
+          {/* Phone Animation - Centered on Mobile */}
+          <div className="flex justify-center items-center mx-auto lg:mx-0 lg:justify-end mt-12 lg:mt-0 pr-0 lg:pr-8 overflow-visible">
             <PhoneAnimation 
               onAnswerCall={handlePhoneAnswerFromAnimation} 
               onHangUp={handlePhoneHangUpFromAnimation}

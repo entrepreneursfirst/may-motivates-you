@@ -16,6 +16,13 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
   
+  // Function to activate phone input in hero section
+  const activatePhoneInput = () => {
+    scrollToSection('hero');
+    // Dispatch custom event to activate phone input
+    window.dispatchEvent(new CustomEvent('activatePhoneInput'));
+  };
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -66,7 +73,7 @@ const Navbar = () => {
             Pricing
           </button>
           <Button 
-            onClick={() => scrollToSection('pricing')}
+            onClick={activatePhoneInput}
             className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-semibold rounded-full px-6 flex items-center gap-2"
           >
             <Phone className="w-4 h-4" />
@@ -94,7 +101,7 @@ const Navbar = () => {
                 Pricing
               </button>
               <Button 
-                onClick={() => scrollToSection('pricing')} 
+                onClick={activatePhoneInput}
                 className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-semibold rounded-full w-full flex items-center justify-center gap-2"
               >
                 <Phone className="w-4 h-4" />
