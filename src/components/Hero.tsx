@@ -64,13 +64,13 @@ const Hero = () => {
     setSelectedCountryCode(country);
   };
 
-  // This function will be called from PhoneAnimation component
+  // This function will be called from PhoneAnimation component, but we won't use it to change anything
   const handlePhoneAnswerFromAnimation = () => {
-    setIsPhoneInputActive(true);
+    // Not changing anything when the phone is answered
   };
 
   const handlePhoneHangUpFromAnimation = () => {
-    setIsPhoneInputActive(false);
+    // Not changing anything when the phone is hung up
   };
   
   return (
@@ -102,9 +102,9 @@ const Hero = () => {
               Commitify is the AI that calls when motivation runs out and procrastination kicks in.
             </p>
             
-            {/* Updated button area with smoother transition */}
+            {/* Updated button area with smooth horizontal expansion */}
             <div className="flex items-center gap-4">
-              <div className="flex transition-all duration-300 ease-in-out">
+              <div className={`flex transition-all duration-500 ease-in-out ${isPhoneInputActive ? 'w-auto' : 'w-[168px]'}`}>
                 {isPhoneInputActive ? (
                   <div className="flex items-center animate-fade-in">
                     <Popover>
@@ -156,7 +156,7 @@ const Hero = () => {
                   </div>
                 ) : (
                   <Button 
-                    className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all"
+                    className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all w-full"
                     onClick={handlePhoneInput}
                   >
                     Try it for $0
