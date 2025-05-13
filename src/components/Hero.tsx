@@ -113,6 +113,11 @@ const Hero = () => {
               Our AI agents help bring it <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">back.</span>
             </h2>
             
+            {/* Subtext - New addition */}
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 font-medium max-w-xl">
+              Meet Commitify — the AI that calls when motivation runs out and procrastination kicks in.
+            </p>
+            
             {/* Button area with smooth horizontal expansion */}
             <div className="flex items-center gap-4">
               <div className={`transition-all duration-700 ease-in-out ${isPhoneInputActive ? 'w-[450px]' : 'w-[168px]'}`}>
