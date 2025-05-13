@@ -44,7 +44,7 @@ const agents = [
     image: "/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png",
     emoji: "💼",
     description: "Laser-focused leadership who turns your chaos into calendar blocks and KPIs.",
-    quote: "This task has no ROI unless you execute. Are we aligned?"
+    quote: "This task has no ROI unless you execute!"
   }
 ];
 
