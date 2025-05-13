@@ -43,7 +43,7 @@ const PhoneAnimation = () => {
   };
 
   // Phone component with incoming call and form
-  return <div className="relative flex items-center justify-center scale-110 md:scale-125 my-8 transform -translate-x-12">
+  return <div className="relative flex items-center justify-center scale-110 md:scale-125 my-8 transform -translate-x-30">
       {/* Ambient glow background */}
       <div className="absolute inset-0 -m-12 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-30 blur-2xl" />
 
