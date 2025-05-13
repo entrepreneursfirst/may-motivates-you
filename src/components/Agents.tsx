@@ -29,7 +29,7 @@ const agents = [
     name: "Hype Beast",
     image: "/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png",
     emoji: "🏋️",
-    description: "High energy, "LET'S GOOOO" attitude.",
+    description: "High energy, 'LET'S GOOOO' attitude.",
     quote: "YOU GOT THIS! Time to level up your game!"
   },
   {
