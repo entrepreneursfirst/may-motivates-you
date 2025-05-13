@@ -7,11 +7,11 @@ const WhyWeBuiltThis = () => {
     <section id="why" className="py-24 overflow-hidden">
       <div className="container mx-auto px-4 relative">
         {/* Added sticker positioned relative to container */}
-        <div className="absolute -left-0 top-30 w-80 z-0 opacity-90">
+        <div className="absolute -left-0 top-50 z-0 opacity-90">
           <img 
             src="/lovable-uploads/99634d53-7783-4dd8-a3d9-bf614fb19fcf.png"
             alt="Cool sticker"
-            className="w-16 md:w-20 lg:w-24 h-auto"
+            className="w-16 md:w-40 lg:w-48 h-auto"
           />
         </div>
         
