@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Phone } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -5,27 +6,33 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+
 type PhoneFormValues = {
   phoneNumber: string;
 };
+
 const PhoneAnimation = () => {
   const [isRinging, setIsRinging] = useState(true);
   const [showCallScreen, setShowCallScreen] = useState(false);
   const [showPhoneForm, setShowPhoneForm] = useState(false);
+
   const form = useForm<PhoneFormValues>({
     defaultValues: {
       phoneNumber: ""
     }
   });
+
   const handleAnswer = () => {
     setShowPhoneForm(true);
   };
+
   const handleSubmitPhone = (data: PhoneFormValues) => {
     console.log("Phone number submitted:", data.phoneNumber);
     setIsRinging(false);
     setShowPhoneForm(false);
     setShowCallScreen(true);
   };
+
   const handleHangUp = () => {
     setIsRinging(true);
     setShowCallScreen(false);
@@ -36,7 +43,7 @@ const PhoneAnimation = () => {
   };
 
   // Phone component with incoming call and form
-  return <div className="relative flex items-center justify-center scale-110 md:scale-125 my-8">
+  return <div className="relative flex items-center justify-center scale-110 md:scale-125 my-8 transform -translate-x-8">
       {/* Ambient glow background */}
       <div className="absolute inset-0 -m-12 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-30 blur-2xl" />
 
@@ -113,4 +120,5 @@ const PhoneAnimation = () => {
       </Sheet>
     </div>;
 };
+
 export default PhoneAnimation;
