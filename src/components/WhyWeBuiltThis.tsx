@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const WhyWeBuiltThis = () => {
   return (
@@ -49,7 +50,7 @@ const WhyWeBuiltThis = () => {
                     className="w-12 h-12 rounded-full object-cover mr-4"
                   />
                   <div>
-                    <p className="font-bold">Sarah Chen</p>
+                    <p className="font-bold">The CEO,000,000</p>
                     <p className="text-sm text-commitify-secondary">Founder & CEO</p>
                   </div>
                 </div>
