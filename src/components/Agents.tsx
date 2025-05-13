@@ -1,8 +1,6 @@
-
 import React, { useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, PhoneCall } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-
 const agents = [{
   name: "Life Coach",
   image: "/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png",
@@ -40,11 +38,9 @@ const agents = [{
   description: "Laser-focused leadership who turns your chaos into calendar blocks and KPIs.",
   quote: "This task has no ROI unless you execute."
 }];
-
 const Agents = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedAgent, setSelectedAgent] = useState<number | null>(null);
-
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
@@ -53,7 +49,6 @@ const Agents = () => {
       });
     }
   };
-
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
@@ -62,11 +57,9 @@ const Agents = () => {
       });
     }
   };
-
   const handleAgentSelect = (index: number) => {
     setSelectedAgent(index === selectedAgent ? null : index);
   };
-
   return <section id="agents" className="py-20 relative bg-commitify-background">
       <div className="container mx-auto px-4 relative z-10">
         <div className="relative">
@@ -83,7 +76,7 @@ const Agents = () => {
           </p>
         </div>
         
-        <div className="relative pt-8">
+        <div className="relative pt-1">
           <Button variant="outline" size="icon" className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 border-commitify-blue text-commitify-blue rounded-full md:-left-5 hidden md:flex" onClick={scrollLeft}>
             <ChevronLeft className="h-5 w-5" />
           </Button>
@@ -127,5 +120,4 @@ const Agents = () => {
       </div>
     </section>;
 };
-
 export default Agents;
