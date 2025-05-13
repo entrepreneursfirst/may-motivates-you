@@ -35,7 +35,7 @@ return (
       <img 
         src="/lovable-uploads/c967a7e7-5403-4fe3-ba1e-52fa5eba1841.png" 
         alt="Rainbow sticker" 
-        className="w-28 md:w-36 lg:w-40 object-contain"
+        className="w-36 md:w-40 lg:w-50 object-contain"
       />
     </div>
       
