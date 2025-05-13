@@ -90,17 +90,7 @@ const PhoneAnimation = () => {
 
   return (
     <div className="relative flex items-center justify-center scale-125 md:scale-150 my-12 transform -translate-x-32">
-      {/* Pulsating circles animation */}
-      {[1, 2, 3].map((circle) => (
-        <div 
-          key={circle}
-          className="absolute inset-0 rounded-full bg-commitify-yellow opacity-20"
-          style={{
-            animation: `ping ${2 + circle * 0.5}s cubic-bezier(0, 0, 0.2, 1) infinite`,
-            animationDelay: `${circle * 0.6}s`
-          }}
-        />
-      ))}
+     
       
       {/* Ambient glow background */}
       <div className="absolute inset-0 -m-12 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-30 blur-2xl" />
