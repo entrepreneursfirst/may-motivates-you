@@ -96,19 +96,21 @@ const PhoneAnimation = () => {
 
   return (
     <div className="relative flex items-center justify-center scale-125 md:scale-150 my-12 transform -translate-x-32">
-      {/* Sound Vibration Visuals - Significantly increased size and opacity */}
-      <div className="absolute inset-0 -m-24 flex items-center justify-center">
-        <div className={`absolute w-96 h-96 rounded-full bg-yellow-400/40 animate-ping-slow`}></div>
-        <div className={`absolute w-80 h-80 rounded-full bg-yellow-400/45 animate-ping-medium`}></div>
-        <div className={`absolute w-64 h-64 rounded-full bg-yellow-400/50 animate-ping-fast`}></div>
+      {/* Sound Vibration Visuals - Updated with sequential wave animations */}
+      <div className="absolute inset-0 -m-24 flex items-center justify-center z-10">
+        <div className="absolute w-64 h-64 rounded-full bg-yellow-400/50 animate-wave-1"></div>
+        <div className="absolute w-80 h-80 rounded-full bg-yellow-400/45 animate-wave-2"></div>
+        <div className="absolute w-96 h-96 rounded-full bg-yellow-400/40 animate-wave-3"></div>
       </div>
       
-      {/* Ambient glow background - Increased intensity */}
+      {/* Ambient glow background */}
       <div className="absolute inset-0 -m-20 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-60 blur-3xl" />
 
-      {/* Tilted Phone with click feedback - uses the updated rotate animation instead of translateX */}
+      {/* Phone with gentle tilt animation */}
       <div 
-        className={`relative transform transition-transform duration-300 cursor-pointer ${phonePressed ? 'scale-[0.97]' : 'scale-100'} ${isRinging ? 'animate-phone-vibrate' : 'transform -rotate-12'}`}
+        className={`relative transform transition-transform duration-300 cursor-pointer 
+          ${phonePressed ? 'scale-[0.97]' : 'scale-100'} 
+          ${isRinging ? 'animate-phone-tilt' : '-rotate-12'}`}
         onClick={handlePhonePress}
       >
         <div className="relative w-64 h-[480px] z-20">

@@ -86,17 +86,10 @@ export default {
 						opacity: '0'
 					}
 				},
-				'ping-slow': {
-					'0%': { transform: 'scale(1)', opacity: '0.6' },
-					'100%': { transform: 'scale(1.6)', opacity: '0' }
-				},
-				'ping-medium': {
-					'0%': { transform: 'scale(1)', opacity: '0.7' },
-					'100%': { transform: 'scale(1.5)', opacity: '0' }
-				},
-				'ping-fast': {
-					'0%': { transform: 'scale(1)', opacity: '0.8' },
-					'100%': { transform: 'scale(1.4)', opacity: '0' }
+				'wave': {
+					'0%': { transform: 'scale(1)', opacity: '0.5' },
+					'50%': { transform: 'scale(1.3)', opacity: '0.2' },
+					'100%': { transform: 'scale(1)', opacity: '0.5' },
 				},
 				'float': {
 					'0%, 100%': { transform: 'translateY(0)' },
@@ -106,10 +99,10 @@ export default {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-5px)' },
 				},
-				'phone-vibrate': {
-					'0%': { transform: 'rotate(-10deg)' },
-					'50%': { transform: 'rotate(-14deg)' },
-					'100%': { transform: 'rotate(-10deg)' }
+				'phone-tilt': {
+					'0%, 100%': { transform: 'rotate(0deg)' },
+					'25%': { transform: 'rotate(3deg)' },
+					'75%': { transform: 'rotate(-3deg)' },
 				},
 				'sheet-enter': {
 					'0%': { transform: 'translateX(100%) scale(0.95)', opacity: '0' },
@@ -120,12 +113,12 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-				'ping-slow': 'ping-slow 3s ease-in-out infinite',
-				'ping-medium': 'ping-medium 2.5s ease-in-out infinite 0.3s',
-				'ping-fast': 'ping-fast 2s ease-in-out infinite 0.6s',
+				'wave-1': 'wave 3s ease-in-out infinite',
+				'wave-2': 'wave 3s ease-in-out infinite 0.5s',
+				'wave-3': 'wave 3s ease-in-out infinite 1s',
 				'float': 'float 6s ease-in-out infinite',
 				'bounce-light': 'bounce-light 3s ease-in-out infinite',
-				'phone-vibrate': 'phone-vibrate 2.5s ease-in-out infinite', // Slowed down from 1.5s to 2.5s
+				'phone-tilt': 'phone-tilt 2s ease-in-out infinite',
 				'sheet-enter': 'sheet-enter 0.3s ease-out'
 			},
 			fontFamily: {
