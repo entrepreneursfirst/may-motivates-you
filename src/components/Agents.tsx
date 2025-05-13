@@ -8,8 +8,8 @@ const agents = [
     name: "Life Coach",
     image: "/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png",
     emoji: "🧍‍♀️",
-    description: "Your personal growth guru who turns goals into daily wins with calm encouragement.",
-    quote: "Let's break this down into manageable steps."
+    description: "Your personal growth guru who turns goals into daily wins.",
+    quote: "Let’s break this into steps — and nail the first one today."
   },
   {
     name: "Zen Master",
@@ -23,7 +23,7 @@ const agents = [
     image: "/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png",
     emoji: "💅",
     description: "The glitter-drenched voice that drags you out of bed and into your power.",
-    quote: "We're not ghosting deadlines in 2025, bestie!"
+    quote: "Slay the day or stay in delay — your call, babe."
   },
   {
     name: "Hype Beast",
@@ -37,14 +37,14 @@ const agents = [
     image: "/lovable-uploads/4d5b4382-c347-4c68-b807-b3d21cfef20c.png",
     emoji: "🎖️",
     description: "No excuses, no delays — just orders, structure, and discipline.",
-    quote: "ATTENTION! That deadline won't meet itself!"
+    quote: "YOU SAID 10AM. IT'S 10:03. WHY AREN'T YOU MOVING?"
   },
   {
     name: "The CEO",
     image: "/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png",
     emoji: "💼",
     description: "Laser-focused leadership who turns your chaos into calendar blocks and KPIs.",
-    quote: "Let's optimize your productivity metrics."
+    quote: "This task has no ROI unless you execute. Are we aligned?"
   }
 ];
 
