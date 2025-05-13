@@ -40,15 +40,6 @@ return (
         />
       </div>
       
-      {/* Smiley Sticker - Also positioned relative to container */}
-      <div className="absolute top-[18cm] right-0 md:right-4 lg:right-8 z-0 opacity-90">
-        <img 
-          src="/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png" 
-          alt="Smiley sticker" 
-          className="w-48 md:w-64 object-contain" 
-        />
-      </div>
-      
       <div className="relative z-10">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
           How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Works</span>
