@@ -5,9 +5,16 @@ const WhyWeBuiltThis = () => {
   return (
     <section id="why" className="py-24 relative overflow-hidden">
       <div className="container mx-auto px-4">
+        {/* Added sticker as absolute positioned element */}
+        <img 
+          src="/lovable-uploads/99634d53-7783-4dd8-a3d9-bf614fb19fcf.png"
+          alt="Cool sticker"
+          className="absolute w-16 md:w-20 lg:w-24 left-8 top-6 md:left-16 md:top-10 z-0 opacity-90"
+        />
+        
         <div className="bg-commitify-yellow/20 p-10 md:p-16 rounded-3xl relative overflow-hidden">
           
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-8 text-center md:text-left">
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-8 text-center md:text-left relative z-10">
             Why We Built <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Commitify</span>
           </h2>
           
