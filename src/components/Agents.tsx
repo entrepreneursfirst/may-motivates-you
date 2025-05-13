@@ -16,7 +16,7 @@ const agents = [
     image: "/lovable-uploads/758609d4-c1fe-450e-926b-5afdf6650e3d.png",
     emoji: "🧘",
     description: "The chill philosopher who reminds you to breathe, reflect, and stay centered.",
-    quote: "This moment is your opportunity to begin."
+    quote: "The task exists. It waits for you. Are you ready?"
   },
   {
     name: "Slay Bestie",
