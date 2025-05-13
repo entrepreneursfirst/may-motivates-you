@@ -57,8 +57,8 @@ const HowItWorks = () => {
                 }} 
               />
             </div>
-            {/* All titles will be in a div with specific height to ensure alignment */}
-            <div className="h-20 flex items-start justify-center">
+            {/* All titles use the same fixed height with top alignment */}
+            <div className="h-20 flex items-start justify-center mb-2">
               <h3 className="text-2xl font-bold">
                 {step1.title}
               </h3>
@@ -81,7 +81,7 @@ const HowItWorks = () => {
                 }} 
               />
             </div>
-            <div className="h-20 flex items-start justify-center">
+            <div className="h-20 flex items-start justify-center mb-2">
               <h3 className="text-2xl font-bold">
                 {step2.title}
               </h3>
@@ -104,7 +104,7 @@ const HowItWorks = () => {
                 }} 
               />
             </div>
-            <div className="h-20 flex items-start justify-center">
+            <div className="h-20 flex items-start justify-center mb-2">
               <h3 className="text-2xl font-bold">
                 {step3.title}
               </h3>
