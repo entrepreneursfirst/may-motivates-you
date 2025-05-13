@@ -29,22 +29,27 @@ const HowItWorks = () => {
   };
   
 return (
-  <section id="how-it-works" className="py-24 relative overflow-hidden">
-    {/* Rainbow Sticker - Added to the left of the header */}
-    <div className="absolute top-0 left-0 z-0 opacity-90">
-      <img 
-        src="/lovable-uploads/c967a7e7-5403-4fe3-ba1e-52fa5eba1841.png" 
-        alt="Rainbow sticker" 
-        className="w-80 md:w-80 lg:w-80 object-contain"
-      />
-    </div>
-      
-      {/* Smiley Sticker */}
-      <div className="absolute top-1 left-[calc(50%168rem)] md:left-[calc(50%+24rem)] z-0 opacity-90">
-        <img src="/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png" alt="Smiley sticker" className="w-48 md:w-64 object-contain" />
+  <section id="how-it-works" className="py-24 overflow-hidden">
+    <div className="container mx-auto px-4 relative">
+      {/* Rainbow Sticker - Now positioned relative to container */}
+      <div className="absolute -left-16 -top-12 z-0 opacity-90">
+        <img 
+          src="/lovable-uploads/c967a7e7-5403-4fe3-ba1e-52fa5eba1841.png" 
+          alt="Rainbow sticker" 
+          className="w-64 md:w-72 lg:w-80 object-contain"
+        />
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      {/* Smiley Sticker - Also positioned relative to container */}
+      <div className="absolute top-1 right-0 md:right-4 lg:right-8 z-0 opacity-90">
+        <img 
+          src="/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png" 
+          alt="Smiley sticker" 
+          className="w-48 md:w-64 object-contain" 
+        />
+      </div>
+      
+      <div className="relative z-10">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
           How It Works
         </h2>
@@ -130,7 +135,8 @@ return (
           </Button>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
   );
 };
 
