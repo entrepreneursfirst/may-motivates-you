@@ -31,7 +31,7 @@ const agents = [{
   image: "/lovable-uploads/4d5b4382-c347-4c68-b807-b3d21cfef20c.png",
   emoji: "🎖️"
 }, {
-  name: "The CEO",
+  name: "The CEO,000,000",
   image: "/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png",
   emoji: "💼"
 }];
