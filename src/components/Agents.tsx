@@ -92,12 +92,12 @@ const Agents = () => {
                 key={index}
                 className="flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl"
               >
-                <div className="relative h-64 overflow-hidden bg-white">
-                  {/* Transparent background for headshots */}
+                <div className="relative h-64 overflow-hidden">
+                  {/* Removed the white background for headshots */}
                   <img 
                     src={agent.image} 
                     alt={agent.name}
-                    className="w-full h-full object-cover object-top mix-blend-normal"
+                    className="w-full h-full object-cover object-top"
                   />
                 </div>
                 
