@@ -8,42 +8,42 @@ const agents = [
     name: "Life Coach",
     image: "/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png",
     emoji: "🧍‍♀️",
-    description: "Gentle, practical — podcast host vibes.",
+    description: "Your personal growth guru who turns goals into daily wins with calm encouragement.",
     quote: "Let's break this down into manageable steps."
   },
   {
     name: "Zen Master",
     image: "/lovable-uploads/758609d4-c1fe-450e-926b-5afdf6650e3d.png",
     emoji: "🧘",
-    description: "Slow, mindful, deeply present.",
+    description: "The chill philosopher who reminds you to breathe, reflect, and stay centered.",
     quote: "This moment is your opportunity to begin."
   },
   {
     name: "Slay Bestie",
     image: "/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png",
     emoji: "💅",
-    description: "Sassy, sweet, flirty-shady motivation.",
+    description: "The glitter-drenched voice that drags you out of bed and into your power.",
     quote: "We're not ghosting deadlines in 2025, bestie!"
   },
   {
     name: "Hype Beast",
     image: "/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png",
     emoji: "🏋️",
-    description: "High energy, 'LET'S GOOOO' attitude.",
+    description: "Pure energy in your ear yelling \"LET'S GOOOO\" until you move.",
     quote: "YOU GOT THIS! Time to level up your game!"
   },
   {
     name: "Drill Sergeant",
     image: "/lovable-uploads/4d5b4382-c347-4c68-b807-b3d21cfef20c.png",
     emoji: "🎖️",
-    description: "Tough accountability, no excuses.",
+    description: "No excuses, no delays — just orders, structure, and discipline.",
     quote: "ATTENTION! That deadline won't meet itself!"
   },
   {
     name: "The CEO",
     image: "/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png",
     emoji: "💼",
-    description: "Efficient, KPI-driven, zero fluff.",
+    description: "Laser-focused leadership who turns your chaos into calendar blocks and KPIs.",
     quote: "Let's optimize your productivity metrics."
   }
 ];
