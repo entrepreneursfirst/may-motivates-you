@@ -1,3 +1,4 @@
+
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, PhoneCall } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,7 @@ const Agents = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedAgent, setSelectedAgent] = useState<number | null>(null);
   const [motivatorWord, setMotivatorWord] = useState("Motivators");
+  const [isTransitioning, setIsTransitioning] = useState(false);
   
   // Words to cycle through
   const motivatorWords = ["Motivators", "Guides", "Voices", "Friends", "Coaches"];
@@ -51,11 +53,21 @@ const Agents = () => {
   // Animation effect for cycling through words
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setMotivatorWord(prevWord => {
-        const currentIndex = motivatorWords.indexOf(prevWord);
-        const nextIndex = (currentIndex + 1) % motivatorWords.length;
-        return motivatorWords[nextIndex];
-      });
+      setIsTransitioning(true);
+      
+      // After the fade-out animation completes, change the word
+      setTimeout(() => {
+        setMotivatorWord(prevWord => {
+          const currentIndex = motivatorWords.indexOf(prevWord);
+          const nextIndex = (currentIndex + 1) % motivatorWords.length;
+          return motivatorWords[nextIndex];
+        });
+        
+        // Reset the transition state after changing the word to trigger fade-in
+        setTimeout(() => {
+          setIsTransitioning(false);
+        }, 50);
+      }, 500); // Wait for the fade-out to complete
     }, 2000); // Change word every 2 seconds
     
     return () => clearInterval(intervalId); // Cleanup on unmount
@@ -106,8 +118,16 @@ const Agents = () => {
           
           <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4 relative z-10">
             An Entire Team of <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple relative">
-              <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-500">
-                {motivatorWord}
+              <span className="relative h-12 inline-block overflow-hidden">
+                <span 
+                  className={`absolute left-0 right-0 text-center transition-all duration-500 ${
+                    isTransitioning 
+                      ? 'transform -translate-y-10 opacity-0' 
+                      : 'transform translate-y-0 opacity-100'
+                  }`}
+                >
+                  {motivatorWord}
+                </span>
               </span>
             </span> for You
           </h2>
