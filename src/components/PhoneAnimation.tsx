@@ -50,6 +50,7 @@ const PhoneAnimation = () => {
   const [showCallScreen, setShowCallScreen] = useState(false);
   const [showPhoneForm, setShowPhoneForm] = useState(false);
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
+  const [phonePressed, setPhonePressed] = useState(false);
 
   const form = useForm<PhoneFormValues>({
     defaultValues: {
@@ -87,16 +88,29 @@ const PhoneAnimation = () => {
       setIsRinging(true);
     }, 1000);
   };
+  
+  const handlePhonePress = () => {
+    setPhonePressed(true);
+    setTimeout(() => setPhonePressed(false), 300);
+  };
 
   return (
     <div className="relative flex items-center justify-center scale-125 md:scale-150 my-12 transform -translate-x-32">
-     
+      {/* Sound Vibration Visuals */}
+      <div className="absolute inset-0 -m-12 flex items-center justify-center">
+        <div className={`absolute w-60 h-60 rounded-full bg-yellow-400/10 animate-ping-slow`}></div>
+        <div className={`absolute w-48 h-48 rounded-full bg-yellow-400/15 animate-ping-medium`}></div>
+        <div className={`absolute w-36 h-36 rounded-full bg-yellow-400/20 animate-ping-fast`}></div>
+      </div>
       
       {/* Ambient glow background */}
       <div className="absolute inset-0 -m-12 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-30 blur-2xl" />
 
-      {/* Tilted Phone */}
-      <div className="relative transform -rotate-12">
+      {/* Tilted Phone with click feedback */}
+      <div 
+        className={`relative transform -rotate-12 transition-transform duration-300 cursor-pointer ${phonePressed ? 'scale-[0.97]' : 'scale-100'} ${isRinging ? 'animate-phone-vibrate' : ''}`}
+        onClick={handlePhonePress}
+      >
         <div className="relative w-64 h-[480px] z-20">
           {/* Gradient screen background inside phone */}
           <div className="absolute top-[1%] bottom-[1%] left-[3%] right-[3%] rounded-[28px] bg-gradient-to-br from-yellow-300 via-amber-300 to-yellow-500 shadow-inner z-0" />
@@ -119,10 +133,10 @@ const PhoneAnimation = () => {
               <>
                 <p className="text-sm text-gray-100 mb-4">Incoming Call...</p>
                 <div className="flex space-x-4">
-                  <Button onClick={handleAnswer} className="bg-green-500 hover:bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center">
+                  <Button onClick={handleAnswer} className="bg-green-500 hover:bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center transition-transform hover:scale-105 active:scale-95">
                     <Phone className="w-5 h-5" />
                   </Button>
-                  <Button onClick={handleHangUp} className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center rotate-135">
+                  <Button onClick={handleHangUp} className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center rotate-135 transition-transform hover:scale-105 active:scale-95">
                     <Phone className="w-5 h-5" />
                   </Button>
                 </div>
@@ -137,7 +151,7 @@ const PhoneAnimation = () => {
                 <div className="bg-white/80 text-black p-3 rounded-lg mb-2 max-w-[90%] text-sm text-left">
                   Your project deserves the attention of your full being.
                 </div>
-                <Button onClick={handleHangUp} className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center mt-auto rotate-135">
+                <Button onClick={handleHangUp} className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center mt-auto rotate-135 transition-transform hover:scale-105 active:scale-95">
                   <Phone className="w-5 h-5" />
                 </Button>
               </>
@@ -148,7 +162,7 @@ const PhoneAnimation = () => {
 
       {/* Phone Number Form Sheet */}
       <Sheet open={showPhoneForm} onOpenChange={setShowPhoneForm}>
-        <SheetContent>
+        <SheetContent className="animate-sheet-enter">
           <SheetHeader>
             <SheetTitle>Enter Your Phone Number</SheetTitle>
             <SheetDescription>

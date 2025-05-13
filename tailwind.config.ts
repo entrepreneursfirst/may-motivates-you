@@ -92,6 +92,18 @@ export default {
 						opacity: '0'
 					}
 				},
+				'ping-slow': {
+					'0%': { transform: 'scale(1)', opacity: '0.6' },
+					'100%': { transform: 'scale(1.6)', opacity: '0' }
+				},
+				'ping-medium': {
+					'0%': { transform: 'scale(1)', opacity: '0.7' },
+					'100%': { transform: 'scale(1.5)', opacity: '0' }
+				},
+				'ping-fast': {
+					'0%': { transform: 'scale(1)', opacity: '0.8' },
+					'100%': { transform: 'scale(1.4)', opacity: '0' }
+				},
 				'float': {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' },
@@ -99,6 +111,15 @@ export default {
 				'bounce-light': {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-5px)' },
+				},
+				'phone-vibrate': {
+					'0%, 100%': { transform: 'rotate(-12deg) translateX(0)' },
+					'25%': { transform: 'rotate(-12deg) translateX(-1px)' },
+					'75%': { transform: 'rotate(-12deg) translateX(1px)' }
+				},
+				'sheet-enter': {
+					'0%': { transform: 'translateX(100%) scale(0.95)', opacity: '0' },
+					'100%': { transform: 'translateX(0) scale(1)', opacity: '1' }
 				}
 			},
 			animation: {
@@ -106,8 +127,13 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'phone-ring': 'phone-ring 1s ease-in-out infinite',
 				'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+				'ping-slow': 'ping-slow 3s ease-in-out infinite',
+				'ping-medium': 'ping-medium 2.5s ease-in-out infinite 0.3s',
+				'ping-fast': 'ping-fast 2s ease-in-out infinite 0.6s',
 				'float': 'float 6s ease-in-out infinite',
 				'bounce-light': 'bounce-light 3s ease-in-out infinite',
+				'phone-vibrate': 'phone-vibrate 0.6s ease-in-out infinite',
+				'sheet-enter': 'sheet-enter 0.3s ease-out'
 			},
 			fontFamily: {
 				'poppins': ['Poppins', 'sans-serif'],
