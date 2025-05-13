@@ -1,6 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { PhoneCall, PhoneOff } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+
 interface PhoneAnimationProps {
   onAnswerCall?: () => void;
   onHangUp?: () => void;
@@ -32,6 +35,7 @@ const agents = [{
   image: "/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png",
   emoji: "💼"
 }];
+
 const PhoneAnimation = ({
   onAnswerCall,
   onHangUp
@@ -49,21 +53,26 @@ const PhoneAnimation = ({
     }, 3000);
     return () => clearInterval(intervalId);
   }, []);
+
   const currentAgent = agents[currentAgentIndex];
+  
   const handleAnswer = () => {
     if (onAnswerCall) {
       onAnswerCall();
     }
   };
+  
   const handleHangUp = () => {
     if (onHangUp) {
       onHangUp();
     }
   };
+  
   const handlePhonePress = () => {
     setPhonePressed(true);
     setTimeout(() => setPhonePressed(false), 300);
   };
+  
   return <div className="relative flex items-center justify-center scale-[1.06] md:scale-[1.275] my-12 transform -translate-x-32">
       {/* Sound Vibration Visuals - Updated with sequential wave animations and lower z-index */}
       <div className="absolute inset-0 -m-24 flex items-center justify-center z-0">
@@ -88,10 +97,13 @@ const PhoneAnimation = ({
 
           {/* Screen content */}
           <div className="absolute inset-[11%] z-20 flex flex-col items-center justify-center px-4">
-            {/* White circular background behind agent image - adjusted to be only slightly larger than headshot */}
-            <div className="w-[36px] h-[36px] rounded-full bg-white flex items-center justify-center mb-8">
-              {/* Increased headshot size by 30% (from w-20 h-20 to w-26 h-26) */}
-              <img src={currentAgent.image} alt={currentAgent.name} className="w-[100px] h-[100px] rounded-full object-cover" />
+            {/* White circular background behind agent image */}
+            <div className="w-28 h-28 rounded-full bg-white flex items-center justify-center mb-8 shadow-sm">
+              {/* Agent image with proper styling */}
+              <Avatar className="w-24 h-24">
+                <AvatarImage src={currentAgent.image} alt={currentAgent.name} className="object-cover" />
+                <AvatarFallback>{currentAgent.emoji}</AvatarFallback>
+              </Avatar>
             </div>
             
             <p className="text-center text-base font-semibold">
@@ -113,4 +125,5 @@ const PhoneAnimation = ({
       </div>
     </div>;
 };
+
 export default PhoneAnimation;
