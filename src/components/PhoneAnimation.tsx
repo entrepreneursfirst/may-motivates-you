@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { PhoneCall, PhoneOff } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 interface PhoneAnimationProps {
   onAnswerCall?: () => void;
@@ -45,6 +45,32 @@ const PhoneAnimation = ({
   const [showPhoneForm, setShowPhoneForm] = useState(false);
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [phonePressed, setPhonePressed] = useState(false);
+  const [imagesPreloaded, setImagesPreloaded] = useState(false);
+
+  // Preload all agent images to prevent flashing
+  useEffect(() => {
+    const preloadImages = async () => {
+      const imagePromises = agents.map((agent) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = agent.image;
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+      });
+      
+      try {
+        await Promise.all(imagePromises);
+        setImagesPreloaded(true);
+      } catch (err) {
+        console.error("Failed to preload some images:", err);
+        // Still set to true to prevent endless loading state
+        setImagesPreloaded(true);
+      }
+    };
+    
+    preloadImages();
+  }, []);
 
   // Rotate through agents every 3 seconds
   useEffect(() => {
@@ -99,11 +125,19 @@ const PhoneAnimation = ({
           <div className="absolute inset-[11%] z-20 flex flex-col items-center justify-center px-4">
             {/* White circular background behind agent image */}
             <div className="w-28 h-28 rounded-full bg-white flex items-center justify-center mb-8 shadow-sm">
-              {/* Agent image with proper styling */}
-              <Avatar className="w-24 h-24">
-                <AvatarImage src={currentAgent.image} alt={currentAgent.name} className="object-cover" />
-                <AvatarFallback>{currentAgent.emoji}</AvatarFallback>
-              </Avatar>
+              {/* Agent image with proper styling and no fallback */}
+              {imagesPreloaded && (
+                <Avatar className="w-24 h-24">
+                  <AvatarImage 
+                    src={currentAgent.image} 
+                    alt={currentAgent.name} 
+                    className="object-cover" 
+                  />
+                </Avatar>
+              )}
+              {!imagesPreloaded && (
+                <div className="w-24 h-24 rounded-full bg-gray-200 animate-pulse" />
+              )}
             </div>
             
             <p className="text-center text-base font-semibold">
