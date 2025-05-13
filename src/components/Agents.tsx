@@ -16,7 +16,7 @@ const agents = [{
   description: "The chill philosopher who reminds you to breathe, reflect, and stay centered.",
   quote: "The task exists. It waits for you. Are you ready?"
 }, {
-  name: "Sassy Bestie",
+  name: "Slay Bestie",
   image: "/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png",
   emoji: "💅",
   description: "The glitter-drenched voice that drags you out of bed and into your power.",
@@ -34,7 +34,7 @@ const agents = [{
   description: "No excuses, no delays — just clear orders, structure, and discipline.",
   quote: "YOU SAID 10AM. IT'S 10:03. WHY AREN'T YOU MOVING?"
 }, {
-  name: "The CEO,000,000",
+  name: "CEO,000,000",
   image: "/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png",
   emoji: "💼",
   description: "Laser-focused leadership who turns your chaos into calendar blocks and KPIs.",
