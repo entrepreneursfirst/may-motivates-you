@@ -1,29 +1,35 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
-const steps = [{
+
+// Step content as separate objects for better editability
+const step1 = {
   imageSrc: "/lovable-uploads/2c682f5d-9441-4c38-bb50-0e5b969df930.png",
   title: "Upload your schedule & goals",
   description: "Import your to-dos, tasks, or even your resume."
-}, {
-  imageSrc: "/lovable-uploads/bff9745b-e164-44f7-afc9-26c5b1823fce.png",
+};
+
+const step2 = {
+  imageSrc: "/lovable-uploads/bff9745b-e164-44f7-afc9-26c5b1823fce.png", 
   title: "Set the call vibe & frequency",
   description: "Choose how often you want to be called—and how aggressive the tone should be."
-}, {
+};
+
+const step3 = {
   imageSrc: "/lovable-uploads/44c37770-c3f4-4735-8bf2-a7bc177b82ad.png",
   title: "Get check-ins from your AI coach",
   description: "Your AI will remember what you said, follow up, and motivate you to finish."
-}];
+};
+
 const HowItWorks = () => {
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({
       behavior: 'smooth'
     });
   };
-  return <section id="how-it-works" className="py-24 relative overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-40 right-20 w-64 h-64 bg-commitify-yellow opacity-10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 left-10 w-80 h-80 bg-commitify-blue opacity-10 rounded-full blur-3xl"></div>
-      
+  
+  return (
+    <section id="how-it-works" className="py-24 relative overflow-hidden">
       {/* Smiley Sticker */}
       <div className="absolute top-1 left-[calc(50%168rem)] md:left-[calc(50%+24rem)] z-0 opacity-90">
         <img src="/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png" alt="Smiley sticker" className="w-24 md:w-32 object-contain" />
@@ -38,20 +44,75 @@ const HowItWorks = () => {
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {steps.map((step, index) => <div key={index} className="flex flex-col items-center text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-              <div className="mb-8">
-                <img src={step.imageSrc} alt={step.title} style={{
-              width: "70px",
-              height: "70px"
-            }} className="w-200 h-200 object-contain" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">
-                {step.title}
+          {/* Step 1 - Each section is now individually editable */}
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-8">
+              <img 
+                src={step1.imageSrc} 
+                alt={step1.title} 
+                className="object-contain"
+                style={{
+                  width: "350px",
+                  height: "350px"
+                }} 
+              />
+            </div>
+            {/* All titles will be in a div with specific height to ensure alignment */}
+            <div className="h-20 flex items-start justify-center">
+              <h3 className="text-2xl font-bold">
+                {step1.title}
               </h3>
-              <p className="text-commitify-secondary text-lg">
-                {step.description}
-              </p>
-            </div>)}
+            </div>
+            <p className="text-commitify-secondary text-lg">
+              {step1.description}
+            </p>
+          </div>
+          
+          {/* Step 2 */}
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-8">
+              <img 
+                src={step2.imageSrc} 
+                alt={step2.title}
+                className="object-contain"
+                style={{
+                  width: "350px",
+                  height: "350px"
+                }} 
+              />
+            </div>
+            <div className="h-20 flex items-start justify-center">
+              <h3 className="text-2xl font-bold">
+                {step2.title}
+              </h3>
+            </div>
+            <p className="text-commitify-secondary text-lg">
+              {step2.description}
+            </p>
+          </div>
+          
+          {/* Step 3 */}
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-8">
+              <img 
+                src={step3.imageSrc} 
+                alt={step3.title} 
+                className="object-contain"
+                style={{
+                  width: "350px",
+                  height: "350px"
+                }} 
+              />
+            </div>
+            <div className="h-20 flex items-start justify-center">
+              <h3 className="text-2xl font-bold">
+                {step3.title}
+              </h3>
+            </div>
+            <p className="text-commitify-secondary text-lg">
+              {step3.description}
+            </p>
+          </div>
         </div>
         
         <div className="mt-16 text-center">
@@ -60,6 +121,8 @@ const HowItWorks = () => {
           </Button>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HowItWorks;
