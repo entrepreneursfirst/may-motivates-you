@@ -66,7 +66,7 @@ const Agents = () => {
   return (
     <section id="agents" className="py-20 relative bg-commitify-background">
       {/* Flower sticker positioned in background */}
-      <div className="absolute left-4 md:left-16 lg:left-32 top-24 md:top-28 w-24 md:w-32 lg:w-40 h-auto z-0 opacity-90">
+      <div className="absolute left-4 md:left-16 lg:left-32 top-20 md:top-20 w-24 md:w-32 lg:w-40 h-auto z-0 opacity-90">
         <img 
           src="/lovable-uploads/10ed87d9-b6c4-46ea-b814-44c6687e494f.png" 
           alt="Flower sticker" 
