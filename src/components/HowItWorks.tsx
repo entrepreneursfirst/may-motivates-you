@@ -41,7 +41,7 @@ return (
       </div>
       
       {/* Smiley Sticker - Also positioned relative to container */}
-      <div className="absolute top-[10cm] right-0 md:right-4 lg:right-8 z-0 opacity-90">
+      <div className="absolute top-[20cm] right-0 md:right-4 lg:right-8 z-0 opacity-90">
         <img 
           src="/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png" 
           alt="Smiley sticker" 
