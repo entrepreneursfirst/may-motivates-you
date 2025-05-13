@@ -35,6 +35,15 @@ const HowItWorks = () => {
       <div className="absolute top-40 right-20 w-64 h-64 bg-commitify-yellow opacity-10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 left-10 w-80 h-80 bg-commitify-blue opacity-10 rounded-full blur-3xl"></div>
       
+      {/* Smiley Sticker */}
+      <div className="absolute top-24 left-[calc(50%+4rem)] md:left-[calc(50%+6rem)] z-0 opacity-90">
+        <img 
+          src="/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png" 
+          alt="Smiley sticker" 
+          className="w-24 md:w-32 object-contain"
+        />
+      </div>
+      
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
           How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Works</span>
