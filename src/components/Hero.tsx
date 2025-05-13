@@ -64,13 +64,14 @@ const Hero = () => {
     setSelectedCountryCode(country);
   };
 
-  // These functions are kept empty deliberately
+  // Connect phone animation buttons with the Try it for $0 button
   const handlePhoneAnswerFromAnimation = () => {
-    // Not changing anything when the phone is answered
+    setIsPhoneInputActive(true);
   };
 
   const handlePhoneHangUpFromAnimation = () => {
-    // Not changing anything when the phone is hung up
+    setIsPhoneInputActive(false);
+    setPhoneNumber('');
   };
   
   return (

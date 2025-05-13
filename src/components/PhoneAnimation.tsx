@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { PhoneCall, PhoneOff } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -60,24 +61,15 @@ const PhoneAnimation = ({ onAnswerCall, onHangUp }: PhoneAnimationProps) => {
   const currentAgent = agents[currentAgentIndex];
 
   const handleAnswer = () => {
-    // Call the parent function but don't change the UI
     if (onAnswerCall) {
       onAnswerCall();
     }
-    // Don't change the ringing state or show the call screen
-  };
-
-  const handleSubmitPhone = (data: any) => {
-    console.log("Phone number submitted:", data.phoneNumber);
-    // Don't change states to keep the phone ringing
   };
 
   const handleHangUp = () => {
-    // Call the parent function but don't change the UI
     if (onHangUp) {
       onHangUp();
     }
-    // Don't change the ringing state
   };
   
   const handlePhonePress = () => {
@@ -113,8 +105,8 @@ const PhoneAnimation = ({ onAnswerCall, onHangUp }: PhoneAnimationProps) => {
 
           {/* Screen content */}
           <div className="absolute inset-[11%] z-20 flex flex-col items-center justify-center px-4">
-            {/* Agent image directly without white circle background */}
-            <div className="w-24 h-24 rounded-full mb-3 flex items-center justify-center">
+            {/* White circular background behind agent image */}
+            <div className="w-28 h-28 rounded-full bg-white flex items-center justify-center mb-3">
               <img 
                 src={currentAgent.image} 
                 alt={currentAgent.name}
