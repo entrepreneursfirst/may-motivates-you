@@ -107,10 +107,10 @@ const Hero = () => {
           {/* Text Content */}
           <div className="space-y-6">
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight">
-              Lazy days happen.
+              Momentum comes and goes.
             </h1>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Our AI agents can <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">motivate you.</span>
+              Our AI agents help bring it back <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">back.</span>
             </h2>
             <p className="text-lg text-commitify-secondary">
               Commitify is the AI that calls when motivation runs out and procrastination kicks in.
