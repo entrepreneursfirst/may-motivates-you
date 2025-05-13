@@ -6,19 +6,19 @@ import { Button } from "@/components/ui/button";
 const step1 = {
   imageSrc: "/lovable-uploads/2c682f5d-9441-4c38-bb50-0e5b969df930.png",
   title: "Upload your schedule & goals",
-  description: "Import your to-dos, tasks, or even your resume."
+  description: "Introduce yourself, explain your to-dos, integrate your schedule, or upload files."
 };
 
 const step2 = {
   imageSrc: "/lovable-uploads/bff9745b-e164-44f7-afc9-26c5b1823fce.png", 
-  title: "Set the call vibe & frequency",
-  description: "Choose how often you want to be called—and how aggressive the tone should be."
+  title: "Set the call time, frequency & vibe",
+  description: "Choose when you want to be called—and who you want the caller to be."
 };
 
 const step3 = {
   imageSrc: "/lovable-uploads/44c37770-c3f4-4735-8bf2-a7bc177b82ad.png",
   title: "Get check-ins from your AI coach",
-  description: "Your AI will remember what you said, follow up, and motivate you to finish."
+  description: "Your AI will remember what you said, follow up, and helps you follow through."
 };
 
 const HowItWorks = () => {
