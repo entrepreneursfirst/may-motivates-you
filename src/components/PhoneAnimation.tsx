@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button";
 const PhoneAnimation = () => {
   const [isRinging, setIsRinging] = useState(true);
   const [showCallScreen, setShowCallScreen] = useState(false);
-  
+
   const handleAnswer = () => {
     setIsRinging(false);
     setShowCallScreen(true);
   };
-  
+
   const handleHangUp = () => {
     setIsRinging(true);
     setShowCallScreen(false);
@@ -20,98 +20,110 @@ const PhoneAnimation = () => {
       setIsRinging(true);
     }, 1000);
   };
-  
-  return (
-    <div className="relative flex items-center gap-2 scale-110 md:scale-125 my-8">
-      {/* Yellow gradient background */}
-      <div className="absolute inset-0 -m-12 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-30 blur-2xl"></div>
-      
-      {/* Phone 1 */}
-      <div className="relative transform -rotate-12 -mr-16 z-10">
-        <img 
-          src="/lovable-uploads/202da3af-3e90-4992-873f-e63795b76f9a.png" 
-          alt="Phone" 
-          className="w-60 md:w-72"
+
+  // Shared phone layout wrapper
+  const PhoneWrapper = ({
+    agentImage,
+    agentName,
+    messageLines,
+    showPickup,
+  }: {
+    agentImage: string;
+    agentName: string;
+    messageLines?: string[];
+    showPickup?: boolean;
+  }) => (
+    <div className="relative w-64 h-[480px] z-20">
+      {/* Gradient screen background inside phone */}
+      <div className="absolute inset-[11%] rounded-[24px] bg-gradient-to-br from-yellow-300 via-amber-300 to-yellow-500 shadow-inner z-0" />
+
+      {/* Phone overlay (the phone frame PNG with empty middle) */}
+      <img
+        src="/lovable-uploads/202da3af-3e90-4992-873f-e63795b76f9a.png"
+        alt="Phone Frame"
+        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
+      />
+
+      {/* Screen content */}
+      <div className="absolute inset-[11%] z-20 flex flex-col items-center justify-center px-4">
+        <img
+          src={agentImage}
+          alt={agentName}
+          className="w-20 h-20 rounded-full mb-3 object-cover"
         />
-        <div className="absolute inset-0 flex flex-col justify-center items-center p-8">
-          {/* Zen Master content */}
-          <img 
-            src="/lovable-uploads/758609d4-c1fe-450e-926b-5afdf6650e3d.png"
-            alt="Zen Master"
-            className="w-24 h-24 object-cover rounded-full mb-3"
-          />
-          <p className="text-center text-sm font-medium">Zen Master is calling...</p>
-          <div className="flex justify-center mt-3 gap-2">
-            <div className="w-3 h-3 bg-commitify-blue rounded-full animate-pulse"></div>
-            <div className="w-3 h-3 bg-commitify-blue rounded-full animate-pulse delay-100"></div>
-            <div className="w-3 h-3 bg-commitify-blue rounded-full animate-pulse delay-200"></div>
-          </div>
-        </div>
+        <p className="text-center text-base font-semibold">{agentName}</p>
+
+        {isRinging && showPickup && (
+          <>
+            <p className="text-sm text-gray-100 mb-4">Incoming Call...</p>
+            <div className="flex space-x-4">
+              <Button 
+                onClick={handleAnswer}
+                className="bg-green-500 hover:bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center"
+              >
+                <Phone className="w-5 h-5" />
+              </Button>
+              <Button 
+                onClick={handleHangUp}
+                className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center rotate-135"
+              >
+                <Phone className="w-5 h-5" />
+              </Button>
+            </div>
+          </>
+        )}
+
+        {showCallScreen &&
+          messageLines?.map((msg, i) => (
+            <div
+              key={i}
+              className="bg-white/80 text-black p-3 rounded-lg mb-2 max-w-[90%] text-sm text-left"
+            >
+              {msg}
+            </div>
+          ))}
+
+        {showCallScreen && (
+          <Button 
+            onClick={handleHangUp}
+            className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center mt-auto rotate-135"
+          >
+            <Phone className="w-5 h-5" />
+          </Button>
+        )}
       </div>
-      
-      {/* Phone 2 (main interactive phone) */}
-      <div className="w-64 h-[480px] bg-black rounded-3xl overflow-hidden shadow-2xl border-8 border-black relative z-20">
-        {/* Phone screen */}
-        <div className="w-full h-full bg-white p-4 flex flex-col">
-          {isRinging && !showCallScreen && (
-            <div className="flex-1 flex flex-col items-center justify-center">
-              <div className="bg-commitify-yellow rounded-full p-4 mb-4">
-                <img 
-                  src="/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png"
-                  alt="Slay Bestie"
-                  className="w-16 h-16 object-cover rounded-full animate-phone-ring"
-                />
-              </div>
-              <p className="text-lg font-semibold">Slay Bestie 🔥</p>
-              <p className="text-sm text-gray-600 mb-6">Incoming Call...</p>
-              
-              <div className="flex space-x-4">
-                <Button 
-                  onClick={handleAnswer}
-                  className="bg-green-500 hover:bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center"
-                >
-                  <Phone className="w-5 h-5" />
-                </Button>
-                <Button 
-                  onClick={handleHangUp}
-                  className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center rotate-135"
-                >
-                  <Phone className="w-5 h-5" />
-                </Button>
-              </div>
-            </div>
-          )}
-          
-          {showCallScreen && (
-            <div className="flex-1 flex flex-col">
-              <div className="text-center mb-4">
-                <img 
-                  src="/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png"
-                  alt="Slay Bestie"
-                  className="w-16 h-16 object-cover rounded-full mx-auto"
-                />
-                <p className="font-bold mt-2">Slay Bestie 🔥</p>
-              </div>
-              
-              <div className="bg-pink-100 p-3 rounded-lg mb-2 self-start max-w-[80%]">
-                <p className="text-sm">Girl, I'm checking on that project you're avoiding! 💅</p>
-              </div>
-              
-              <div className="bg-pink-100 p-3 rounded-lg mb-2 self-start max-w-[80%]">
-                <p className="text-sm">We're not ghosting deadlines in 2025, bestie!</p>
-              </div>
-              
-              <div className="mt-auto">
-                <Button 
-                  onClick={handleHangUp}
-                  className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto rotate-135"
-                >
-                  <Phone className="w-5 h-5" />
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
+    </div>
+  );
+
+  return (
+    <div className="relative flex items-center gap-6 scale-110 md:scale-125 my-8">
+      {/* Ambient glow background */}
+      <div className="absolute inset-0 -m-12 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-30 blur-2xl" />
+
+      {/* Phone 1 – Zen Master, passive call */}
+      <div className="relative transform -rotate-12 -mr-10">
+        <PhoneWrapper
+          agentImage="/lovable-uploads/758609d4-c1fe-450e-926b-5afdf6650e3d.png"
+          agentName="Zen Master 🌿"
+          showPickup={false}
+        />
+      </div>
+
+      {/* Phone 2 – Main Phone, interactive */}
+      <div>
+        <PhoneWrapper
+          agentImage="/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png"
+          agentName="Slay Bestie 🔥"
+          showPickup={isRinging && !showCallScreen}
+          messageLines={
+            showCallScreen
+              ? [
+                  "Girl, I'm checking on that project you're avoiding! 💅",
+                  "We're not ghosting deadlines in 2025, bestie!",
+                ]
+              : undefined
+          }
+        />
       </div>
     </div>
   );
