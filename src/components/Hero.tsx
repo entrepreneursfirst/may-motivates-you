@@ -15,7 +15,7 @@ const Hero = () => {
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-commitify-purple opacity-10 rounded-full blur-3xl"></div>
       
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
           {/* Text Content */}
           <div className="space-y-8">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
@@ -42,8 +42,8 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Phone Animation */}
-          <div className="flex justify-center lg:justify-end mt-8 lg:mt-0">
+          {/* Phone Animation - Added more right padding and center alignment for better visual */}
+          <div className="flex justify-center lg:justify-end mt-12 lg:mt-0 pr-0 lg:pr-8 overflow-visible">
             <PhoneAnimation />
           </div>
         </div>

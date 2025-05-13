@@ -22,13 +22,16 @@ const PhoneAnimation = () => {
   };
   
   return (
-    <div className="relative flex items-center gap-6">
+    <div className="relative flex items-center gap-2 scale-110 md:scale-125 my-8">
+      {/* Yellow gradient background */}
+      <div className="absolute inset-0 -m-12 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-30 blur-2xl"></div>
+      
       {/* Phone 1 */}
-      <div className="relative transform -rotate-6">
+      <div className="relative transform -rotate-12 -mr-16 z-10">
         <img 
           src="/lovable-uploads/202da3af-3e90-4992-873f-e63795b76f9a.png" 
           alt="Phone" 
-          className="w-48 md:w-64"
+          className="w-60 md:w-72"
         />
         <div className="absolute inset-0 flex flex-col justify-center items-center p-8">
           {/* Zen Master content */}
@@ -47,7 +50,7 @@ const PhoneAnimation = () => {
       </div>
       
       {/* Phone 2 (main interactive phone) */}
-      <div className="w-56 h-96 bg-black rounded-3xl overflow-hidden shadow-2xl border-8 border-black relative mx-auto transform rotate-6 z-10">
+      <div className="w-64 h-[480px] bg-black rounded-3xl overflow-hidden shadow-2xl border-8 border-black relative z-20">
         {/* Phone screen */}
         <div className="w-full h-full bg-white p-4 flex flex-col">
           {isRinging && !showCallScreen && (
