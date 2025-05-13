@@ -1,11 +1,77 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Check, X, ChevronDown } from 'lucide-react';
 import PhoneAnimation from './PhoneAnimation';
+import { 
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+// Country codes for the dropdown
+const countryCodes = [
+  { code: "+1", country: "US", name: "United States" },
+  { code: "+44", country: "GB", name: "United Kingdom" },
+  { code: "+33", country: "FR", name: "France" },
+  { code: "+49", country: "DE", name: "Germany" },
+  { code: "+61", country: "AU", name: "Australia" },
+  { code: "+91", country: "IN", name: "India" },
+  { code: "+81", country: "JP", name: "Japan" },
+  { code: "+86", country: "CN", name: "China" },
+];
 
 const Hero = () => {
+  const [isPhoneInputActive, setIsPhoneInputActive] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [selectedCountryCode, setSelectedCountryCode] = useState(countryCodes[0]);
+  const [showWaitlistDialog, setShowWaitlistDialog] = useState(false);
+  const [phoneAnimationRef, setPhoneAnimationRef] = useState(null);
+  
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handlePhoneInput = () => {
+    setIsPhoneInputActive(true);
+  };
+
+  const handleCancel = () => {
+    setIsPhoneInputActive(false);
+    setPhoneNumber('');
+  };
+
+  const handleSubmit = () => {
+    if (selectedCountryCode.code !== "+1") {
+      setShowWaitlistDialog(true);
+    } else {
+      console.log("Phone number submitted:", selectedCountryCode.code + phoneNumber);
+      setIsPhoneInputActive(false);
+    }
+  };
+
+  const handleSelectCountry = (country) => {
+    setSelectedCountryCode(country);
+  };
+
+  // This function will be called from PhoneAnimation component
+  const handlePhoneAnswerFromAnimation = () => {
+    setIsPhoneInputActive(true);
+  };
+
+  const handlePhoneHangUpFromAnimation = () => {
+    setIsPhoneInputActive(false);
   };
   
   return (
@@ -18,7 +84,6 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center relative">
           {/* Sun Sticker with floating animation */}
           <div className="absolute top-[450px] left-[40px] md:top-[400px] md:left-[40px] lg:top-[450px] lg:left-[400px] w-24 md:w-32 lg:w-40 z-10">
-
             <img 
               src="/lovable-uploads/7699a50a-72f1-4d30-9cd6-720d836c481f.png" 
               alt="Sun Sticker" 
@@ -38,12 +103,63 @@ const Hero = () => {
               Commitify is the AI that calls when motivation runs out and procrastination kicks in.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button 
-                className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all"
-                onClick={() => scrollToSection('pricing')}
-              >
-                Try it for $0
-              </Button>
+              {isPhoneInputActive ? (
+                <div className="flex flex-wrap gap-2 items-center">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button 
+                        className="bg-white border border-gray-300 text-gray-700 px-3 py-6 rounded-l-full hover:bg-gray-50 flex items-center min-w-[90px] justify-center gap-1"
+                      >
+                        {selectedCountryCode.code} <ChevronDown className="h-4 w-4" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0 max-h-[300px] overflow-y-auto">
+                      <div className="grid">
+                        {countryCodes.map((country) => (
+                          <div
+                            key={country.code}
+                            className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
+                            onClick={() => handleSelectCountry(country)}
+                          >
+                            <span className="font-medium">{country.code}</span>
+                            <span className="ml-2 text-sm text-gray-600">{country.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                  
+                  <Input
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="py-6 rounded-none border-l-0 border-r-0"
+                    placeholder="Enter your phone number"
+                  />
+                  
+                  <div className="flex">
+                    <Button 
+                      onClick={handleSubmit}
+                      className="bg-commitify-yellow text-commitify-text hover:bg-commitify-yellow/90 px-4 py-6 rounded-none"
+                    >
+                      <Check className="w-5 h-5" />
+                    </Button>
+                    <Button 
+                      onClick={handleCancel}
+                      className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-6 rounded-r-full"
+                    >
+                      <X className="w-5 h-5" />
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button 
+                  className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all"
+                  onClick={handlePhoneInput}
+                >
+                  Try it for $0
+                </Button>
+              )}
               <Button 
                 variant="outline" 
                 className="border-2 border-commitify-blue text-commitify-blue hover:bg-commitify-blue/10 font-medium text-lg px-8 py-6 rounded-full"
@@ -56,10 +172,35 @@ const Hero = () => {
           
           {/* Phone Animation */}
           <div className="flex justify-center lg:justify-end mt-12 lg:mt-0 pr-0 lg:pr-8 overflow-visible">
-            <PhoneAnimation />
+            <PhoneAnimation 
+              onAnswerCall={handlePhoneAnswerFromAnimation} 
+              onHangUp={handlePhoneHangUpFromAnimation}
+            />
           </div>
         </div>
       </div>
+
+      {/* Waitlist Dialog */}
+      <AlertDialog open={showWaitlistDialog} onOpenChange={setShowWaitlistDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>We're expanding soon!</AlertDialogTitle>
+            <AlertDialogDescription>
+              We are working on getting Commitify available in {selectedCountryCode.name}. Would you like to join our waitlist?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setShowWaitlistDialog(false)}>Maybe later</AlertDialogCancel>
+            <AlertDialogAction onClick={() => {
+              console.log(`Added to waitlist for ${selectedCountryCode.name}`);
+              setShowWaitlistDialog(false);
+              setIsPhoneInputActive(false);
+            }}>
+              Join waitlist
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </section>
   );
 };

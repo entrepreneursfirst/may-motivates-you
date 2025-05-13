@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Phone } from 'lucide-react';
+import { PhoneCall, PhoneOff } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -10,6 +10,11 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 type PhoneFormValues = {
   phoneNumber: string;
 };
+
+interface PhoneAnimationProps {
+  onAnswerCall?: () => void;
+  onHangUp?: () => void;
+}
 
 // Agent data for display on phone
 const agents = [
@@ -45,7 +50,7 @@ const agents = [
   }
 ];
 
-const PhoneAnimation = () => {
+const PhoneAnimation = ({ onAnswerCall, onHangUp }: PhoneAnimationProps) => {
   const [isRinging, setIsRinging] = useState(true);
   const [showCallScreen, setShowCallScreen] = useState(false);
   const [showPhoneForm, setShowPhoneForm] = useState(false);
@@ -70,7 +75,12 @@ const PhoneAnimation = () => {
   const currentAgent = agents[currentAgentIndex];
 
   const handleAnswer = () => {
-    setShowPhoneForm(true);
+    // Instead of showing the form, call the parent function
+    if (onAnswerCall) {
+      onAnswerCall();
+    }
+    setIsRinging(false);
+    setShowCallScreen(true);
   };
 
   const handleSubmitPhone = (data: PhoneFormValues) => {
@@ -81,6 +91,10 @@ const PhoneAnimation = () => {
   };
 
   const handleHangUp = () => {
+    // Call the parent function
+    if (onHangUp) {
+      onHangUp();
+    }
     setIsRinging(true);
     setShowCallScreen(false);
     // After 1 second, start ringing again
@@ -140,10 +154,10 @@ const PhoneAnimation = () => {
                 <p className="text-sm text-gray-700 mb-4">Incoming Call...</p>
                 <div className="flex space-x-4">
                   <Button onClick={handleAnswer} className="bg-green-500 hover:bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center transition-transform hover:scale-105 active:scale-95">
-                    <Phone className="w-5 h-5" />
+                    <PhoneCall className="w-5 h-5" />
                   </Button>
                   <Button onClick={handleHangUp} className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center rotate-135 transition-transform hover:scale-105 active:scale-95">
-                    <Phone className="w-5 h-5" />
+                    <PhoneOff className="w-5 h-5" />
                   </Button>
                 </div>
               </>
@@ -158,48 +172,13 @@ const PhoneAnimation = () => {
                   Your project deserves the attention of your full being.
                 </div>
                 <Button onClick={handleHangUp} className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center mt-auto rotate-135 transition-transform hover:scale-105 active:scale-95">
-                  <Phone className="w-5 h-5" />
+                  <PhoneOff className="w-5 h-5" />
                 </Button>
               </>
             )}
           </div>
         </div>
       </div>
-
-      {/* Phone Number Form Sheet */}
-      <Sheet open={showPhoneForm} onOpenChange={setShowPhoneForm}>
-        <SheetContent className="animate-sheet-enter">
-          <SheetHeader>
-            <SheetTitle>Enter Your Phone Number</SheetTitle>
-            <SheetDescription>
-              We'll send you motivational calls to keep you on track
-            </SheetDescription>
-          </SheetHeader>
-          
-          <div className="py-6">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(handleSubmitPhone)} className="space-y-6">
-                <FormField 
-                  control={form.control} 
-                  name="phoneNumber" 
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
-                      <FormControl>
-                        <Input placeholder="+1 (555) 123-4567" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} 
-                />
-                <Button type="submit" className="w-full">
-                  Start Receiving Calls
-                </Button>
-              </form>
-            </Form>
-          </div>
-        </SheetContent>
-      </Sheet>
     </div>
   );
 };
