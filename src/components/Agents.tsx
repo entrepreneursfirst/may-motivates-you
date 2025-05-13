@@ -1,4 +1,3 @@
-
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, PhoneCall } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -41,37 +40,30 @@ const agents = [{
   quote: "This task has no ROI unless you execute."
 }];
 
+// Words to cycle through
+const motivatorWords = ["Motivators", "Guides", "Voices", "Friends", "Coaches"];
+
 const Agents = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedAgent, setSelectedAgent] = useState<number | null>(null);
-  const [motivatorWord, setMotivatorWord] = useState("Motivators");
+  const [index, setIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   
-  // Words to cycle through
-  const motivatorWords = ["Motivators", "Guides", "Voices", "Friends", "Coaches"];
-
   // Animation effect for cycling through words
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const interval = setInterval(() => {
       setIsTransitioning(true);
-      
-      // After the fade-out animation completes, change the word
       setTimeout(() => {
-        setMotivatorWord(prevWord => {
-          const currentIndex = motivatorWords.indexOf(prevWord);
-          const nextIndex = (currentIndex + 1) % motivatorWords.length;
-          return motivatorWords[nextIndex];
-        });
-        
-        // Reset the transition state after changing the word to trigger fade-in
-        setTimeout(() => {
-          setIsTransitioning(false);
-        }, 50);
-      }, 500); // Wait for the fade-out to complete
-    }, 2000); // Change word every 2 seconds
+        setIndex((prev) => (prev + 1) % motivatorWords.length);
+        setIsTransitioning(false);
+      }, 500); // Match transition duration
+    }, 3000); // Change word every 3 seconds
     
-    return () => clearInterval(intervalId); // Cleanup on unmount
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
+
+  const currentWord = motivatorWords[index];
+  const nextWord = motivatorWords[(index + 1) % motivatorWords.length];
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -117,19 +109,26 @@ const Agents = () => {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4 relative z-10">
-            An Entire Team of <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple relative">
-              <span className="relative h-12 inline-block overflow-hidden">
-                <span 
-                  className={`absolute left-0 right-0 text-center transition-all duration-500 ${
-                    isTransitioning 
-                      ? 'transform -translate-y-10 opacity-0' 
-                      : 'transform translate-y-0 opacity-100'
+            An Entire Team of{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple relative inline-block h-12 overflow-hidden">
+              <span className="relative block h-full">
+                <span
+                  className={`absolute left-0 right-0 top-0 text-center transition-all duration-500 ${
+                    isTransitioning ? '-translate-y-10 opacity-0' : 'translate-y-0 opacity-100'
                   }`}
                 >
-                  {motivatorWord}
+                  {currentWord}
+                </span>
+                <span
+                  className={`absolute left-0 right-0 top-0 text-center transition-all duration-500 ${
+                    isTransitioning ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                  }`}
+                >
+                  {nextWord}
                 </span>
               </span>
-            </span> for You
+            </span>{" "}
+            for You
           </h2>
           <p className="text-center text-commitify-secondary text-xl mb-24 max-w-3xl mx-auto">
             Choose your vibe – from zen to slay. 
