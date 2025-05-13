@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -103,7 +102,7 @@ const Hero = () => {
           
           {/* Text Content */}
           <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl lg:text-[61px] font-extrabold leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-[75px] font-extrabold leading-tight">
               Everyday is your day.
             </h1>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
