@@ -39,7 +39,7 @@ const PhoneAnimation = () => {
 
       {/* Phone overlay (the phone frame PNG with empty middle) */}
       <img
-        src="/lovable-uploads/202da3af-3e90-4992-873f-e63795b76f9a.png"
+        src="/lovable-uploads/dbf73134-0771-42c1-994e-959d4ced156e.png"
         alt="Phone Frame"
         className="absolute inset-0 w-full h-full z-10 pointer-events-none"
       />
