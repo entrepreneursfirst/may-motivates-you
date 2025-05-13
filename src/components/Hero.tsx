@@ -9,7 +9,7 @@ const Hero = () => {
   };
   
   return (
-    <section id="hero" className="pt-32 pb-20 relative overflow-hidden">
+    <section id="hero" className="pt-40 pb-28 relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute top-40 left-10 w-72 h-72 bg-commitify-yellow opacity-10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-commitify-purple opacity-10 rounded-full blur-3xl"></div>
