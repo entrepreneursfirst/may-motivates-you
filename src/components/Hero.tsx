@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -109,8 +110,8 @@ const Hero = () => {
               Our AI agents help bring it <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">back.</span>
             </h2>
             
-            {/* Subtext - Adjusted size to match other sections */}
-            <p className="text-center text-commitify-secondary text-xl mb-4 max-w-3xl">Meet Commitify — the AI that calls when motivation runs out and procrastination kicks in.</p>
+            {/* Subtext - Changed from text-center to text-left */}
+            <p className="text-left text-commitify-secondary text-xl mb-4 max-w-3xl">Meet Commitify — the AI that calls when motivation runs out and procrastination kicks in.</p>
             
             {/* Button area with smooth horizontal expansion */}
             <div className="flex items-center gap-4">
