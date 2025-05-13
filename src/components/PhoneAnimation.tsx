@@ -110,7 +110,7 @@ const PhoneAnimation = () => {
       <div 
         className={`relative transform transition-transform duration-1500 cursor-pointer z-10
           ${phonePressed ? 'scale-[0.90]' : 'scale-100'} 
-          ${isRinging ? 'animate-phone-tilt' : 'rotate-[-12deg]''}`}
+          ${isRinging ? 'animate-phone-tilt' : '-rotate-12'}`}
         onClick={handlePhonePress}
       >
         <div className="relative w-64 h-[480px] z-20">
