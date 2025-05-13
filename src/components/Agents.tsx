@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, PhoneCall } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+
 const agents = [{
   name: "Life Coach",
   image: "/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png",
@@ -38,9 +39,11 @@ const agents = [{
   description: "Laser-focused leadership who turns your chaos into calendar blocks and KPIs.",
   quote: "This task has no ROI unless you execute."
 }];
+
 const Agents = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedAgent, setSelectedAgent] = useState<number | null>(null);
+
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
@@ -49,6 +52,7 @@ const Agents = () => {
       });
     }
   };
+
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
@@ -57,9 +61,11 @@ const Agents = () => {
       });
     }
   };
+
   const handleAgentSelect = (index: number) => {
     setSelectedAgent(index === selectedAgent ? null : index);
   };
+
   return <section id="agents" className="py-20 relative bg-commitify-background">
       <div className="container mx-auto px-4 relative z-10">
         <div className="relative">
@@ -81,28 +87,36 @@ const Agents = () => {
             <ChevronLeft className="h-5 w-5" />
           </Button>
           
-          <div ref={scrollContainerRef} className="flex overflow-x-auto gap-8 py-4 px-2 pb-8 scroll-container">
-            {agents.map((agent, index) => <div key={index} className={`flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl ${selectedAgent === index ? 'ring-2 ring-commitify-purple' : ''}`} onClick={() => handleAgentSelect(index)}>
-                <div className="relative h-64 overflow-hidden">
-                  <img src={agent.image} alt={agent.name} className="w-full h-full object-cover object-top" />
-                </div>
-                
-                <div className="p-6 bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">{agent.emoji}</span>
-                    <h3 className="font-bold text-xl">{agent.name}</h3>
+          {/* Left fade-out gradient overlay */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 z-[5] pointer-events-none bg-gradient-to-r from-commitify-background to-transparent"></div>
+          
+          <div className="relative overflow-hidden">
+            <div ref={scrollContainerRef} className="flex overflow-x-auto gap-8 py-4 px-2 pb-8 scroll-container">
+              {agents.map((agent, index) => <div key={index} className={`flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl ${selectedAgent === index ? 'ring-2 ring-commitify-purple' : ''}`} onClick={() => handleAgentSelect(index)}>
+                  <div className="relative h-64 overflow-hidden">
+                    <img src={agent.image} alt={agent.name} className="w-full h-full object-cover object-top" />
                   </div>
                   
-                  <p className="text-sm text-commitify-secondary mb-4">
-                    {agent.description}
-                  </p>
-                  
-                  <div className="bg-white/70 p-3 rounded-lg italic text-sm">
-                    "{agent.quote}"
+                  <div className="p-6 bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-2xl">{agent.emoji}</span>
+                      <h3 className="font-bold text-xl">{agent.name}</h3>
+                    </div>
+                    
+                    <p className="text-sm text-commitify-secondary mb-4">
+                      {agent.description}
+                    </p>
+                    
+                    <div className="bg-white/70 p-3 rounded-lg italic text-sm">
+                      "{agent.quote}"
+                    </div>
                   </div>
-                </div>
-              </div>)}
+                </div>)}
+            </div>
           </div>
+          
+          {/* Right fade-out gradient overlay */}
+          <div className="absolute right-0 top-0 bottom-0 w-16 z-[5] pointer-events-none bg-gradient-to-l from-commitify-background to-transparent"></div>
           
           <Button variant="outline" size="icon" className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 border-commitify-blue text-commitify-blue rounded-full md:-right-5 hidden md:flex" onClick={scrollRight}>
             <ChevronRight className="h-5 w-5" />
@@ -120,4 +134,5 @@ const Agents = () => {
       </div>
     </section>;
 };
+
 export default Agents;
