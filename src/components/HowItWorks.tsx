@@ -32,7 +32,7 @@ return (
   <section id="how-it-works" className="py-24 overflow-hidden">
     <div className="container mx-auto px-4 relative">
       {/* Rainbow Sticker - Now positioned relative to container */}
-      <div className="absolute -left[0.3cm] -top-12 z-0 opacity-90">
+      <div className="absolute -left[0cm] -top-12 z-0 opacity-90">
         <img 
           src="/lovable-uploads/c967a7e7-5403-4fe3-ba1e-52fa5eba1841.png" 
           alt="Rainbow sticker" 
