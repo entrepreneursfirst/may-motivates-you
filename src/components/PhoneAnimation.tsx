@@ -109,7 +109,7 @@ const PhoneAnimation = () => {
       <div className="relative transform -rotate-12">
         <div className="relative w-64 h-[480px] z-20">
           {/* Gradient screen background inside phone */}
-          <div className="absolute top-[1%] bottom-[1%] left-[3%] right-[3%] rounded-[24px] bg-gradient-to-br from-yellow-300 via-amber-300 to-yellow-500 shadow-inner z-0" />
+          <div className="absolute top-[1%] bottom-[1%] left-[3%] right-[3%] rounded-[20px] bg-gradient-to-br from-yellow-300 via-amber-300 to-yellow-500 shadow-inner z-0" />
 
           {/* Phone overlay (the phone frame PNG with empty middle) */}
           <img src="/lovable-uploads/dbf73134-0771-42c1-994e-959d4ced156e.png" alt="Phone Frame" className="absolute inset-0 w-full h-full z-10 pointer-events-none" />
