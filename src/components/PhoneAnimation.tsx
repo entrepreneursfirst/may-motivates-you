@@ -99,7 +99,7 @@ const PhoneAnimation = ({
     setTimeout(() => setPhonePressed(false), 300);
   };
   
-  return <div className="relative flex items-center justify-center scale-[1.06] md:scale-[1.275] my-12 transform -translate-x-32">
+  return <div className="relative flex items-center justify-center scale-[1.06] md:scale-[1.275] my-12 transform md:-translate-x-32">
       {/* Sound Vibration Visuals - Updated with sequential wave animations and lower z-index */}
       <div className="absolute inset-0 -m-24 flex items-center justify-center z-0">
         <div className="absolute w-64 h-64 rounded-full bg-yellow-400/50 animate-wave-1"></div>

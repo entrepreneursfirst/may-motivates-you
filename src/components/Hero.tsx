@@ -189,7 +189,7 @@ const Hero = () => {
           </div>
           
           {/* Phone Animation */}
-          <div className="flex justify-center lg:justify-end mt-12 lg:mt-0 pr-0 lg:pr-8 overflow-visible">
+          <div className="flex justify-center items-center mx-auto md:mx-0 md:justify-center lg:justify-end mt-12 lg:mt-0 pr-0 lg:pr-8 overflow-visible">
             <PhoneAnimation 
               onAnswerCall={handlePhoneAnswerFromAnimation} 
               onHangUp={handlePhoneHangUpFromAnimation}
