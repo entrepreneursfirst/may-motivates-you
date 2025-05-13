@@ -1,3 +1,4 @@
+
 import React, { useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, PhoneCall } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -87,8 +88,8 @@ const Agents = () => {
             <ChevronLeft className="h-5 w-5" />
           </Button>
           
-          {/* Left fade-out gradient overlay */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 z-[5] pointer-events-none bg-gradient-to-r from-commitify-background to-transparent"></div>
+          {/* Left fade-out gradient overlay - moved further to the left */}
+          <div className="absolute left-0 top-0 bottom-0 w-10 z-[5] pointer-events-none bg-gradient-to-r from-commitify-background to-transparent"></div>
           
           <div className="relative overflow-hidden">
             <div ref={scrollContainerRef} className="flex overflow-x-auto gap-8 py-4 px-2 pb-8 scroll-container">
@@ -115,8 +116,8 @@ const Agents = () => {
             </div>
           </div>
           
-          {/* Right fade-out gradient overlay */}
-          <div className="absolute right-0 top-0 bottom-0 w-16 z-[5] pointer-events-none bg-gradient-to-l from-commitify-background to-transparent"></div>
+          {/* Right fade-out gradient overlay - moved further to the right */}
+          <div className="absolute right-0 top-0 bottom-0 w-10 z-[5] pointer-events-none bg-gradient-to-l from-commitify-background to-transparent"></div>
           
           <Button variant="outline" size="icon" className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 border-commitify-blue text-commitify-blue rounded-full md:-right-5 hidden md:flex" onClick={scrollRight}>
             <ChevronRight className="h-5 w-5" />
