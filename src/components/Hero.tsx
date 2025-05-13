@@ -104,10 +104,10 @@ const Hero = () => {
           {/* Text Content */}
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-[61px] font-extrabold leading-tight">
-              Momentum comes and goes.
+              The day is yours.
             </h1>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Our AI agents help bring it <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">back.</span>
+              Our AI agents make sure you <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">own it.</span>
             </h2>
             
             {/* Subtext - Changed from text-center to text-left */}
