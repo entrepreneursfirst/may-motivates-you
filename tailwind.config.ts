@@ -132,7 +132,7 @@ export default {
 				'ping-fast': 'ping-fast 2s ease-in-out infinite 0.6s',
 				'float': 'float 6s ease-in-out infinite',
 				'bounce-light': 'bounce-light 3s ease-in-out infinite',
-				'phone-vibrate': 'phone-vibrate 0.6s ease-in-out infinite',
+				'phone-vibrate': 'phone-vibrate 1.5s ease-in-out infinite', // Slowed down from 0.6s to 1.5s
 				'sheet-enter': 'sheet-enter 0.3s ease-out'
 			},
 			fontFamily: {

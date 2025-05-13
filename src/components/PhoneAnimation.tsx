@@ -96,15 +96,15 @@ const PhoneAnimation = () => {
 
   return (
     <div className="relative flex items-center justify-center scale-125 md:scale-150 my-12 transform -translate-x-32">
-      {/* Sound Vibration Visuals */}
-      <div className="absolute inset-0 -m-12 flex items-center justify-center">
-        <div className={`absolute w-60 h-60 rounded-full bg-yellow-400/10 animate-ping-slow`}></div>
-        <div className={`absolute w-48 h-48 rounded-full bg-yellow-400/15 animate-ping-medium`}></div>
-        <div className={`absolute w-36 h-36 rounded-full bg-yellow-400/20 animate-ping-fast`}></div>
+      {/* Sound Vibration Visuals - Increased size and opacity */}
+      <div className="absolute inset-0 -m-16 flex items-center justify-center">
+        <div className={`absolute w-72 h-72 rounded-full bg-yellow-400/25 animate-ping-slow`}></div>
+        <div className={`absolute w-60 h-60 rounded-full bg-yellow-400/30 animate-ping-medium`}></div>
+        <div className={`absolute w-48 h-48 rounded-full bg-yellow-400/35 animate-ping-fast`}></div>
       </div>
       
-      {/* Ambient glow background */}
-      <div className="absolute inset-0 -m-12 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-30 blur-2xl" />
+      {/* Ambient glow background - Increased intensity */}
+      <div className="absolute inset-0 -m-16 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-40 blur-2xl" />
 
       {/* Tilted Phone with click feedback */}
       <div 
