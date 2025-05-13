@@ -106,7 +106,7 @@ const Hero = () => {
           
           {/* Text Content */}
           <div className="space-y-6">
-            <h1 className="text-[4.4rem] md:text-[5.5rem] lg:text-[64px] font-extrabold leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-[58px] font-extrabold leading-tight">
               Momentum comes and goes.
             </h1>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
