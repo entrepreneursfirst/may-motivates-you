@@ -36,7 +36,7 @@ const HowItWorks = () => {
       <div className="absolute bottom-20 left-10 w-80 h-80 bg-commitify-blue opacity-10 rounded-full blur-3xl"></div>
       
       {/* Smiley Sticker */}
-      <div className="absolute top-24 left-[calc(50%+8rem)] md:left-[calc(50%+12rem)] z-0 opacity-90">
+      <div className="absolute top-24 left-[calc(50%168rem)] md:left-[calc(50%+24rem)] z-0 opacity-90">
         <img 
           src="/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png" 
           alt="Smiley sticker" 
