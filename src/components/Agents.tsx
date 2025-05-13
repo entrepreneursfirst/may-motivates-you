@@ -66,12 +66,26 @@ const Agents = () => {
   return (
     <section id="agents" className="py-20 relative bg-commitify-background">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
-          An entire team of <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">motivators</span> for you
-        </h2>
-        <p className="text-center text-commitify-secondary text-xl mb-16 max-w-3xl mx-auto">
-          Pick your coach. From chill monk to CEO boss.
-        </p>
+        {/* Header section with the sticker */}
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-center mb-4 relative">
+          {/* Flower sticker positioned to the left of the header */}
+          <div className="absolute md:relative md:-left-16 -top-6 md:top-0 w-24 h-24 md:w-32 md:h-32">
+            <img 
+              src="/lovable-uploads/db39f677-ddef-4858-981d-cca6677ee9e9.png" 
+              alt="Flower sticker" 
+              className="w-full h-full object-contain"
+            />
+          </div>
+          
+          <div className="text-center md:text-left">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
+              An entire team of <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">motivators</span> for you
+            </h2>
+            <p className="text-commitify-secondary text-xl mb-16 max-w-3xl">
+              Pick your coach. From chill monk to CEO boss.
+            </p>
+          </div>
+        </div>
         
         <div className="relative">
           <Button 
@@ -93,7 +107,6 @@ const Agents = () => {
                 className="flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl"
               >
                 <div className="relative h-64 overflow-hidden">
-                  {/* Removed the white background for headshots */}
                   <img 
                     src={agent.image} 
                     alt={agent.name}
@@ -101,7 +114,6 @@ const Agents = () => {
                   />
                 </div>
                 
-                {/* Yellow gradient background for the text area */}
                 <div className="p-6 bg-gradient-to-br from-yellow-100 via-amber-200 to-yellow-300">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-2xl">{agent.emoji}</span>
