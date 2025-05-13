@@ -26,7 +26,7 @@ const WhyWeBuiltThis = () => {
               <h3 className="text-2xl font-bold mb-4">The Founder's Story</h3>
               
               <p className="italic text-commitify-secondary mb-6">"As someone with ADHD, I built this after missing too many personal deadlines. I never missed meetings with others — only my own goals. 
-              <p className="italic text-commitify-secondary mnb-6"> Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
+              <p className="italic text-commitify-secondary mb-6"> Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
 
               
               <div className="flex items-center">
