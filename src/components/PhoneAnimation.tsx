@@ -107,7 +107,7 @@ const PhoneAnimation = () => {
 
       {/* Tilted Phone */}
       <div className="relative transform -rotate-12">
-        <div className="relative w-64 h-[400px] z-20">
+        <div className="relative w-64 h-[480] z-20">
           {/* Gradient screen background inside phone */}
           <div className="absolute inset-[3%] rounded-[24px] bg-gradient-to-br from-yellow-300 via-amber-300 to-yellow-500 shadow-inner z-0" />
 
