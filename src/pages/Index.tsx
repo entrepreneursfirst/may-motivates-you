@@ -13,7 +13,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-commitify-background overflow-hidden relative">
       {/* Decorative stickers scattered across the page */}
-      <div className="sticker top-[4%] left-[35%] animate-float">
+      <div className="sticker top-[4%] left-[35%] animate-float z-0">
         <img src="/lovable-uploads/7699a50a-72f1-4d30-9cd6-720d836c481f.png" alt="" className="w-16 md:w-24" />
       </div>
       <div className="sticker top-[30%] right-[35%] animate-bounce-light">
