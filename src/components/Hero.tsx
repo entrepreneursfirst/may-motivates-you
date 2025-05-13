@@ -18,11 +18,11 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
           {/* Text Content */}
           <div className="space-y-8">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
               Lazy days happen. <br />
               Our AI agents can <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">motivate you.</span>
             </h1>
-            <p className="text-xl text-commitify-secondary">
+            <p className="text-lg text-commitify-secondary">
               Commitify is the AI that calls when motivation runs out and procrastination kicks in.
             </p>
             <div className="flex flex-wrap gap-4">

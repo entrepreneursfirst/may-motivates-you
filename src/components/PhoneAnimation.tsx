@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Phone } from 'lucide-react';
+import { Phone, Volume2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -43,9 +43,31 @@ const PhoneAnimation = () => {
   };
 
   // Phone component with incoming call and form
-  return <div className="relative flex items-center justify-center scale-110 md:scale-125 my-8 transform -translate-x-24">
+  return <div className="relative flex items-center justify-center scale-110 md:scale-125 my-8 transform -translate-x-32 animate-phone-buzz">
       {/* Ambient glow background */}
       <div className="absolute inset-0 -m-12 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-30 blur-2xl" />
+
+      {/* Soundwaves coming from bottom of the phone */}
+      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
+        <div className="flex justify-center space-x-1">
+          {/* Sound wave bars */}
+          {[1, 2, 3, 4, 3, 2, 1].map((size, index) => (
+            <div 
+              key={index}
+              className="bg-commitify-yellow h-4 w-0.5 animate-sound-wave opacity-70" 
+              style={{ 
+                height: `${size * 4}px`,
+                animationDelay: `${index * 0.1}s`
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Sound icon */}
+      <div className="absolute -bottom-10 transform -translate-x-1/2 left-1/2 text-commitify-yellow animate-pulse">
+        <Volume2 size={16} />
+      </div>
 
       {/* Tilted Phone */}
       <div className="relative transform -rotate-12">
