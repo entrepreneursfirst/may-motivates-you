@@ -1,5 +1,4 @@
-
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, PhoneCall } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
@@ -44,6 +43,23 @@ const agents = [{
 const Agents = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedAgent, setSelectedAgent] = useState<number | null>(null);
+  const [motivatorWord, setMotivatorWord] = useState("Motivators");
+  
+  // Words to cycle through
+  const motivatorWords = ["Motivators", "Guides", "Voices", "Friends", "Coaches"];
+
+  // Animation effect for cycling through words
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setMotivatorWord(prevWord => {
+        const currentIndex = motivatorWords.indexOf(prevWord);
+        const nextIndex = (currentIndex + 1) % motivatorWords.length;
+        return motivatorWords[nextIndex];
+      });
+    }, 2000); // Change word every 2 seconds
+    
+    return () => clearInterval(intervalId); // Cleanup on unmount
+  }, []);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -89,7 +105,11 @@ const Agents = () => {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4 relative z-10">
-            An Entire Team of <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Motivators</span> for You
+            An Entire Team of <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple relative">
+              <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-500">
+                {motivatorWord}
+              </span>
+            </span> for You
           </h2>
           <p className="text-center text-commitify-secondary text-xl mb-24 max-w-3xl mx-auto">
             Choose your vibe – from zen to slay. 
