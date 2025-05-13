@@ -38,6 +38,19 @@ const Hero = () => {
   const [selectedCountryCode, setSelectedCountryCode] = useState(countryCodes[0]);
   const [showWaitlistDialog, setShowWaitlistDialog] = useState(false);
   
+  // Add an event listener for the custom event
+  useEffect(() => {
+    const handleActivatePhoneInput = () => {
+      setIsPhoneInputActive(true);
+    };
+
+    window.addEventListener('activatePhoneInput', handleActivatePhoneInput);
+    
+    return () => {
+      window.removeEventListener('activatePhoneInput', handleActivatePhoneInput);
+    };
+  }, []);
+  
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };

@@ -67,6 +67,19 @@ const Agents = () => {
     setSelectedAgent(index === selectedAgent ? null : index);
   };
 
+  // Function to scroll to hero section and activate phone input
+  const handleCallNow = () => {
+    // Dispatch a custom event that will be caught by the Hero component
+    const event = new CustomEvent('activatePhoneInput');
+    window.dispatchEvent(event);
+    
+    // Scroll to the top (hero section)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return <section id="agents" className="py-20 relative bg-commitify-background">
       <div className="container mx-auto px-4 relative z-10">
         <div className="relative">
@@ -92,7 +105,7 @@ const Agents = () => {
           <div className="absolute left-0 top-0 bottom-0 w-10 z-[5] pointer-events-none bg-gradient-to-r from-commitify-background to-transparent"></div>
           
           <div className="relative overflow-hidden">
-            <div ref={scrollContainerRef} className="flex overflow-x-auto gap-8 py-4 px-12 pb-8 scroll-container">
+            <div ref={scrollContainerRef} className="flex overflow-x-auto gap-8 py-4 px-2 pb-8 scroll-container">
               {agents.map((agent, index) => <div key={index} 
                   className={`flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl cursor-pointer ${selectedAgent === index ? 'ring-2 ring-commitify-purple' : ''}`} 
                   onClick={() => handleAgentSelect(index)}>
@@ -127,7 +140,10 @@ const Agents = () => {
         </div>
         
         <div className="text-center mt-10">
-          {selectedAgent !== null ? <Button className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium rounded-full px-8 py-6 shadow-md hover:shadow-lg transition-all gap-2">
+          {selectedAgent !== null ? <Button 
+              className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium rounded-full px-8 py-6 shadow-md hover:shadow-lg transition-all gap-2"
+              onClick={handleCallNow}
+            >
               <PhoneCall size={20} />
               Call Now
             </Button> : <Button className="bg-gray-300 hover:bg-gray-400 text-gray-600 font-medium rounded-full px-8 py-6 shadow-md transition-all cursor-not-allowed" disabled>
