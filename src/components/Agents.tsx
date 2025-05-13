@@ -82,10 +82,10 @@ const Agents = () => {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4 relative z-10">
-            An entire team of <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">motivators</span> for you
+            An Entire Team of <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Motivators</span> for You
           </h2>
           <p className="text-center text-commitify-secondary text-xl mb-16 max-w-3xl mx-auto">
-            Pick your coach. From chill monk to CEO boss.
+            Choose your vibe – from zen to slay. 
           </p>
         </div>
         
