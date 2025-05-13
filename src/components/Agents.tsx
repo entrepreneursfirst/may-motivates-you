@@ -65,7 +65,16 @@ const Agents = () => {
   
   return (
     <section id="agents" className="py-20 relative bg-commitify-background">
-      <div className="container mx-auto px-4">
+      {/* Flower sticker positioned in background */}
+      <div className="absolute left-4 md:left-16 lg:left-32 top-24 md:top-28 w-24 md:w-32 lg:w-40 h-auto z-0 opacity-90">
+        <img 
+          src="/lovable-uploads/10ed87d9-b6c4-46ea-b814-44c6687e494f.png" 
+          alt="Flower sticker" 
+          className="w-full h-auto"
+        />
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
           An entire team of <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">motivators</span> for you
         </h2>
@@ -93,7 +102,6 @@ const Agents = () => {
                 className="flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl"
               >
                 <div className="relative h-64 overflow-hidden">
-                  {/* Removed the white background for headshots */}
                   <img 
                     src={agent.image} 
                     alt={agent.name}
@@ -101,7 +109,6 @@ const Agents = () => {
                   />
                 </div>
                 
-                {/* Yellow gradient background for the text area */}
                 <div className="p-6 bg-gradient-to-br from-yellow-100 via-amber-200 to-yellow-300">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-2xl">{agent.emoji}</span>
