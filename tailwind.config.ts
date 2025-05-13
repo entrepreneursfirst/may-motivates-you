@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -81,11 +80,6 @@ export default {
 					from: { height: 'var(--radix-accordion-content-height)' },
 					to: { height: '0' }
 				},
-				'phone-ring': {
-					'0%, 100%': { transform: 'rotate(0deg)' },
-					'5%, 15%, 25%': { transform: 'rotate(-5deg)' },
-					'10%, 20%, 30%': { transform: 'rotate(5deg)' },
-				},
 				'ping': {
 					'75%, 100%': {
 						transform: 'scale(2)',
@@ -113,9 +107,9 @@ export default {
 					'50%': { transform: 'translateY(-5px)' },
 				},
 				'phone-vibrate': {
-					'0%, 100%': { transform: 'rotate(-12deg) translateX(0)' },
-					'25%': { transform: 'rotate(-12deg) translateX(-1px)' },
-					'75%': { transform: 'rotate(-12deg) translateX(1px)' }
+					'0%': { transform: 'rotate(-10deg)' },
+					'50%': { transform: 'rotate(-14deg)' },
+					'100%': { transform: 'rotate(-10deg)' }
 				},
 				'sheet-enter': {
 					'0%': { transform: 'translateX(100%) scale(0.95)', opacity: '0' },
@@ -125,14 +119,13 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'phone-ring': 'phone-ring 1s ease-in-out infinite',
 				'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
 				'ping-slow': 'ping-slow 3s ease-in-out infinite',
 				'ping-medium': 'ping-medium 2.5s ease-in-out infinite 0.3s',
 				'ping-fast': 'ping-fast 2s ease-in-out infinite 0.6s',
 				'float': 'float 6s ease-in-out infinite',
 				'bounce-light': 'bounce-light 3s ease-in-out infinite',
-				'phone-vibrate': 'phone-vibrate 1.5s ease-in-out infinite', // Slowed down from 0.6s to 1.5s
+				'phone-vibrate': 'phone-vibrate 2.5s ease-in-out infinite', // Slowed down from 1.5s to 2.5s
 				'sheet-enter': 'sheet-enter 0.3s ease-out'
 			},
 			fontFamily: {

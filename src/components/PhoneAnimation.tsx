@@ -106,9 +106,9 @@ const PhoneAnimation = () => {
       {/* Ambient glow background - Increased intensity */}
       <div className="absolute inset-0 -m-20 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-60 blur-3xl" />
 
-      {/* Tilted Phone with click feedback */}
+      {/* Tilted Phone with click feedback - uses the updated rotate animation instead of translateX */}
       <div 
-        className={`relative transform -rotate-12 transition-transform duration-300 cursor-pointer ${phonePressed ? 'scale-[0.97]' : 'scale-100'} ${isRinging ? 'animate-phone-vibrate' : ''}`}
+        className={`relative transform transition-transform duration-300 cursor-pointer ${phonePressed ? 'scale-[0.97]' : 'scale-100'} ${isRinging ? 'animate-phone-vibrate' : 'transform -rotate-12'}`}
         onClick={handlePhonePress}
       >
         <div className="relative w-64 h-[480px] z-20">
