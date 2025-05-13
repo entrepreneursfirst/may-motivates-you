@@ -108,7 +108,7 @@ const PhoneAnimation = () => {
 
       {/* Phone with gentle tilt animation - higher z-index to appear above soundwaves */}
       <div 
-        className={`relative transform transition-transform duration-300 cursor-pointer z-10
+        className={`relative transform transition-transform duration-1500 cursor-pointer z-10
           ${phonePressed ? 'scale-[0.97]' : 'scale-100'} 
           ${isRinging ? 'animate-phone-tilt' : '-rotate-12'}`}
         onClick={handlePhonePress}
