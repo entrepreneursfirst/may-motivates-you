@@ -6,20 +6,17 @@ const steps = [
   {
     imageSrc: "/lovable-uploads/2c682f5d-9441-4c38-bb50-0e5b969df930.png",
     title: "Upload your schedule & goals",
-    description: "Import your to-dos, tasks, or even your resume.",
-    color: "bg-commitify-yellow"
+    description: "Import your to-dos, tasks, or even your resume."
   },
   {
     imageSrc: "/lovable-uploads/bff9745b-e164-44f7-afc9-26c5b1823fce.png",
     title: "Set the call vibe & frequency",
-    description: "Choose how often you want to be called—and how aggressive the tone should be.",
-    color: "bg-commitify-blue"
+    description: "Choose how often you want to be called—and how aggressive the tone should be."
   },
   {
     imageSrc: "/lovable-uploads/44c37770-c3f4-4735-8bf2-a7bc177b82ad.png",
     title: "Get check-ins from your AI coach",
-    description: "Your AI will remember what you said, follow up, and motivate you to finish.",
-    color: "bg-commitify-purple"
+    description: "Your AI will remember what you said, follow up, and motivate you to finish."
   }
 ];
 
@@ -57,11 +54,12 @@ const HowItWorks = () => {
               key={index} 
               className="flex flex-col items-center text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
             >
-              <div className={`w-20 h-20 rounded-full ${step.color} text-white flex items-center justify-center mb-6`}>
+              <div className="mb-8">
                 <img 
                   src={step.imageSrc} 
                   alt={step.title} 
-                  className="w-14 h-14 object-contain"
+                  className="w-70 h-70 object-contain" 
+                  style={{ width: "70px", height: "70px" }}
                 />
               </div>
               <h3 className="text-2xl font-bold mb-4">
