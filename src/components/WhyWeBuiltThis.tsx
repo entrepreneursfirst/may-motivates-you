@@ -25,15 +25,18 @@ const WhyWeBuiltThis = () => {
             <div className="bg-white rounded-2xl p-6 shadow-lg">
               <h3 className="text-2xl font-bold mb-4">The Founder's Story</h3>
               
-              <p className="italic text-commitify-secondary mb-6">
-                "As someone with ADHD, I needed more than just another notification. I needed the psychological weight of a conversation — someone who would remember what I promised and follow up. That's why our AI coaches don't just remind you; they call you and actually talk."
-              </p>
+              <p className="italic text-commitify-secondary mb-6">"As someone with ADHD, I built this after missing too many personal deadlines. I never missed meetings with others — only my own goals.
+
+
+
+
+Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
               
               <div className="flex items-center">
                 <img src="/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png" alt="Founder" className="w-12 h-12 rounded-full object-cover mr-4" />
                 <div>
-                  <p className="font-bold">The CEO,000,000</p>
-                  <p className="text-sm text-commitify-secondary">Founder & CEO</p>
+                  <p className="font-bold">Mehdi Greefhorst</p>
+                  <p className="text-sm text-commitify-secondary">Founder</p>
                 </div>
               </div>
             </div>
