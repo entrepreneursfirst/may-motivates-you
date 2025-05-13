@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { PhoneCall, PhoneOff } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -92,7 +91,7 @@ const PhoneAnimation = ({
             {/* White circular background behind agent image - adjusted to be only slightly larger than headshot */}
             <div className="w-[36px] h-[36px] rounded-full bg-white flex items-center justify-center mb-8">
               {/* Increased headshot size by 30% (from w-20 h-20 to w-26 h-26) */}
-              <img src={currentAgent.image} alt={currentAgent.name} className="w-[32px] h-[32px] rounded-full object-cover" />
+              <img src={currentAgent.image} alt={currentAgent.name} className="w-[100px] h-[100px] rounded-full object-cover" />
             </div>
             
             <p className="text-center text-base font-semibold">
