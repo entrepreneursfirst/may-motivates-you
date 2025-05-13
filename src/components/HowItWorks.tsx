@@ -41,7 +41,7 @@ return (
       
       {/* Smiley Sticker */}
       <div className="absolute top-1 left-[calc(50%168rem)] md:left-[calc(50%+24rem)] z-0 opacity-90">
-        <img src="/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png" alt="Smiley sticker" className="w-24 md:w-32 object-contain" />
+        <img src="/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png" alt="Smiley sticker" className="w-48 md:w-64 object-contain" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
