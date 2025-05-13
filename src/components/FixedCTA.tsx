@@ -1,51 +1,42 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { ArrowUp } from 'lucide-react';
+import { Phone } from 'lucide-react';
 
 const FixedCTA = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
   
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const showThreshold = 500; // Show after scrolling 500px
-      
-      setIsVisible(scrollY > showThreshold);
+      // Show CTA after scrolling 70% of the first viewport
+      const shouldShow = window.scrollY > window.innerHeight * 0.7;
+      setVisible(shouldShow);
     };
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
-  if (!isVisible) return null;
+
+  if (!visible) return null;
   
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-purple-500 to-pink-500 py-4 px-4 shadow-lg transform transition-transform z-40">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
-        <p className="text-xl font-medium mb-3 md:mb-0 text-white">
-          Ready for your AI coach to call you? 📱✨
+    <div className="fixed bottom-6 left-0 right-0 z-40 px-4">
+      <div className="max-w-lg mx-auto bg-white border border-gray-200 rounded-full shadow-lg p-3 flex items-center justify-between">
+        <p className="ml-2 font-semibold hidden md:block">
+          Let your AI coach call you now
         </p>
-        <div className="flex gap-4">
-          <Button 
-            className="bg-white text-purple-600 hover:bg-purple-100 font-medium px-8 transition-all shadow-md hover:shadow-xl"
-            onClick={() => {
-              document.getElementById('start-now')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            Try My First Call
-          </Button>
-          <Button
-            variant="outline"
-            className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-purple-600 transition-all"
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          >
-            <ArrowUp className="w-4 h-4 mr-2" />
-            Back to Top
-          </Button>
-        </div>
+        <Button 
+          className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text rounded-full flex items-center gap-2"
+          onClick={() => scrollToSection('pricing')}
+        >
+          <Phone className="w-4 h-4" />
+          <span className="hidden md:inline">Call Me Now</span>
+          <span className="md:hidden">Try Free</span>
+        </Button>
       </div>
     </div>
   );

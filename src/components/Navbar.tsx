@@ -1,16 +1,21 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu } from 'lucide-react';
+import { Menu, Clock, Phone } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -21,62 +26,79 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 backdrop-blur-md z-50 transition-all duration-300 ${
-      isScrolled ? "bg-white bg-opacity-90 shadow-md py-3" : "bg-transparent py-6"
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled ? "bg-commitify-background bg-opacity-95 shadow-md py-3" : "bg-transparent py-5"
     }`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         <a href="#" className="flex items-center">
-          <span className="text-2xl font-bold font-outfit">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">call</span>me<span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">may.be</span>
+          <span className="flex items-center gap-2 text-2xl font-bold">
+            <span className="bg-commitify-yellow rounded-full p-1">
+              <Clock className="w-5 h-5 text-commitify-text" />
+            </span>
+            <span>Commitify</span>
           </span>
         </a>
 
         {/* Mobile Menu Toggle */}
         <button 
           onClick={toggleMenu} 
-          className="md:hidden text-dark focus:outline-none"
+          className="md:hidden text-commitify-text focus:outline-none"
           aria-label="Toggle menu"
         >
           <Menu size={24} />
         </button>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          <a href="#how-it-works" className="text-gray-700 hover:text-purple-500 transition-colors font-medium">
+        <div className="hidden md:flex items-center space-x-6">
+          <button onClick={() => scrollToSection('hero')} className="text-commitify-text hover:text-commitify-blue transition-colors font-medium">
+            Home
+          </button>
+          <button onClick={() => scrollToSection('agents')} className="text-commitify-text hover:text-commitify-blue transition-colors font-medium">
+            Agents
+          </button>
+          <button onClick={() => scrollToSection('how-it-works')} className="text-commitify-text hover:text-commitify-blue transition-colors font-medium">
             How It Works
-          </a>
-          <a href="#voices" className="text-gray-700 hover:text-purple-500 transition-colors font-medium">
-            Coach Voices
-          </a>
-          <a href="#pricing" className="text-gray-700 hover:text-purple-500 transition-colors font-medium">
+          </button>
+          <button onClick={() => scrollToSection('why')} className="text-commitify-text hover:text-commitify-blue transition-colors font-medium">
+            Why
+          </button>
+          <button onClick={() => scrollToSection('pricing')} className="text-commitify-text hover:text-commitify-blue transition-colors font-medium">
             Pricing
-          </a>
-          <a href="#faq" className="text-gray-700 hover:text-purple-500 transition-colors font-medium">
-            FAQ
-          </a>
-          <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 text-white shadow-md hover:shadow-lg transition-all">
-            Try It Free
+          </button>
+          <Button 
+            onClick={() => scrollToSection('pricing')}
+            className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-semibold rounded-full px-6 flex items-center gap-2"
+          >
+            <Phone className="w-4 h-4" />
+            Get a Call
           </Button>
         </div>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg">
-            <div className="container mx-auto px-4 py-3 flex flex-col space-y-3">
-              <a href="#how-it-works" className="text-gray-700 hover:text-purple-500 transition-colors py-2 font-medium" onClick={toggleMenu}>
+          <div className="md:hidden absolute top-full left-0 right-0 bg-commitify-background shadow-lg">
+            <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+              <button onClick={() => scrollToSection('hero')} className="text-commitify-text hover:text-commitify-blue transition-colors py-2 font-medium">
+                Home
+              </button>
+              <button onClick={() => scrollToSection('agents')} className="text-commitify-text hover:text-commitify-blue transition-colors py-2 font-medium">
+                Agents
+              </button>
+              <button onClick={() => scrollToSection('how-it-works')} className="text-commitify-text hover:text-commitify-blue transition-colors py-2 font-medium">
                 How It Works
-              </a>
-              <a href="#voices" className="text-gray-700 hover:text-purple-500 transition-colors py-2 font-medium" onClick={toggleMenu}>
-                Coach Voices
-              </a>
-              <a href="#pricing" className="text-gray-700 hover:text-purple-500 transition-colors py-2 font-medium" onClick={toggleMenu}>
+              </button>
+              <button onClick={() => scrollToSection('why')} className="text-commitify-text hover:text-commitify-blue transition-colors py-2 font-medium">
+                Why
+              </button>
+              <button onClick={() => scrollToSection('pricing')} className="text-commitify-text hover:text-commitify-blue transition-colors py-2 font-medium">
                 Pricing
-              </a>
-              <a href="#faq" className="text-gray-700 hover:text-purple-500 transition-colors py-2 font-medium" onClick={toggleMenu}>
-                FAQ
-              </a>
-              <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 text-white w-full" onClick={toggleMenu}>
-                Try It Free
+              </button>
+              <Button 
+                onClick={() => scrollToSection('pricing')} 
+                className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-semibold rounded-full w-full flex items-center justify-center gap-2"
+              >
+                <Phone className="w-4 h-4" />
+                Get a Call
               </Button>
             </div>
           </div>

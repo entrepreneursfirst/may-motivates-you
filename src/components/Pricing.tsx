@@ -8,7 +8,7 @@ const plans = [
   {
     name: "Quick Kickstart",
     description: "Perfect for that one crucial task",
-    price: "€1.99",
+    price: "$1.99",
     features: [
       "1 call right now",
       "Choose your coach voice",
@@ -20,7 +20,7 @@ const plans = [
   {
     name: "Focus Pack",
     description: "Keep on track throughout the week",
-    price: "€4.99",
+    price: "$4.99",
     period: "per week",
     features: [
       "3 calls per week",
@@ -34,7 +34,7 @@ const plans = [
   {
     name: "Power-Up Plan",
     description: "Maximum accountability",
-    price: "€9.99",
+    price: "$9.99",
     period: "per week",
     features: [
       "Daily calls",
@@ -61,32 +61,35 @@ const Pricing = () => {
   return (
     <section id="pricing" className="py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center font-outfit mb-4">
-          Simple <span className="text-neon">Pricing</span>
+        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Pricing</span>
         </h2>
-        <p className="text-center text-gray-600 text-lg mb-16">
-          Choose the perfect plan for your needs
-        </p>
+        <div className="text-center mb-16">
+          <h3 className="text-3xl md:text-4xl font-bold">Try your first call for $0</h3>
+          <p className="text-commitify-secondary text-lg mt-4 max-w-2xl mx-auto">
+            Choose the perfect plan for your needs
+          </p>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {plans.map((plan, index) => (
             <div 
               key={index}
-              className={`bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow border ${plan.popular ? 'border-neon' : 'border-gray-100'}`}
+              className={`bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${plan.popular ? 'border-commitify-yellow' : 'border-gray-100'}`}
             >
               {plan.popular && (
-                <div className="bg-neon text-white text-center py-2 font-medium">
+                <div className="bg-commitify-yellow text-commitify-text text-center py-2 font-medium">
                   Most Popular
                 </div>
               )}
               
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
-                <p className="text-gray-600 mb-4">{plan.description}</p>
+                <p className="text-commitify-secondary mb-4">{plan.description}</p>
                 <div className="mb-6">
                   <span className="text-3xl font-bold">{plan.price}</span>
                   {plan.period && (
-                    <span className="text-gray-500 ml-1">{plan.period}</span>
+                    <span className="text-commitify-secondary ml-1">{plan.period}</span>
                   )}
                 </div>
                 
@@ -100,7 +103,7 @@ const Pricing = () => {
                 </ul>
                 
                 <Button 
-                  className={`w-full ${plan.popular ? 'bg-neon hover:bg-neon-hover' : 'bg-gray-800 hover:bg-gray-700'} text-white`}
+                  className={`w-full ${plan.popular ? 'bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text' : 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'} rounded-full`}
                   onClick={() => handleSelectPlan(plan.name)}
                 >
                   {plan.buttonText}
@@ -110,7 +113,7 @@ const Pricing = () => {
           ))}
         </div>
         
-        <p className="text-center text-gray-500 mt-8">
+        <p className="text-center text-commitify-secondary mt-8">
           Cancel anytime. First call demo free. All plans include VAT.
         </p>
       </div>
