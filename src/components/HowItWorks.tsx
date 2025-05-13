@@ -91,7 +91,7 @@ const HowItWorks = () => {
             </p>
           </div>
           
-          {/* Step 3 */}
+          {/* Step 3 - Making this stickman 10% smaller */}
           <div className="flex flex-col items-center text-center">
             <div className="mb-8">
               <img 
@@ -99,8 +99,8 @@ const HowItWorks = () => {
                 alt={step3.title} 
                 className="object-contain"
                 style={{
-                  width: "350px",
-                  height: "350px"
+                  width: "315px",  /* 350px - 10% = 315px */
+                  height: "315px"  /* 350px - 10% = 315px */
                 }} 
               />
             </div>
