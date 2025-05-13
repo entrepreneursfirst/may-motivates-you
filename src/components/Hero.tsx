@@ -17,7 +17,7 @@ const Hero = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center relative">
           {/* Sun Sticker with floating animation */}
-          <div className="absolute -top-[50px] left-[500px] md:-top-[50px] md:left-[500px] lg:-top-[50px] lg:left-[500px] w-24 md:w-32 lg:w-40 z-10 animate-float">
+          <div className="absolute -top-[40px] left-[450px] md:-top-[40px] md:left-[450px] lg:-top-[40px] lg:left-[450px] w-24 md:w-32 lg:w-40 z-10 animate-float">
 
             <img 
               src="/lovable-uploads/7699a50a-72f1-4d30-9cd6-720d836c481f.png" 
