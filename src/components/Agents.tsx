@@ -1,6 +1,6 @@
 
-import React, { useRef } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight, PhoneCall } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const agents = [
@@ -9,7 +9,7 @@ const agents = [
     image: "/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png",
     emoji: "🧍‍♀️",
     description: "Your personal growth guru who turns goals into daily wins with calm encouragement.",
-    quote: "Let’s break this into steps — and nail the first one today."
+    quote: "Let's break this into steps — and nail the first one today."
   },
   {
     name: "Zen Master",
@@ -19,7 +19,7 @@ const agents = [
     quote: "The task exists. It waits for you. Are you ready?"
   },
   {
-    name: "Slay Bestie",
+    name: "Sassy Bestie",
     image: "/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png",
     emoji: "💅",
     description: "The glitter-drenched voice that drags you out of bed and into your power.",
@@ -29,7 +29,7 @@ const agents = [
     name: "Hype Beast",
     image: "/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png",
     emoji: "🏋️",
-    description: "Pure energy in your ear yelling \"LET'S GOOOOOOO\" until you move.",
+    description: "Pure energy in your ear yelling \"LET'S GOOOO\" until you move.",
     quote: "YOU GOT THIS! Time to level up your game!"
   },
   {
@@ -50,6 +50,7 @@ const agents = [
 
 const Agents = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [selectedAgent, setSelectedAgent] = useState<number | null>(null);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -63,6 +64,10 @@ const Agents = () => {
     }
   };
   
+  const handleAgentSelect = (index: number) => {
+    setSelectedAgent(index === selectedAgent ? null : index);
+  };
+
   return (
     <section id="agents" className="py-20 relative bg-commitify-background">
       <div className="container mx-auto px-4 relative z-10">
@@ -101,7 +106,8 @@ const Agents = () => {
             {agents.map((agent, index) => (
               <div 
                 key={index}
-                className="flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl"
+                className={`flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl ${selectedAgent === index ? 'ring-2 ring-commitify-purple' : ''}`}
+                onClick={() => handleAgentSelect(index)}
               >
                 <div className="relative h-64 overflow-hidden">
                   <img 
@@ -111,7 +117,7 @@ const Agents = () => {
                   />
                 </div>
                 
-                <div className="p-6 bg-gradient-to-br from-yellow-100 via-amber-200 to-yellow-300">
+                <div className="p-6 bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-2xl">{agent.emoji}</span>
                     <h3 className="font-bold text-xl">{agent.name}</h3>
@@ -140,11 +146,21 @@ const Agents = () => {
         </div>
         
         <div className="text-center mt-10">
-          <Button 
-            className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium rounded-full px-8 py-6 shadow-md hover:shadow-lg transition-all"
-          >
-            Find Your Perfect Coach
-          </Button>
+          {selectedAgent !== null ? (
+            <Button 
+              className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium rounded-full px-8 py-6 shadow-md hover:shadow-lg transition-all gap-2"
+            >
+              <PhoneCall size={20} />
+              Call Now
+            </Button>
+          ) : (
+            <Button 
+              className="bg-gray-300 hover:bg-gray-400 text-gray-600 font-medium rounded-full px-8 py-6 shadow-md transition-all cursor-not-allowed"
+              disabled
+            >
+              Select Your Agent
+            </Button>
+          )}
         </div>
       </div>
     </section>
