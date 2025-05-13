@@ -15,7 +15,16 @@ const Hero = () => {
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-commitify-purple opacity-10 rounded-full blur-3xl"></div>
       
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center relative">
+          {/* Sun Sticker with floating animation */}
+          <div className="absolute -top-20 -left-12 md:-top-24 md:-left-16 lg:-top-28 lg:-left-10 w-24 md:w-32 lg:w-40 z-10 animate-float">
+            <img 
+              src="/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png" 
+              alt="Sun Sticker" 
+              className="w-full h-auto"
+            />
+          </div>
+          
           {/* Text Content */}
           <div className="space-y-6">
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight">
