@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { Phone, Volume2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Phone } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -11,16 +11,62 @@ type PhoneFormValues = {
   phoneNumber: string;
 };
 
+// Agent data for display on phone
+const agents = [
+  {
+    name: "Life Coach",
+    image: "/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png",
+    emoji: "🧍‍♀️",
+  },
+  {
+    name: "Zen Master",
+    image: "/lovable-uploads/758609d4-c1fe-450e-926b-5afdf6650e3d.png",
+    emoji: "🧘",
+  },
+  {
+    name: "Slay Bestie",
+    image: "/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png",
+    emoji: "💅",
+  },
+  {
+    name: "Hype Beast",
+    image: "/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png",
+    emoji: "🏋️",
+  },
+  {
+    name: "Drill Sergeant",
+    image: "/lovable-uploads/4d5b4382-c347-4c68-b807-b3d21cfef20c.png",
+    emoji: "🎖️",
+  },
+  {
+    name: "The CEO",
+    image: "/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png",
+    emoji: "💼",
+  }
+];
+
 const PhoneAnimation = () => {
   const [isRinging, setIsRinging] = useState(true);
   const [showCallScreen, setShowCallScreen] = useState(false);
   const [showPhoneForm, setShowPhoneForm] = useState(false);
+  const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
 
   const form = useForm<PhoneFormValues>({
     defaultValues: {
       phoneNumber: ""
     }
   });
+
+  // Rotate through agents every 3 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentAgentIndex(prevIndex => (prevIndex + 1) % agents.length);
+    }, 3000);
+    
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const currentAgent = agents[currentAgentIndex];
 
   const handleAnswer = () => {
     setShowPhoneForm(true);
@@ -42,32 +88,22 @@ const PhoneAnimation = () => {
     }, 1000);
   };
 
-  // Phone component with incoming call and form
-  return <div className="relative flex items-center justify-center scale-110 md:scale-125 my-8 transform -translate-x-32 animate-phone-buzz">
+  return (
+    <div className="relative flex items-center justify-center scale-125 md:scale-150 my-12 transform -translate-x-32">
+      {/* Pulsating circles animation */}
+      {[1, 2, 3].map((circle) => (
+        <div 
+          key={circle}
+          className="absolute inset-0 rounded-full bg-commitify-yellow opacity-20"
+          style={{
+            animation: `ping ${2 + circle * 0.5}s cubic-bezier(0, 0, 0.2, 1) infinite`,
+            animationDelay: `${circle * 0.6}s`
+          }}
+        />
+      ))}
+      
       {/* Ambient glow background */}
       <div className="absolute inset-0 -m-12 rounded-full bg-gradient-to-br from-commitify-yellow to-amber-200 opacity-30 blur-2xl" />
-
-      {/* Soundwaves coming from bottom of the phone */}
-      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
-        <div className="flex justify-center space-x-1">
-          {/* Sound wave bars */}
-          {[1, 2, 3, 4, 3, 2, 1].map((size, index) => (
-            <div 
-              key={index}
-              className="bg-commitify-yellow h-4 w-0.5 animate-sound-wave opacity-70" 
-              style={{ 
-                height: `${size * 4}px`,
-                animationDelay: `${index * 0.1}s`
-              }}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Sound icon */}
-      <div className="absolute -bottom-10 transform -translate-x-1/2 left-1/2 text-commitify-yellow animate-pulse">
-        <Volume2 size={16} />
-      </div>
 
       {/* Tilted Phone */}
       <div className="relative transform -rotate-12">
@@ -80,10 +116,17 @@ const PhoneAnimation = () => {
 
           {/* Screen content */}
           <div className="absolute inset-[11%] z-20 flex flex-col items-center justify-center px-4">
-            <img src="/lovable-uploads/758609d4-c1fe-450e-926b-5afdf6650e3d.png" alt="Zen Master" className="w-20 h-20 rounded-full mb-3 object-cover" />
-            <p className="text-center text-base font-semibold">Zen Master 🌿</p>
+            <img 
+              src={currentAgent.image} 
+              alt={currentAgent.name}
+              className="w-20 h-20 rounded-full mb-3 object-cover"
+            />
+            <p className="text-center text-base font-semibold">
+              {currentAgent.name} {currentAgent.emoji}
+            </p>
 
-            {isRinging && !showCallScreen && <>
+            {isRinging && !showCallScreen && (
+              <>
                 <p className="text-sm text-gray-100 mb-4">Incoming Call...</p>
                 <div className="flex space-x-4">
                   <Button onClick={handleAnswer} className="bg-green-500 hover:bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center">
@@ -93,9 +136,11 @@ const PhoneAnimation = () => {
                     <Phone className="w-5 h-5" />
                   </Button>
                 </div>
-              </>}
+              </>
+            )}
 
-            {showCallScreen && <>
+            {showCallScreen && (
+              <>
                 <div className="bg-white/80 text-black p-3 rounded-lg mb-2 max-w-[90%] text-sm text-left">
                   Stay present, my friend. Let's focus on what matters now.
                 </div>
@@ -105,7 +150,8 @@ const PhoneAnimation = () => {
                 <Button onClick={handleHangUp} className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center mt-auto rotate-135">
                   <Phone className="w-5 h-5" />
                 </Button>
-              </>}
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -123,15 +169,19 @@ const PhoneAnimation = () => {
           <div className="py-6">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(handleSubmitPhone)} className="space-y-6">
-                <FormField control={form.control} name="phoneNumber" render={({
-                field
-              }) => <FormItem>
+                <FormField 
+                  control={form.control} 
+                  name="phoneNumber" 
+                  render={({ field }) => (
+                    <FormItem>
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
                         <Input placeholder="+1 (555) 123-4567" {...field} />
                       </FormControl>
                       <FormMessage />
-                    </FormItem>} />
+                    </FormItem>
+                  )} 
+                />
                 <Button type="submit" className="w-full">
                   Start Receiving Calls
                 </Button>
@@ -140,7 +190,8 @@ const PhoneAnimation = () => {
           </div>
         </SheetContent>
       </Sheet>
-    </div>;
+    </div>
+  );
 };
 
 export default PhoneAnimation;

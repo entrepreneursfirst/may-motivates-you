@@ -17,11 +17,13 @@ const Hero = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
           {/* Text Content */}
-          <div className="space-y-8">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
-              Lazy days happen. <br />
-              Our AI agents can <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">motivate you.</span>
+          <div className="space-y-6">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight">
+              Lazy days happen.
             </h1>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              Our AI agents can <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">motivate you.</span>
+            </h2>
             <p className="text-lg text-commitify-secondary">
               Commitify is the AI that calls when motivation runs out and procrastination kicks in.
             </p>
@@ -42,7 +44,7 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Phone Animation - Added more right padding and center alignment for better visual */}
+          {/* Phone Animation */}
           <div className="flex justify-center lg:justify-end mt-12 lg:mt-0 pr-0 lg:pr-8 overflow-visible">
             <PhoneAnimation />
           </div>

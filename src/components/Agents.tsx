@@ -64,9 +64,7 @@ const Agents = () => {
   };
   
   return (
-    <section id="agents" className="py-20 relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-commitify-blue/5 to-commitify-purple/5 rounded-3xl"></div>
-      
+    <section id="agents" className="py-20 relative bg-commitify-background">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
           An entire team of <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">motivators</span> for you

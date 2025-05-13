@@ -86,14 +86,11 @@ export default {
 					'5%, 15%, 25%': { transform: 'rotate(-5deg)' },
 					'10%, 20%, 30%': { transform: 'rotate(5deg)' },
 				},
-				'phone-buzz': {
-					'0%, 100%': { transform: 'translateX(-8rem)' },
-					'25%': { transform: 'translateX(-8.125rem)' },
-					'75%': { transform: 'translateX(-7.875rem)' },
-				},
-				'sound-wave': {
-					'0%, 100%': { height: '0.25rem', opacity: '0.5' },
-					'50%': { height: '1rem', opacity: '0.9' },
+				'ping': {
+					'75%, 100%': {
+						transform: 'scale(2)',
+						opacity: '0'
+					}
 				},
 				'float': {
 					'0%, 100%': { transform: 'translateY(0)' },
@@ -108,8 +105,7 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'phone-ring': 'phone-ring 1s ease-in-out infinite',
-				'phone-buzz': 'phone-buzz 3s ease-in-out infinite',
-				'sound-wave': 'sound-wave 1.5s ease-in-out infinite',
+				'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
 				'float': 'float 6s ease-in-out infinite',
 				'bounce-light': 'bounce-light 3s ease-in-out infinite',
 			},
