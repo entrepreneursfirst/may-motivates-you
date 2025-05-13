@@ -93,7 +93,9 @@ const Agents = () => {
           
           <div className="relative overflow-hidden">
             <div ref={scrollContainerRef} className="flex overflow-x-auto gap-8 py-4 px-12 pb-8 scroll-container">
-              {agents.map((agent, index) => <div key={index} className={`flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl ${selectedAgent === index ? 'ring-2 ring-commitify-purple' : ''}`} onClick={() => handleAgentSelect(index)}>
+              {agents.map((agent, index) => <div key={index} 
+                  className={`flex-shrink-0 w-[280px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 rounded-2xl cursor-pointer ${selectedAgent === index ? 'ring-2 ring-commitify-purple' : ''}`} 
+                  onClick={() => handleAgentSelect(index)}>
                   <div className="relative h-64 overflow-hidden">
                     <img src={agent.image} alt={agent.name} className="w-full h-full object-cover object-top" />
                   </div>
