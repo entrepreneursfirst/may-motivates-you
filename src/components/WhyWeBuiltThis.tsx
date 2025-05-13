@@ -7,7 +7,7 @@ const WhyWeBuiltThis = () => {
       <div className="container mx-auto px-4 relative">
         {/* Added sticker positioned relative to container */}
         <div className="absolute -left-0 -top-[3cm] z-0 transform rotate-[-20deg] opacity-90">
-          <img src="/lovable-uploads/99634d53-7783-4dd8-a3d9-bf614fb19fcf.png" alt="Cool sticker" className="w-16 md:w-16 lg:w-16 h-auto" />
+          <img src="/lovable-uploads/99634d53-7783-4dd8-a3d9-bf614fb19fcf.png" alt="Cool sticker" className="w-30 md:w-40 lg:w-48 h-auto" />
         </div>
         
         <div className="bg-commitify-yellow/20 p-10 md:p-16 rounded-3xl relative overflow-hidden">
