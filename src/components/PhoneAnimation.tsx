@@ -47,8 +47,8 @@ const PhoneAnimation = ({
   const [nextAgentIndex, setNextAgentIndex] = useState(1);
   const [phonePressed, setPhonePressed] = useState(false);
   const [imagesPreloaded, setImagesPreloaded] = useState(false);
-  const [nextImageLoaded, setNextImageLoaded] = useState(false);
   const nextImageRef = useRef<HTMLImageElement | null>(null);
+  const timerRef = useRef<number | null>(null);
 
   // Preload all agent images to prevent flashing
   useEffect(() => {
@@ -75,7 +75,7 @@ const PhoneAnimation = ({
     preloadImages();
   }, []);
 
-  // Preload next image before displaying
+  // Improved rotation effect with proper image preloading
   useEffect(() => {
     if (!imagesPreloaded) return;
     
@@ -85,46 +85,32 @@ const PhoneAnimation = ({
     // Create new image element for next agent
     const img = new Image();
     img.src = agents[nextIndex].image;
-    
-    // Only switch to next agent when this image is loaded
-    img.onload = () => {
-      setNextImageLoaded(true);
-    };
-    
-    // Save reference
     nextImageRef.current = img;
     
-    // Reset the loaded state
-    setNextImageLoaded(false);
-    
-    // Start timer for rotation
-    const timeoutId = setTimeout(() => {
-      if (nextImageLoaded) {
+    // Wait for the next image to load before starting the timer
+    img.onload = () => {
+      // Start timer for rotation - only after image is loaded
+      timerRef.current = window.setTimeout(() => {
         setCurrentAgentIndex(nextIndex);
-      } else {
-        // If next image isn't loaded yet, wait for it
-        const checkInterval = setInterval(() => {
-          if (nextImageLoaded) {
-            setCurrentAgentIndex(nextIndex);
-            clearInterval(checkInterval);
-          }
-        }, 100);
-        
-        // Safety timeout in case image never loads
-        setTimeout(() => {
-          clearInterval(checkInterval);
-          setCurrentAgentIndex(nextIndex); // Switch anyway after timeout
-        }, 2000);
-      }
-    }, 3000);
+      }, 3000);
+    };
+    
+    // Safety timeout in case image never loads
+    const safetyTimeout = window.setTimeout(() => {
+      setCurrentAgentIndex(nextIndex); // Switch anyway after safety timeout
+    }, 4000);
     
     return () => {
-      clearTimeout(timeoutId);
+      // Cleanup timers and image onload handler
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      clearTimeout(safetyTimeout);
       if (nextImageRef.current) {
         nextImageRef.current.onload = null;
       }
     };
-  }, [currentAgentIndex, imagesPreloaded, nextImageLoaded]);
+  }, [currentAgentIndex, imagesPreloaded]);
 
   const currentAgent = agents[currentAgentIndex];
   
@@ -185,16 +171,14 @@ const PhoneAnimation = ({
                 <div className="w-24 h-24 rounded-full bg-gray-200 animate-pulse" />
               )}
               
-              {/* Hidden preloader for next image */}
-              <div className="hidden">
-                {nextAgentIndex !== currentAgentIndex && agents[nextAgentIndex] && (
-                  <img 
-                    src={agents[nextAgentIndex].image} 
-                    alt="Preload next" 
-                    onLoad={() => setNextImageLoaded(true)}
-                  />
-                )}
-              </div>
+              {/* Hidden image to preload next agent */}
+              {nextAgentIndex !== currentAgentIndex && agents[nextAgentIndex] && (
+                <img 
+                  src={agents[nextAgentIndex].image} 
+                  alt="Preload next" 
+                  className="hidden"
+                />
+              )}
             </div>
             
             <p className="text-center text-base font-semibold">
