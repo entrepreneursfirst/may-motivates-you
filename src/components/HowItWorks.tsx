@@ -30,6 +30,15 @@ const HowItWorks = () => {
   
   return (
     <section id="how-it-works" className="py-24 relative overflow-hidden">
+      {/* Rainbow Sticker - Added to the left of the header */}
+      <div className="absolute top-24 left-4 md:left-16 lg:left-24 z-0 opacity-90">
+        <img 
+          src="/lovable-uploads/c967a7e7-5403-4fe3-ba1e-52fa5eba1841.png" 
+          alt="Rainbow sticker" 
+          className="w-20 md:w-28 lg:w-32 object-contain"
+        />
+      </div>
+      
       {/* Smiley Sticker */}
       <div className="absolute top-1 left-[calc(50%168rem)] md:left-[calc(50%+24rem)] z-0 opacity-90">
         <img src="/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png" alt="Smiley sticker" className="w-24 md:w-32 object-contain" />
