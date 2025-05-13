@@ -19,7 +19,7 @@ const Hero = () => {
           {/* Sun Sticker with floating animation */}
           <div className="absolute -top-20 -left-12 md:-top-24 md:-left-16 lg:-top-28 lg:-left-10 w-24 md:w-32 lg:w-40 z-10 animate-float">
             <img 
-              src="/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png" 
+              src="/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png" 
               alt="Sun Sticker" 
               className="w-full h-auto"
             />
