@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PhoneCall, PhoneOff } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
@@ -44,8 +44,11 @@ const PhoneAnimation = ({
   const [showCallScreen, setShowCallScreen] = useState(false);
   const [showPhoneForm, setShowPhoneForm] = useState(false);
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
+  const [nextAgentIndex, setNextAgentIndex] = useState(1);
   const [phonePressed, setPhonePressed] = useState(false);
   const [imagesPreloaded, setImagesPreloaded] = useState(false);
+  const [nextImageLoaded, setNextImageLoaded] = useState(false);
+  const nextImageRef = useRef<HTMLImageElement | null>(null);
 
   // Preload all agent images to prevent flashing
   useEffect(() => {
@@ -72,13 +75,56 @@ const PhoneAnimation = ({
     preloadImages();
   }, []);
 
-  // Rotate through agents every 3 seconds
+  // Preload next image before displaying
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentAgentIndex(prevIndex => (prevIndex + 1) % agents.length);
+    if (!imagesPreloaded) return;
+    
+    const nextIndex = (currentAgentIndex + 1) % agents.length;
+    setNextAgentIndex(nextIndex);
+    
+    // Create new image element for next agent
+    const img = new Image();
+    img.src = agents[nextIndex].image;
+    
+    // Only switch to next agent when this image is loaded
+    img.onload = () => {
+      setNextImageLoaded(true);
+    };
+    
+    // Save reference
+    nextImageRef.current = img;
+    
+    // Reset the loaded state
+    setNextImageLoaded(false);
+    
+    // Start timer for rotation
+    const timeoutId = setTimeout(() => {
+      if (nextImageLoaded) {
+        setCurrentAgentIndex(nextIndex);
+      } else {
+        // If next image isn't loaded yet, wait for it
+        const checkInterval = setInterval(() => {
+          if (nextImageLoaded) {
+            setCurrentAgentIndex(nextIndex);
+            clearInterval(checkInterval);
+          }
+        }, 100);
+        
+        // Safety timeout in case image never loads
+        setTimeout(() => {
+          clearInterval(checkInterval);
+          setCurrentAgentIndex(nextIndex); // Switch anyway after timeout
+        }, 2000);
+      }
     }, 3000);
-    return () => clearInterval(intervalId);
-  }, []);
+    
+    return () => {
+      clearTimeout(timeoutId);
+      if (nextImageRef.current) {
+        nextImageRef.current.onload = null;
+      }
+    };
+  }, [currentAgentIndex, imagesPreloaded, nextImageLoaded]);
 
   const currentAgent = agents[currentAgentIndex];
   
@@ -138,6 +184,17 @@ const PhoneAnimation = ({
               {!imagesPreloaded && (
                 <div className="w-24 h-24 rounded-full bg-gray-200 animate-pulse" />
               )}
+              
+              {/* Hidden preloader for next image */}
+              <div className="hidden">
+                {nextAgentIndex !== currentAgentIndex && agents[nextAgentIndex] && (
+                  <img 
+                    src={agents[nextAgentIndex].image} 
+                    alt="Preload next" 
+                    onLoad={() => setNextImageLoaded(true)}
+                  />
+                )}
+              </div>
             </div>
             
             <p className="text-center text-base font-semibold">
