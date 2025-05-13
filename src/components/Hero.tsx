@@ -64,7 +64,7 @@ const Hero = () => {
     setSelectedCountryCode(country);
   };
 
-  // This function will be called from PhoneAnimation component, but we won't use it to change anything
+  // These functions are kept empty deliberately
   const handlePhoneAnswerFromAnimation = () => {
     // Not changing anything when the phone is answered
   };
@@ -102,11 +102,11 @@ const Hero = () => {
               Commitify is the AI that calls when motivation runs out and procrastination kicks in.
             </p>
             
-            {/* Updated button area with smooth horizontal expansion */}
+            {/* Button area with smooth horizontal expansion */}
             <div className="flex items-center gap-4">
-              <div className={`flex transition-all duration-500 ease-in-out ${isPhoneInputActive ? 'w-auto' : 'w-[168px]'}`}>
+              <div className={`transition-all duration-700 ease-in-out ${isPhoneInputActive ? 'w-[450px]' : 'w-[168px]'}`}>
                 {isPhoneInputActive ? (
-                  <div className="flex items-center animate-fade-in">
+                  <div className="flex items-center w-full">
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button 

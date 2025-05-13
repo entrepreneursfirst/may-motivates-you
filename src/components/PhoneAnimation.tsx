@@ -60,32 +60,24 @@ const PhoneAnimation = ({ onAnswerCall, onHangUp }: PhoneAnimationProps) => {
   const currentAgent = agents[currentAgentIndex];
 
   const handleAnswer = () => {
-    // Instead of showing the form, call the parent function
+    // Call the parent function but don't change the UI
     if (onAnswerCall) {
       onAnswerCall();
     }
-    setIsRinging(false);
-    setShowCallScreen(true);
+    // Don't change the ringing state or show the call screen
   };
 
   const handleSubmitPhone = (data: any) => {
     console.log("Phone number submitted:", data.phoneNumber);
-    setIsRinging(false);
-    setShowPhoneForm(false);
-    setShowCallScreen(true);
+    // Don't change states to keep the phone ringing
   };
 
   const handleHangUp = () => {
-    // Call the parent function
+    // Call the parent function but don't change the UI
     if (onHangUp) {
       onHangUp();
     }
-    setIsRinging(true);
-    setShowCallScreen(false);
-    // After 1 second, start ringing again
-    setTimeout(() => {
-      setIsRinging(true);
-    }, 1000);
+    // Don't change the ringing state
   };
   
   const handlePhonePress = () => {
@@ -121,8 +113,8 @@ const PhoneAnimation = ({ onAnswerCall, onHangUp }: PhoneAnimationProps) => {
 
           {/* Screen content */}
           <div className="absolute inset-[11%] z-20 flex flex-col items-center justify-center px-4">
-            {/* White circle background for the headshot */}
-            <div className="bg-white w-24 h-24 rounded-full flex items-center justify-center mb-3">
+            {/* Agent image directly without white circle background */}
+            <div className="w-24 h-24 rounded-full mb-3 flex items-center justify-center">
               <img 
                 src={currentAgent.image} 
                 alt={currentAgent.name}
@@ -134,33 +126,16 @@ const PhoneAnimation = ({ onAnswerCall, onHangUp }: PhoneAnimationProps) => {
               {currentAgent.name} {currentAgent.emoji}
             </p>
 
-            {isRinging && !showCallScreen && (
-              <>
-                <p className="text-sm text-gray-700 mb-4">Incoming Call...</p>
-                <div className="flex space-x-4">
-                  <Button onClick={handleAnswer} className="bg-green-500 hover:bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center transition-transform hover:scale-105 active:scale-95">
-                    <PhoneCall className="w-5 h-5" />
-                  </Button>
-                  <Button onClick={handleHangUp} className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center rotate-135 transition-transform hover:scale-105 active:scale-95">
-                    <PhoneOff className="w-5 h-5" />
-                  </Button>
-                </div>
-              </>
-            )}
-
-            {showCallScreen && (
-              <>
-                <div className="bg-white/80 text-black p-3 rounded-lg mb-2 max-w-[90%] text-sm text-left">
-                  Stay present, my friend. Let's focus on what matters now.
-                </div>
-                <div className="bg-white/80 text-black p-3 rounded-lg mb-2 max-w-[90%] text-sm text-left">
-                  Your project deserves the attention of your full being.
-                </div>
-                <Button onClick={handleHangUp} className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center mt-auto rotate-135 transition-transform hover:scale-105 active:scale-95">
-                  <PhoneOff className="w-5 h-5" />
-                </Button>
-              </>
-            )}
+            {/* Always show this content regardless of state */}
+            <p className="text-sm text-gray-700 mb-4">Incoming Call...</p>
+            <div className="flex space-x-4">
+              <Button onClick={handleAnswer} className="bg-green-500 hover:bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center transition-transform hover:scale-105 active:scale-95">
+                <PhoneCall className="w-5 h-5" />
+              </Button>
+              <Button onClick={handleHangUp} className="bg-red-500 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center rotate-135 transition-transform hover:scale-105 active:scale-95">
+                <PhoneOff className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
