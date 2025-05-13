@@ -149,7 +149,7 @@ const Hero = () => {
                       type="tel"
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
-                      className="py-6 rounded-none border-l-0 border-r-0 w-[180px] sm:w-[220px]"
+                      className="py-6 rounded-none border-l-0 border-r-0 w-[180px] sm:w-[220px] shadow-[0_0_10px_rgba(178,107,202,0.5)] focus:shadow-[0_0_15px_rgba(178,107,202,0.7)]"
                       placeholder="Phone number"
                     />
                     
