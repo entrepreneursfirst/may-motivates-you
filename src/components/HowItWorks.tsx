@@ -67,7 +67,7 @@ const HowItWorks = () => {
               }} />
             </div>
             <div className="h-20 flex items-start justify-center mb-2">
-              <h3 className="text-2xl font-bold">
+              <h3 className="text-3xl font-extrabold">
                 {step2.title}
               </h3>
             </div>
