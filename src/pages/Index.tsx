@@ -9,6 +9,19 @@ import Pricing from '@/components/Pricing';
 import Footer from '@/components/Footer';
 import FixedCTA from '@/components/FixedCTA';
 
-
+const Index = () => {
+  return (
+    <div className="min-h-screen">
+      <Navbar />
+      <Hero />
+      <Agents />
+      <HowItWorks />
+      <WhyWeBuiltThis />
+      <Pricing />
+      <Footer />
+      <FixedCTA />
+    </div>
+  );
+};
 
 export default Index;

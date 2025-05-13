@@ -6,17 +6,6 @@ const WhyWeBuiltThis = () => {
     <section id="why" className="py-24 relative overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="bg-commitify-yellow/20 p-10 md:p-16 rounded-3xl relative overflow-hidden">
-          <img 
-            src="/lovable-uploads/7699a50a-72f1-4d30-9cd6-720d836c481f.png" 
-            alt="" 
-            className="absolute top-5 right-5 w-24 opacity-30"
-          />
-          
-          <img 
-            src="/lovable-uploads/3decf83c-218f-41ae-aa32-951b5f1315cc.png" 
-            alt="" 
-            className="absolute bottom-5 left-5 w-20 opacity-30"
-          />
           
           <h2 className="text-4xl md:text-5xl font-extrabold mb-8 text-center md:text-left">
             Why We Built <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Commitify</span>

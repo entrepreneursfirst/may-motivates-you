@@ -81,10 +81,6 @@
   }
 }
 
-.sticker {
-  @apply absolute z-10 pointer-events-none;
-}
-
 .bg-clip-text {
   -webkit-background-clip: text;
   background-clip: text;

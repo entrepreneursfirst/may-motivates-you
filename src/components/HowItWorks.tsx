@@ -35,18 +35,6 @@ const HowItWorks = () => {
       <div className="absolute top-40 right-20 w-64 h-64 bg-commitify-yellow opacity-10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 left-10 w-80 h-80 bg-commitify-blue opacity-10 rounded-full blur-3xl"></div>
       
-      <img 
-        src="/lovable-uploads/3decf83c-218f-41ae-aa32-951b5f1315cc.png" 
-        alt="" 
-        className="absolute top-20 left-10 w-16 opacity-40 animate-float"
-      />
-      
-      <img 
-        src="/lovable-uploads/cb06b746-c500-4c6c-b244-f17b27f8195e.png" 
-        alt="" 
-        className="absolute bottom-20 right-10 w-20 opacity-40 animate-bounce-light"
-      />
-      
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
           How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Works</span>
