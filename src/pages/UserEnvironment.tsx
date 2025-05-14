@@ -252,10 +252,10 @@ const UserEnvironment = () => {
             </span>
           </a>
           
-          {/* Back to landing page button */}
+          {/* Home button - updated text from "Back to Home" to "Home" */}
           <Button variant="outline" onClick={() => navigate('/')} className="flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" />
-            Back to Home
+            Home
           </Button>
         </div>
       </header>
