@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { 
   Calendar as CalendarIcon, 
   Clock, 
+  Edit,
   File, 
   FileText,
   Mail, 
@@ -10,7 +11,9 @@ import {
   Phone, 
   Settings, 
   UserRound,
-  Trash2
+  Trash2,
+  X,
+  Check
 } from 'lucide-react';
 import { 
   Card, 
@@ -33,6 +36,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { ScheduledCall } from "@/components/ScheduledCall";
 import { TimeSelector } from "@/components/TimeSelector";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 // Import agents from the Agents component
 const agents = [{
@@ -119,6 +123,9 @@ const UserEnvironment = () => {
   // Toast notifications
   const { toast } = useToast();
 
+  // State for editing profile
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+
   // State for user profile
   const [userProfile, setUserProfile] = useState({
     name: "John Doe",
@@ -130,6 +137,9 @@ const UserEnvironment = () => {
   
   // State for active agent
   const [activeAgentId, setActiveAgentId] = useState(1);
+
+  // State for subscription dialog
+  const [showPlanDialog, setShowPlanDialog] = useState(false);
 
   // State for active plan (mock data - in a real app this would come from an API)
   const [activePlan, setActivePlan] = useState("Bestie");
@@ -205,9 +215,17 @@ const UserEnvironment = () => {
 
   // Handle subscription changes
   const handleChangeSubscription = () => {
+    setShowPlanDialog(true);
+  };
+
+  // Handle plan selection
+  const handleSelectPlan = (planName: string) => {
+    setActivePlan(planName);
+    setShowPlanDialog(false);
+    
     toast({
-      title: "Subscription management",
-      description: "Opening subscription management portal...",
+      title: "Plan updated",
+      description: `Your subscription has been updated to ${planName}.`,
     });
   };
 
@@ -229,90 +247,143 @@ const UserEnvironment = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-commitify-background to-commitify-background/90 pt-24">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-commitify-background to-commitify-background/90">
+      {/* Header with logo */}
+      <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10">
+        <div className="container mx-auto px-4 py-3 flex justify-center">
+          <img 
+            src="/lovable-uploads/dbf73134-0771-42c1-994e-959d4ced156e.png" 
+            alt="Commitify" 
+            className="h-14"
+          />
+        </div>
+      </header>
+      
+      <div className="container mx-auto px-4 py-8 pt-24">
         <h1 className="text-3xl font-bold mb-8">Your Commitify Environment</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Left Sidebar: Profile Card - Now sticky positioning */}
+          {/* Left Sidebar: Profile Card - Now sticky positioned */}
           <div className="md:col-span-1">
             <Card className="sticky top-24">
-              <CardHeader>
-                <CardTitle>Profile</CardTitle>
-                <CardDescription>Manage your personal information</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Profile</CardTitle>
+                  <CardDescription>Manage your personal information</CardDescription>
+                </div>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => setIsEditingProfile(!isEditingProfile)}
+                >
+                  {isEditingProfile ? <X className="h-4 w-4" /> : <Edit className="h-4 w-4" />}
+                </Button>
               </CardHeader>
               <CardContent className="space-y-6">                
                 <div className="space-y-3">
                   <div className="space-y-1">
                     <Label>Name</Label>
-                    <div className="flex">
+                    {isEditingProfile ? (
                       <Input 
                         value={userProfile.name} 
                         onChange={e => setUserProfile({...userProfile, name: e.target.value})}
                       />
-                    </div>
+                    ) : (
+                      <p className="text-base">{userProfile.name}</p>
+                    )}
                   </div>
                   
                   <div className="space-y-1">
                     <Label>Phone</Label>
-                    <div className="flex items-center space-x-2">
-                      <Phone className="w-4 h-4 text-muted-foreground" />
-                      <Input 
-                        value={userProfile.phone} 
-                        onChange={e => setUserProfile({...userProfile, phone: e.target.value})}
-                      />
-                    </div>
+                    {isEditingProfile ? (
+                      <div className="flex items-center space-x-2">
+                        <Phone className="w-4 h-4 text-muted-foreground" />
+                        <Input 
+                          value={userProfile.phone} 
+                          onChange={e => setUserProfile({...userProfile, phone: e.target.value})}
+                        />
+                      </div>
+                    ) : (
+                      <p className="text-base flex items-center gap-2">
+                        <Phone className="w-4 h-4 text-muted-foreground" />
+                        {userProfile.phone}
+                      </p>
+                    )}
                   </div>
                   
                   <div className="space-y-1">
                     <Label>Location</Label>
-                    <Input 
-                      value={userProfile.location} 
-                      onChange={e => setUserProfile({...userProfile, location: e.target.value})}
-                    />
+                    {isEditingProfile ? (
+                      <Input 
+                        value={userProfile.location} 
+                        onChange={e => setUserProfile({...userProfile, location: e.target.value})}
+                      />
+                    ) : (
+                      <p className="text-base">{userProfile.location}</p>
+                    )}
                   </div>
                   
                   <div className="space-y-1">
                     <Label>Gender</Label>
-                    <select 
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      value={userProfile.gender}
-                      onChange={e => setUserProfile({...userProfile, gender: e.target.value})}
-                    >
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Non-binary">Non-binary</option>
-                      <option value="Prefer not to say">Prefer not to say</option>
-                    </select>
+                    {isEditingProfile ? (
+                      <select 
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        value={userProfile.gender}
+                        onChange={e => setUserProfile({...userProfile, gender: e.target.value})}
+                      >
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Non-binary">Non-binary</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                      </select>
+                    ) : (
+                      <p className="text-base">{userProfile.gender}</p>
+                    )}
                   </div>
                   
                   <div className="space-y-1">
                     <Label>Birth Date</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-full justify-start text-left font-normal",
-                            !userProfile.birthdate && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {userProfile.birthdate ? format(userProfile.birthdate, "PPP") : <span>Pick a date</span>}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <CalendarComponent
-                          mode="single"
-                          selected={userProfile.birthdate}
-                          onSelect={(date) => date && setUserProfile({...userProfile, birthdate: date})}
-                          initialFocus
-                          className={cn("p-3 pointer-events-auto")}
-                        />
-                      </PopoverContent>
-                    </Popover>
+                    {isEditingProfile ? (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-full justify-start text-left font-normal",
+                              !userProfile.birthdate && "text-muted-foreground"
+                            )}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {userProfile.birthdate ? format(userProfile.birthdate, "PPP") : <span>Pick a date</span>}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <CalendarComponent
+                            mode="single"
+                            selected={userProfile.birthdate}
+                            onSelect={(date) => date && setUserProfile({...userProfile, birthdate: date})}
+                            initialFocus
+                            className={cn("p-3 pointer-events-auto")}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    ) : (
+                      <p className="text-base">
+                        {userProfile.birthdate ? format(userProfile.birthdate, "PPP") : "Not provided"}
+                      </p>
+                    )}
                   </div>
                 </div>
+                
+                {isEditingProfile && (
+                  <Button
+                    onClick={() => setIsEditingProfile(false)}
+                    className="w-full"
+                  >
+                    <Check className="mr-2 h-4 w-4" />
+                    Save Changes
+                  </Button>
+                )}
                 
                 {/* Subscription Plan Section */}
                 <div className="space-y-4 border-t pt-4">
@@ -337,17 +408,14 @@ const UserEnvironment = () => {
                     </Button>
                     <Button 
                       onClick={handleCancelSubscription}
-                      variant="outline" 
-                      className="w-full text-red-500 hover:bg-red-50"
+                      variant="ghost" 
+                      className="w-full text-muted-foreground hover:text-destructive"
                     >
                       Cancel Subscription
                     </Button>
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button className="w-full">Save Changes</Button>
-              </CardFooter>
             </Card>
           </div>
           
@@ -407,33 +475,10 @@ const UserEnvironment = () => {
             {/* Data Input & Preferences Section */}
             <div>
               <h2 className="text-2xl font-bold mb-4">Data Input & Preferences</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Natural Language Input */}
+              
+              {/* First row - Call Schedule (3 columns wide) */}
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
                 <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <MessageSquare className="w-5 h-5" />
-                      Natural Language Input
-                    </CardTitle>
-                    <CardDescription>
-                      Tell your agent what to track in your own words
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Textarea 
-                      placeholder="E.g., I want to track my workout progress, remind me to exercise 3 times a week..."
-                      className="min-h-[150px]"
-                    />
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full">
-                      Submit to Agent
-                    </Button>
-                  </CardFooter>
-                </Card>
-                
-                {/* Call Schedule - Updated */}
-                <Card className="md:col-span-2">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Clock className="w-5 h-5" />
@@ -443,38 +488,48 @@ const UserEnvironment = () => {
                       Schedule when your agent should call you
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    {/* Calendar for date selection */}
-                    <div className="border rounded-md p-4">
-                      <h4 className="font-medium mb-3">Select dates for calls</h4>
-                      <CalendarComponent
-                        mode="single"
-                        selected={selectedDate}
-                        onSelect={handleDateSelect}
-                        className={cn("mx-auto p-3 pointer-events-auto")}
-                      />
-                    </div>
-                    
-                    {/* Time selection when date is selected */}
-                    {showTimeSelector && (
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Calendar for date selection */}
                       <div className="border rounded-md p-4">
-                        <h4 className="font-medium mb-3">
-                          Select time for {selectedDate ? format(selectedDate, "MMMM d, yyyy") : "call"}
-                        </h4>
-                        <TimeSelector
-                          onTimeSelect={handleTimeSelect}
-                          rangeMode={timeRangeMode}
-                          setRangeMode={setTimeRangeMode}
-                          startTime={startTime}
-                          endTime={endTime}
-                          setStartTime={setStartTime}
-                          setEndTime={setEndTime}
+                        <h4 className="font-medium mb-3">Select dates for calls</h4>
+                        <CalendarComponent
+                          mode="single"
+                          selected={selectedDate}
+                          onSelect={handleDateSelect}
+                          className={cn("mx-auto p-3 pointer-events-auto")}
                         />
                       </div>
-                    )}
+                      
+                      {/* Time selection when date is selected */}
+                      <div className="border rounded-md p-4">
+                        {showTimeSelector ? (
+                          <>
+                            <h4 className="font-medium mb-3">
+                              Select time for {selectedDate ? format(selectedDate, "MMMM d, yyyy") : "call"}
+                            </h4>
+                            <TimeSelector
+                              onTimeSelect={handleTimeSelect}
+                              rangeMode={timeRangeMode}
+                              setRangeMode={setTimeRangeMode}
+                              startTime={startTime}
+                              endTime={endTime}
+                              setStartTime={setStartTime}
+                              setEndTime={setEndTime}
+                            />
+                          </>
+                        ) : (
+                          <div className="flex items-center justify-center h-full">
+                            <p className="text-muted-foreground text-center">
+                              Select a date from the calendar to schedule a call
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                     
                     {/* Scheduled calls list */}
-                    <div className="border rounded-md p-4">
+                    <div className="mt-6 border rounded-md p-4">
                       <h4 className="font-medium mb-3">Scheduled calls</h4>
                       {scheduledCalls.length === 0 ? (
                         <p className="text-muted-foreground text-center py-4">
@@ -494,8 +549,34 @@ const UserEnvironment = () => {
                     </div>
                   </CardContent>
                 </Card>
-                
-                {/* Upcoming Integrations */}
+              </div>
+              
+              {/* Second row - Natural Language Input */}
+              <div className="grid grid-cols-1 gap-6 mb-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <MessageSquare className="w-5 h-5" />
+                      Natural Language Input
+                    </CardTitle>
+                    <CardDescription>
+                      Tell your agent what to track in your own words
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Textarea 
+                      placeholder="E.g., I want to track my workout progress, remind me to exercise 3 times a week..."
+                      className="min-h-[150px]"
+                    />
+                    <Button className="w-full mt-4">
+                      Submit to Agent
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+              
+              {/* Third row - Future Features */}
+              <div className="grid grid-cols-1 gap-6">
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
@@ -540,6 +621,44 @@ const UserEnvironment = () => {
           </div>
         </div>
       </div>
+      
+      {/* Subscription Plan Selection Dialog */}
+      <Dialog open={showPlanDialog} onOpenChange={setShowPlanDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Change Subscription Plan</DialogTitle>
+            <DialogDescription>
+              Select a new subscription plan below
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid grid-cols-1 gap-4 py-4">
+            {plans.map(plan => (
+              <button
+                key={plan.name}
+                className={`p-4 rounded-lg ${plan.color} flex items-center justify-between hover:opacity-90 transition-opacity`}
+                onClick={() => handleSelectPlan(plan.name)}
+              >
+                <div className="flex items-center">
+                  <span className="text-2xl mr-3">{plan.emoji}</span>
+                  <div className="text-left">
+                    <h4 className="font-medium">{plan.name}</h4>
+                    <p className="text-xs">{plan.description}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="font-bold">{plan.price}</p>
+                  <p className="text-xs">{plan.period}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowPlanDialog(false)}>
+              Cancel
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
