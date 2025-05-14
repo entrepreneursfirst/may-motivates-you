@@ -14,7 +14,7 @@ import {
   X,
   Check,
   ArrowLeft,
-  Agent
+  Bot
 } from 'lucide-react';
 import { 
   Card, 
@@ -459,7 +459,7 @@ const UserEnvironment = () => {
             <Card>
               <CardHeader>
                 <div className="flex items-center gap-2">
-                  <Agent className="w-5 h-5 text-commitify-text" />
+                  <Bot className="w-5 h-5 text-commitify-text" />
                   <div>
                     <CardTitle>Your Active Agent</CardTitle>
                     <CardDescription>Manage your active agent and preferences</CardDescription>
