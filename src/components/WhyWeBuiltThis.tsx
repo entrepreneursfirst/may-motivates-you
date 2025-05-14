@@ -50,7 +50,7 @@ const WhyWeBuiltThis = () => {
                     <div className="absolute bottom-0 left-0 w-full flex justify-center pb-2">
                       <button 
                         onClick={() => setIsOpen(true)}
-                        className="text-[#E57040] flex items-center gap-1 py-1 px-3 rounded-md transition-all hover:bg-commitify-yellow/10 text-sm font-medium z-10"
+                        className="text-[#E57040] flex items-center gap-1 py-1 px-3 rounded-md transition-all hover:bg-commitify-yellow/20 text-sm font-medium z-10"
                       >
                         Read more
                         <ChevronDown className="w-4 h-4" />
