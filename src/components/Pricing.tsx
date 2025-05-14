@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Check, Phone, MemoryStick, Mic, Star, CalendarIcon, CircleDollarSign } from 'lucide-react';
+import { Check, Phone, MemoryStick, Mic, Star, CalendarIcon, CircleDollarSign, HandHeart, Hand, 100 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -50,7 +50,7 @@ const plans = [
   },
   {
     name: "Bestie",
-    emoji: "🤝",
+    emoji: <HandHeart className="w-5 h-5" />,
     description: "Our most popular choice",
     price: "$5.00",
     period: "per week",
@@ -72,7 +72,7 @@ const plans = [
   },
   {
     name: "Ride or Die",
-    emoji: "🔥",
+    emoji: <100 className="w-5 h-5" />,
     description: "Maximum accountability",
     price: "$6.50",
     period: "per week",
