@@ -24,18 +24,56 @@ const WhyWeBuiltThis = () => {
               <p className="text-lg">What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — you answer.</p>
             </div>
             
-            <div className="bg-white rounded-2xl p-6 shadow-lg">
-              <h3 className="text-2xl font-bold mb-4">The Founder's Story</h3>
+            <div className="space-y-6">
+              <div className="bg-white rounded-2xl p-6 shadow-lg">
+                <h3 className="text-2xl font-bold mb-4">The Founder's Story</h3>
+                
+                <p className="italic text-commitify-secondary mb-6">"As someone with ADHD, I built this after missing too many personal deadlines. I never missed meetings with others — only my own goals.</p>
+                
+                <p className="italic text-commitify-secondary mb-6">Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
+                
+                <div className="flex items-center">
+                  <img src="/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png" alt="Founder" className="w-12 h-12 rounded-full object-cover mr-4" />
+                  <div>
+                    <p className="font-bold">Mehdi Greefhorst</p>
+                    <p className="text-sm text-commitify-secondary">Founder</p>
+                  </div>
+                </div>
+              </div>
               
-              <p className="italic text-commitify-secondary mb-6">"As someone with ADHD, I built this after missing too many personal deadlines. I never missed meetings with others — only my own goals.</p>
-              
-              <p className="italic text-commitify-secondary mb-6">Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
-              
-              <div className="flex items-center">
-                <img src="/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png" alt="Founder" className="w-12 h-12 rounded-full object-cover mr-4" />
-                <div>
-                  <p className="font-bold">Mehdi Greefhorst</p>
-                  <p className="text-sm text-commitify-secondary">Founder</p>
+              {/* New founders cards */}
+              <div className="grid grid-cols-1 gap-4">
+                {/* Carlo Porcelli */}
+                <div className="bg-white rounded-2xl p-4 shadow-lg">
+                  <div className="flex items-center">
+                    <img src="/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png" alt="Carlo Porcelli" className="w-12 h-12 rounded-full object-cover mr-4" />
+                    <div>
+                      <p className="font-bold">Carlo Porcelli</p>
+                      <p className="text-sm text-commitify-secondary">Co-founder</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Mustafa Yenler */}
+                <div className="bg-white rounded-2xl p-4 shadow-lg">
+                  <div className="flex items-center">
+                    <img src="/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png" alt="Mustafa Yenler" className="w-12 h-12 rounded-full object-cover mr-4" />
+                    <div>
+                      <p className="font-bold">Mustafa Yenler</p>
+                      <p className="text-sm text-commitify-secondary">Co-founder</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Gijs de Bruin */}
+                <div className="bg-white rounded-2xl p-4 shadow-lg">
+                  <div className="flex items-center">
+                    <img src="/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png" alt="Gijs de Bruin" className="w-12 h-12 rounded-full object-cover mr-4" />
+                    <div>
+                      <p className="font-bold">Gijs de Bruin</p>
+                      <p className="text-sm text-commitify-secondary">Co-founder</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
