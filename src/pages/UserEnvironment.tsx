@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Calendar, 
@@ -6,7 +5,7 @@ import {
   File, 
   FileText,
   Mail, 
-  NaturalLanguage, 
+  MessageSquare, 
   Phone, 
   Settings, 
   UserRound 
@@ -245,7 +244,7 @@ const UserEnvironment = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <NaturalLanguage className="w-5 h-5" />
+                      <MessageSquare className="w-5 h-5" />
                       Natural Language Input
                     </CardTitle>
                     <CardDescription>
