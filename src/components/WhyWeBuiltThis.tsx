@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,48 +23,56 @@ const WhyWeBuiltThis = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-            {/* Left text section - now with collapsible content on mobile */}
+            {/* Left text section - with improved read more experience */}
             <div className="space-y-6">
               {isMobile ? (
-                <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-6">
+                <div className="relative">
                   {/* First paragraph always visible */}
-                  <div className="relative">
-                    <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in <span className="font-bold">a way that sticks</span>.</p>
-                    
-                    {/* Hidden content with smooth transition */}
-                    <div className={`relative overflow-hidden transition-all duration-500 ${isOpen ? 'max-h-full' : 'max-h-40'}`}>
-                      <div className="text-lg mt-6">
-                        These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.
-                      </div>
-                      
-                      <div className="text-lg mt-6">
-                        What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.
-                      </div>
-                      
-                      {/* Fade overlay only when collapsed */}
-                      {!isOpen && (
-                        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-commitify-yellow/20 via-commitify-yellow/20 to-transparent pointer-events-none"></div>
-                      )}
+                  <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in <span className="font-bold">a way that sticks</span>.</p>
+                  
+                  {/* Hidden content with smooth transition */}
+                  <div 
+                    className={`relative overflow-hidden transition-all duration-500 ease-in-out ${
+                      isOpen ? 'max-h-[800px] opacity-100' : 'max-h-[120px] opacity-95'
+                    }`}
+                  >
+                    <div className="text-lg mt-6">
+                      These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.
                     </div>
                     
-                    {/* Clean, minimal Read more / Show less trigger */}
-                    <CollapsibleTrigger asChild>
-                      <span className="mt-4 flex items-center justify-center text-[#E57040] hover:text-[#E57040]/80 transition cursor-pointer select-none">
-                        {isOpen ? (
-                          <>
-                            Show less
-                            <ChevronDown className="ml-1 h-4 w-4 transform rotate-180" />
-                          </>
-                        ) : (
-                          <>
-                            Read more
-                            <ChevronDown className="ml-1 h-4 w-4" />
-                          </>
-                        )}
-                      </span>
-                    </CollapsibleTrigger>
+                    <div className="text-lg mt-6">
+                      What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.
+                    </div>
+                    
+                    {/* Fade overlay only when collapsed */}
+                    {!isOpen && (
+                      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-commitify-yellow/20 via-commitify-yellow/20 to-transparent pointer-events-none" />
+                    )}
                   </div>
-                </Collapsible>
+                  
+                  {/* Clean, minimal Read more / Show less toggle */}
+                  {!isOpen ? (
+                    <div className="absolute bottom-0 left-0 w-full flex justify-center pb-1">
+                      <button
+                        onClick={() => setIsOpen(true)}
+                        className="text-[#E57040] hover:text-[#E57040]/80 font-medium flex items-center transition-all duration-300 z-10"
+                      >
+                        Read more
+                        <ChevronDown className="ml-1 h-4 w-4 transition-transform" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex justify-center mt-4">
+                      <button
+                        onClick={() => setIsOpen(false)}
+                        className="text-[#E57040] hover:text-[#E57040]/80 font-medium flex items-center transition-all duration-300"
+                      >
+                        Show less
+                        <ChevronDown className="ml-1 h-4 w-4 transform rotate-180 transition-transform" />
+                      </button>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <>
                   <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in  <span className="font-bold">a way that sticks</span>. Is it a journaling app? A chatbot you open when you're feeling stuck? A dashboard that tracks your progress and sends push notifications?</p>
