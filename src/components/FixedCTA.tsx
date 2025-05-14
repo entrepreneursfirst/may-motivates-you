@@ -38,8 +38,7 @@ const FixedCTA = () => {
           onClick={scrollToTop}
         >
           <Phone className="w-4 h-4" />
-          <span className="hidden md:inline">Call Me Now</span>
-          <span className="md:hidden">Try Free</span>
+          <span>Call Me Now</span>
         </Button>
       </div>
     </div>
