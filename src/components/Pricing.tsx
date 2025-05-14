@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Check, Phone, MemoryStick, Mic, Star, Plus, CalendarIcon, CircleDollarSign } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -16,7 +16,6 @@ const plans = [
     features: [
       "Motivational voice agent",
       "Basic AI memory (short-term)",
-      "Fixed voice tone",
     ],
     popular: false,
     buttonText: "Get Started",
@@ -41,7 +40,7 @@ const plans = [
   {
     name: "Ride or Die",
     description: "Maximum accountability",
-    price: "$6.67",
+    price: "$6.50",
     period: "per week",
     calls: 8,
     features: [
@@ -65,8 +64,10 @@ const extraCallPack = {
 
 const Pricing = () => {
   const { toast } = useToast();
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
   const handleSelectPlan = (planName: string) => {
+    setSelectedPlan(planName);
     toast({
       title: "Plan Selected",
       description: `You've selected the ${planName} plan. Let's get started!`,
@@ -90,7 +91,13 @@ const Pricing = () => {
           {plans.map((plan, index) => (
             <Card 
               key={index}
-              className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${plan.popular ? 'border-commitify-yellow' : 'border-gray-100'} bg-gradient-to-br from-violet-50 to-violet-100 h-full flex flex-col`}
+              className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${
+                selectedPlan === plan.name 
+                  ? 'border-4 border-commitify-blue' 
+                  : plan.popular 
+                  ? 'border-commitify-yellow' 
+                  : 'border-gray-100'
+              } bg-gradient-to-br from-violet-50 to-violet-100 h-full flex flex-col`}
             >
               {/* Fixed height container for "Most Popular" badge */}
               <div className="h-[40px] flex items-center justify-center">
@@ -133,10 +140,16 @@ const Pricing = () => {
               
               <CardFooter className="pt-4 mt-auto">
                 <Button 
-                  className={`w-full ${plan.popular ? 'bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text' : 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'} rounded-full`}
+                  className={`w-full ${
+                    selectedPlan === plan.name
+                      ? 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'
+                      : plan.popular 
+                      ? 'bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text' 
+                      : 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'
+                  } rounded-full`}
                   onClick={() => handleSelectPlan(plan.name)}
                 >
-                  {plan.buttonText}
+                  {selectedPlan === plan.name ? 'Selected' : plan.buttonText}
                 </Button>
               </CardFooter>
             </Card>
@@ -145,7 +158,9 @@ const Pricing = () => {
         
         {/* Extra Minutes Pack */}
         <div className="mt-12 max-w-xs mx-auto">
-          <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100 bg-gradient-to-br from-violet-50 to-violet-100 flex flex-col h-full">
+          <Card className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${
+            selectedPlan === extraCallPack.name ? 'border-4 border-green-500' : 'border-gray-100'
+          } bg-gradient-to-br from-violet-50 to-violet-100 flex flex-col h-full`}>
             <CardHeader className="pb-0">
               <div className="h-12 flex items-center">
                 <div className="flex items-center justify-between w-full">
@@ -171,10 +186,14 @@ const Pricing = () => {
             
             <CardFooter className="pt-2 mt-auto">
               <Button 
-                className="w-full bg-green-500 hover:bg-green-600 text-white rounded-full"
+                className={`w-full ${
+                  selectedPlan === extraCallPack.name
+                    ? 'bg-green-600 hover:bg-green-700'
+                    : 'bg-green-500 hover:bg-green-600'
+                } text-white rounded-full`}
                 onClick={() => handleSelectPlan(extraCallPack.name)}
               >
-                {extraCallPack.buttonText}
+                {selectedPlan === extraCallPack.name ? 'Selected' : extraCallPack.buttonText}
               </Button>
             </CardFooter>
           </Card>
