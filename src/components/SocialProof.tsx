@@ -114,7 +114,7 @@ const SocialProof = () => {
           <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
             What Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Members</span> Say 
           </h2>
-          <img src="/lovable-uploads/d2c6c635-074a-4194-ad78-9aa1d54f6d17.png" alt="Happy emoji" className="w-48 h-auto absolute -right-64 md:right-[-10rem] top-0 md:-top-6 object-contain" />
+          <img src="/lovable-uploads/d2c6c635-074a-4194-ad78-9aa1d54f6d17.png" alt="Happy emoji" className="w-48 h-auto absolute -right-64 md:right-[-15rem] top-0 md:-top-6 object-contain" />
           <p className="text-xl text-commitify-secondary">Real calls leading to real results: these people got the push they needed.</p>
         </div>
         
