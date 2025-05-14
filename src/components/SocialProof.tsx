@@ -47,10 +47,15 @@ const SocialProof = () => {
   return (
     <section className="py-24 bg-commitify-background overflow-hidden relative">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-16 relative">
           <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
             Members Are Enjoying <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Happier And Healthier</span> Lives
           </h2>
+          <img 
+            src="/lovable-uploads/d2c6c635-074a-4194-ad78-9aa1d54f6d17.png" 
+            alt="Happy emoji" 
+            className="w-20 h-20 absolute -right-2 md:right-0 top-0 md:-top-6"
+          />
           <p className="text-xl text-commitify-secondary">
             Real results from real people who got the push they needed.
           </p>
