@@ -248,7 +248,7 @@ const UserEnvironment = () => {
               <span className="bg-commitify-yellow rounded-full p-1">
                 <Clock className="w-5 h-5 text-commitify-text" />
               </span>
-              <span>Commitify | User Environment</span>
+              <span>Commitify | User</span>
             </span>
           </a>
           
