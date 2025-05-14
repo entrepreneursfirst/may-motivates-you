@@ -54,7 +54,7 @@ const SocialProof = () => {
           <img 
             src="/lovable-uploads/d2c6c635-074a-4194-ad78-9aa1d54f6d17.png" 
             alt="Happy emoji" 
-            className="w-24 h-24 absolute -right-16 md:right-[-4rem] top-0 md:-top-6 object-contain"
+            className="w-120 h-120 absolute -right-32 md:right-[-8rem] top-0 md:-top-6 object-contain"
           />
           <p className="text-xl text-commitify-secondary">
             Real results from real people who got the push they needed.
