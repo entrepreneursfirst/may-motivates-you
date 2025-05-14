@@ -107,25 +107,14 @@ const UserEnvironment = () => {
         <h1 className="text-3xl font-bold mb-8">Your Commitify Environment</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Left Sidebar: Profile Card */}
+          {/* Left Sidebar: Profile Card - Now fixed positioning */}
           <div className="md:col-span-1">
             <Card className="sticky top-24">
               <CardHeader>
                 <CardTitle>Profile</CardTitle>
                 <CardDescription>Manage your personal information</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex flex-col items-center space-y-4">
-                  <Avatar className="w-32 h-32 border-4 border-commitify-yellow">
-                    <AvatarFallback className="text-4xl bg-gradient-to-r from-[#FFC371] to-[#FDE365] text-commitify-text">
-                      {userProfile.name.split(' ').map(n => n[0]).join('')}
-                    </AvatarFallback>
-                  </Avatar>
-                  <Button variant="outline" size="sm" className="w-full">
-                    Upload Photo
-                  </Button>
-                </div>
-                
+              <CardContent className="space-y-6">                
                 <div className="space-y-3">
                   <div className="space-y-1">
                     <Label>Name</Label>
