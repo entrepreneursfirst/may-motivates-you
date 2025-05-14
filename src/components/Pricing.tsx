@@ -63,7 +63,7 @@ const plans = [
     ],
     popular: true,
     buttonText: "Most Popular",
-    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
+    icon: <Phone className="w-5 h-5 mr-2 text-commitify-yellow" />,
     headerText: "Most Popular",
     billingNote: "Billed Monthly",
     color: "bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text",
