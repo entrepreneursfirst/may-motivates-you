@@ -41,7 +41,7 @@ const WhyWeBuiltThis = () => {
                 {/* Mehdi Greefhorst */}
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
                   <div className="flex items-center">
-                    <img src="/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png" alt="Founder" className="w-12 h-12 rounded-full object-cover mr-4" />
+                    <img src="/lovable-uploads/04aa2041-2f74-4ee1-9cc8-644ca6e5fc26.png" alt="Mehdi Greefhorst" className="w-12 h-12 rounded-full object-cover mr-4" />
                     <div>
                       <p className="font-bold">Mehdi Greefhorst</p>
                       <p className="text-sm text-commitify-secondary">Founder</p>
@@ -52,7 +52,7 @@ const WhyWeBuiltThis = () => {
                 {/* Carlo Porcelli */}
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
                   <div className="flex items-center">
-                    <img src="/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png" alt="Carlo Porcelli" className="w-12 h-12 rounded-full object-cover mr-4" />
+                    <img src="/lovable-uploads/58d0c2bf-1239-4fe5-aaa0-516a235d9258.png" alt="Carlo Porcelli" className="w-12 h-12 rounded-full object-cover mr-4" />
                     <div>
                       <p className="font-bold">Carlo Porcelli</p>
                       <p className="text-sm text-commitify-secondary">Founder</p>
@@ -63,7 +63,7 @@ const WhyWeBuiltThis = () => {
                 {/* Mustafa Yenler */}
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
                   <div className="flex items-center">
-                    <img src="/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png" alt="Mustafa Yenler" className="w-12 h-12 rounded-full object-cover mr-4" />
+                    <img src="/lovable-uploads/1c214e5c-3192-4289-a908-e43b4dbc8d16.png" alt="Mustafa Yenler" className="w-12 h-12 rounded-full object-cover mr-4" />
                     <div>
                       <p className="font-bold">Mustafa Yenler</p>
                       <p className="text-sm text-commitify-secondary">Founder</p>
@@ -74,7 +74,7 @@ const WhyWeBuiltThis = () => {
                 {/* Gijs de Bruin */}
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
                   <div className="flex items-center">
-                    <img src="/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png" alt="Gijs de Bruin" className="w-12 h-12 rounded-full object-cover mr-4" />
+                    <img src="/lovable-uploads/fb705994-ba28-4b60-91b7-d2d077392913.png" alt="Gijs de Bruin" className="w-12 h-12 rounded-full object-cover mr-4" />
                     <div>
                       <p className="font-bold">Gijs de Bruin</p>
                       <p className="text-sm text-commitify-secondary">Founder</p>
