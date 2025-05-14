@@ -295,8 +295,6 @@ const UserEnvironment = () => {
       </header>
       
       <div className="container mx-auto px-4 py-8 pt-24">
-        <h1 className="text-3xl font-bold mb-8">Your Commitify Environment</h1>
-        
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Left Sidebar: Profile Card - Now sticky positioned */}
           <div className="md:col-span-1">
