@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -44,7 +45,7 @@ const WhyWeBuiltThis = () => {
                       </p>
                     </div>
 
-                    {/* Fade Overlay */}
+                    {/* Fade Overlay - using the same gradient style as in the Agents carousel */}
                     {!isOpen && (
                       <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-commitify-yellow/20 to-transparent pointer-events-none"></div>
                     )}
