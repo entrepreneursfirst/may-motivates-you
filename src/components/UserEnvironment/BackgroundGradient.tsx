@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 
 const BackgroundGradient: React.FC = () => {
@@ -13,14 +14,14 @@ const BackgroundGradient: React.FC = () => {
   
   return (
     <div 
-      className="fixed inset-0 -z-10 opacity-40 pointer-events-none"
+      className="fixed inset-0 -z-10 opacity-70 pointer-events-none"
       style={{
         background: `radial-gradient(circle at ${position.x}% ${position.y}%, 
-                    #FDE1D3 0%, 
-                    #FFDEE2 25%, 
-                    #E5DEFF 50%, 
-                    rgba(229, 222, 255, 0.3) 75%, 
-                    rgba(229, 222, 255, 0) 100%)`,
+                    #F97316 0%, 
+                    #8B5CF6 30%, 
+                    #0EA5E9 60%, 
+                    rgba(14, 165, 233, 0.4) 80%, 
+                    rgba(14, 165, 233, 0) 100%)`,
       }}
     />
   );
