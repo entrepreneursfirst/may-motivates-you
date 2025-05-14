@@ -64,7 +64,7 @@ const HowItWorks = () => {
           {/* Step 2 */}
           <div className="flex flex-col items-center text-center">
             <div className="mb-4 md:mb-2 flex items-center justify-center h-auto md:h-[350px]">
-              <img src={step2.imageSrc} alt="Set the call time, vibe & frequency" className="object-contain w-full max-w-[300px] h-auto" />
+              <img src={step2.imageSrc} alt="Set the call time, vibe & frequency" className="object-contain w-full max-w-[360px] h-auto" />
             </div>
             <div className="flex items-start justify-center mb-1 text-center">
               <h3 className="text-2xl md:text-3xl font-extrabold mb-2 text-center">
