@@ -27,7 +27,16 @@ const WhyWeBuiltThis = () => {
             
             {/* Right founder section - now 50% of the space */}
             <div className="space-y-6">
-              {/* Founders grid - 2x2 with Mehdi moved to the grid */}
+              {/* Founder's story - moved above the grid */}
+              <div className="bg-white rounded-2xl p-6 shadow-lg">
+                <h3 className="text-2xl font-bold mb-4">Note from One of the Founders</h3>
+                
+                <p className="italic text-commitify-secondary mb-6">"As someone with ADHD, I built this after missing too many personal deadlines. I never missed meetings with others — only my own goals.</p>
+                
+                <p className="italic text-commitify-secondary mb-6">Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
+              </div>
+              
+              {/* Founders grid - 2x2 */}
               <div className="grid grid-cols-2 gap-4">
                 {/* Mehdi Greefhorst */}
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
@@ -72,15 +81,6 @@ const WhyWeBuiltThis = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              
-              {/* Founder's story */}
-              <div className="bg-white rounded-2xl p-6 shadow-lg">
-                <h3 className="text-2xl font-bold mb-4">The Founder's Story</h3>
-                
-                <p className="italic text-commitify-secondary mb-6">"As someone with ADHD, I built this after missing too many personal deadlines. I never missed meetings with others — only my own goals.</p>
-                
-                <p className="italic text-commitify-secondary mb-6">Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
               </div>
             </div>
           </div>
