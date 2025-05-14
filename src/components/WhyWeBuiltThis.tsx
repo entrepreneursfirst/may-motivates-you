@@ -16,7 +16,8 @@ const WhyWeBuiltThis = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-            <div className="md:col-span-2 space-y-6 pr-4 md:pr-8 lg:pr-12">
+            {/* Left text section - made narrower */}
+            <div className="md:col-span-1 space-y-6">
               <p className="text-lg">AI has proven itself as a powerful reflection partner. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in a way that sticks. Is it a journaling app? A chatbot you open when you're feeling stuck? A dashboard that tracks your progress and sends push notifications? </p>
               
               <p className="text-lg">These formats all have promise — but they rely on one thing: you deciding to sit down, open the app, and reflect. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.</p>
@@ -24,7 +25,9 @@ const WhyWeBuiltThis = () => {
               <p className="text-lg">What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — you answer.</p>
             </div>
             
-            <div className="space-y-6">
+            {/* Right founder section - made wider */}
+            <div className="md:col-span-2 space-y-6">
+              {/* Founder's story */}
               <div className="bg-white rounded-2xl p-6 shadow-lg">
                 <h3 className="text-2xl font-bold mb-4">The Founder's Story</h3>
                 
@@ -41,8 +44,8 @@ const WhyWeBuiltThis = () => {
                 </div>
               </div>
               
-              {/* New founders cards */}
-              <div className="grid grid-cols-1 gap-4">
+              {/* 2x2 Grid for founders */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Carlo Porcelli */}
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
                   <div className="flex items-center">
@@ -71,6 +74,19 @@ const WhyWeBuiltThis = () => {
                     <img src="/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png" alt="Gijs de Bruin" className="w-12 h-12 rounded-full object-cover mr-4" />
                     <div>
                       <p className="font-bold">Gijs de Bruin</p>
+                      <p className="text-sm text-commitify-secondary">Co-founder</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Fourth founder placeholder */}
+                <div className="bg-white rounded-2xl p-4 shadow-lg">
+                  <div className="flex items-center">
+                    <div className="w-12 h-12 rounded-full bg-gray-200 mr-4 flex items-center justify-center">
+                      <span className="text-gray-500 text-xl">+</span>
+                    </div>
+                    <div>
+                      <p className="font-bold">Join Us</p>
                       <p className="text-sm text-commitify-secondary">Co-founder</p>
                     </div>
                   </div>
