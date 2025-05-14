@@ -250,12 +250,15 @@ const UserEnvironment = () => {
     <div className="min-h-screen bg-gradient-to-br from-commitify-background to-commitify-background/90">
       {/* Header with logo */}
       <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10">
-        <div className="container mx-auto px-4 py-3 flex justify-center">
-          <img 
-            src="/lovable-uploads/dbf73134-0771-42c1-994e-959d4ced156e.png" 
-            alt="Commitify" 
-            className="h-14"
-          />
+        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+          <a href="#" className="flex items-center">
+            <span className="flex items-center gap-2 text-2xl font-bold">
+              <span className="bg-commitify-yellow rounded-full p-1">
+                <Clock className="w-5 h-5 text-commitify-text" />
+              </span>
+              <span>Commitify</span>
+            </span>
+          </a>
         </div>
       </header>
       
