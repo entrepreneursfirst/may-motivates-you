@@ -13,7 +13,8 @@ import {
   Trash2,
   X,
   Check,
-  ArrowLeft
+  ArrowLeft,
+  Agent
 } from 'lucide-react';
 import { 
   Card, 
@@ -149,6 +150,9 @@ const UserEnvironment = () => {
   // State for active plan (mock data - in a real app this would come from an API)
   const [activePlan, setActivePlan] = useState("Bestie");
 
+  // State for plan selection
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+
   // Date selection states
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [showTimeSelector, setShowTimeSelector] = useState(false);
@@ -220,20 +224,29 @@ const UserEnvironment = () => {
 
   // Handle subscription changes
   const handleChangeSubscription = () => {
+    setSelectedPlan(null); // Reset selected plan when opening dialog
     setShowPlanDialog(true);
   };
 
   // Handle plan selection
   const handleSelectPlan = (planName: string) => {
-    setActivePlan(planName);
-    setShowPlanDialog(false);
-    
-    toast({
-      title: "Plan updated",
-      description: `Your subscription has been updated to ${planName}.`,
-    });
+    setSelectedPlan(planName);
+  };
+  
+  // Handle plan confirmation
+  const handleConfirmPlan = () => {
+    if (selectedPlan) {
+      setActivePlan(selectedPlan);
+      setShowPlanDialog(false);
+      
+      toast({
+        title: "Plan updated",
+        description: `Your subscription has been updated to ${selectedPlan}.`,
+      });
+    }
   };
 
+  // Handle cancel subscription
   const handleCancelSubscription = () => {
     toast({
       title: "Cancel subscription",
@@ -285,9 +298,12 @@ const UserEnvironment = () => {
           <div className="md:col-span-1">
             <Card className="sticky top-24">
               <CardHeader className="flex flex-row items-center justify-between">
-                <div>
-                  <CardTitle>Profile</CardTitle>
-                  <CardDescription>Manage your personal information</CardDescription>
+                <div className="flex items-center gap-2">
+                  <UserRound className="w-5 h-5 text-commitify-text" />
+                  <div>
+                    <CardTitle>Profile</CardTitle>
+                    <CardDescription>Manage your personal information</CardDescription>
+                  </div>
                 </div>
                 <Button 
                   variant="ghost" 
@@ -442,8 +458,13 @@ const UserEnvironment = () => {
             {/* Active Agent Section */}
             <Card>
               <CardHeader>
-                <CardTitle>Your Active Agent</CardTitle>
-                <CardDescription>Manage your active agent and preferences</CardDescription>
+                <div className="flex items-center gap-2">
+                  <Agent className="w-5 h-5 text-commitify-text" />
+                  <div>
+                    <CardTitle>Your Active Agent</CardTitle>
+                    <CardDescription>Manage your active agent and preferences</CardDescription>
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="p-4 bg-gradient-to-r from-[#FFC371] via-[#FFAA5B] to-[#FDE365] rounded-lg text-commitify-text mb-6">
@@ -656,7 +677,9 @@ const UserEnvironment = () => {
             {plans.map(plan => (
               <button
                 key={plan.name}
-                className={`p-4 rounded-lg ${plan.color} flex items-center justify-between hover:opacity-90 transition-opacity`}
+                className={`p-4 rounded-lg ${plan.color} flex items-center justify-between hover:opacity-90 transition-opacity ${
+                  selectedPlan === plan.name ? 'ring-2 ring-primary' : ''
+                }`}
                 onClick={() => handleSelectPlan(plan.name)}
               >
                 <div className="flex items-center">
@@ -673,9 +696,15 @@ const UserEnvironment = () => {
               </button>
             ))}
           </div>
-          <DialogFooter>
+          <DialogFooter className="flex justify-between items-center mt-4">
             <Button variant="outline" onClick={() => setShowPlanDialog(false)}>
               Cancel
+            </Button>
+            <Button 
+              onClick={handleConfirmPlan} 
+              disabled={!selectedPlan}
+            >
+              Confirm
             </Button>
           </DialogFooter>
         </DialogContent>
