@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -31,50 +30,38 @@ const WhyWeBuiltThis = () => {
                   <div className="relative">
                     <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in <span className="font-bold">a way that sticks</span>.</p>
                     
-                    {/* Hidden content */}
-                    <CollapsibleContent className="space-y-6 animate-accordion-down">
-                      <p className="text-lg mt-6">These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.</p>
-                      
-                      <p className="text-lg">What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.</p>
-                    </CollapsibleContent>
-                    
-                    {/* Read more button with fade overlay */}
-                    {!isOpen && (
-                      <div className="relative mt-4">
-                        {/* Text preview with smooth fade */}
-                        <div className="relative overflow-hidden pb-16">
-                          <div className="text-lg">
-                            These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall...
-                          </div>
-                          {/* Gradient fade overlay */}
-                          <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-commitify-yellow/20 via-commitify-yellow/20 to-transparent pointer-events-none" style={{ backgroundPosition: "0 30%" }}></div>
-                        </div>
-                        
-                        {/* Read more button positioned on top of gradient */}
-                        <CollapsibleTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-transparent hover:bg-transparent border border-[#FF914D]/20 hover:border-[#FF914D]/40 text-[#E57040]"
-                          >
-                            Read more
-                            <ChevronDown className="ml-2 h-4 w-4" />
-                          </Button>
-                        </CollapsibleTrigger>
+                    {/* Hidden content with smooth transition */}
+                    <div className={`relative overflow-hidden transition-all duration-500 ${isOpen ? 'max-h-full' : 'max-h-40'}`}>
+                      <div className="text-lg mt-6">
+                        These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.
                       </div>
-                    )}
+                      
+                      <div className="text-lg mt-6">
+                        What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.
+                      </div>
+                      
+                      {/* Fade overlay only when collapsed */}
+                      {!isOpen && (
+                        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-commitify-yellow/20 via-commitify-yellow/20 to-transparent pointer-events-none"></div>
+                      )}
+                    </div>
                     
-                    {/* Show less button - only visible when content is expanded */}
-                    {isOpen && (
-                      <CollapsibleTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          className="w-full mt-4 bg-transparent hover:bg-transparent border border-[#FF914D]/20 hover:border-[#FF914D]/40 text-[#E57040] flex items-center justify-center"
-                        >
-                          Show less
-                          <ChevronDown className="ml-2 h-4 w-4 transform rotate-180" />
-                        </Button>
-                      </CollapsibleTrigger>
-                    )}
+                    {/* Clean, minimal Read more / Show less trigger */}
+                    <CollapsibleTrigger asChild>
+                      <span className="mt-4 flex items-center justify-center text-[#E57040] hover:text-[#E57040]/80 transition cursor-pointer select-none">
+                        {isOpen ? (
+                          <>
+                            Show less
+                            <ChevronDown className="ml-1 h-4 w-4 transform rotate-180" />
+                          </>
+                        ) : (
+                          <>
+                            Read more
+                            <ChevronDown className="ml-1 h-4 w-4" />
+                          </>
+                        )}
+                      </span>
+                    </CollapsibleTrigger>
                   </div>
                 </Collapsible>
               ) : (
