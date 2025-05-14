@@ -52,6 +52,10 @@ const Agents = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const isMobile = useIsMobile();
   
+  // New state to track scroll position indicators
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+  
   // Animation effect for cycling through words
   useEffect(() => {
     const interval = setInterval(() => {
@@ -63,6 +67,31 @@ const Agents = () => {
     }, 3000); // Change word every 3 seconds
     
     return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
+
+  // New effect to track scroll position and update arrow visibility
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    const handleScroll = () => {
+      // Show left arrow if not at the beginning
+      setShowLeftArrow(container.scrollLeft > 20);
+      
+      // Show right arrow if not at the end
+      const isAtEnd = Math.abs(
+        container.scrollWidth - container.scrollLeft - container.clientWidth
+      ) < 20;
+      
+      setShowRightArrow(!isAtEnd);
+    };
+    
+    // Initial check
+    handleScroll();
+    
+    // Add scroll event listener
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
   }, []);
 
   const currentWord = motivatorWords[index];
@@ -107,7 +136,7 @@ const Agents = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="relative">
           {/* Flower sticker positioned relative to the container - moved down on mobile */}
-          <div className={`absolute -left-10 ${isMobile ? 'top-[40px]' : 'top-0'} w-24 md:w-32 lg:w-40 h-auto z-0 opacity-90`}>
+          <div className={`absolute -left-10 ${isMobile ? 'top-[160px]' : 'top-0'} w-24 md:w-32 lg:w-40 h-auto z-0 opacity-90`}>
             <img src="/lovable-uploads/10ed87d9-b6c4-46ea-b814-44c6687e494f.png" alt="Flower sticker" className="w-full h-auto" />
           </div>
           
@@ -126,6 +155,18 @@ const Agents = () => {
           
           {/* Left fade-out gradient overlay - moved further to the left */}
           <div className="absolute left-0 top-0 bottom-0 w-10 z-[5] pointer-events-none bg-gradient-to-r from-commitify-background to-transparent"></div>
+          
+          {/* Mobile left navigation arrow - pulsating */}
+          {isMobile && showLeftArrow && (
+            <Button 
+              variant="outline" 
+              size="icon" 
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 border-commitify-blue text-commitify-blue rounded-full animate-pulse shadow-md" 
+              onClick={scrollLeft}
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+          )}
           
           <div className="relative overflow-hidden">
             <div ref={scrollContainerRef} className="flex overflow-x-auto gap-8 py-4 px-12 pb-8 scroll-container">
@@ -156,6 +197,18 @@ const Agents = () => {
           
           {/* Right fade-out gradient overlay - moved further to the right */}
           <div className="absolute right-0 top-0 bottom-0 w-10 z-[5] pointer-events-none bg-gradient-to-l from-commitify-background to-transparent"></div>
+          
+          {/* Mobile right navigation arrow - pulsating */}
+          {isMobile && showRightArrow && (
+            <Button 
+              variant="outline" 
+              size="icon" 
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 border-commitify-blue text-commitify-blue rounded-full animate-pulse shadow-md" 
+              onClick={scrollRight}
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          )}
           
           <Button variant="outline" size="icon" className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 border-commitify-blue text-commitify-blue rounded-full md:-right-5 hidden md:flex" onClick={scrollRight}>
             <ChevronRight className="h-5 w-5" />
