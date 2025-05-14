@@ -177,17 +177,17 @@ const Agents = () => {
                     <img src={agent.image} alt={agent.name} className="w-full h-full object-cover object-top" />
                   </div>
                   
-                  <div className="p-6 bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300">
+                  <div className="p-6 bg-gradient-to-br from-[#FF914D] via-[#E57040] to-[#EFAF26] text-white">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-2xl">{agent.emoji}</span>
                       <h3 className="font-bold text-xl">{agent.name}</h3>
                     </div>
                     
-                    <p className="text-sm text-commitify-secondary mb-4">
+                    <p className="text-sm mb-4">
                       {agent.description}
                     </p>
                     
-                    <div className="bg-white/70 p-3 rounded-lg italic text-sm">
+                    <div className="bg-white/70 p-3 rounded-lg italic text-sm text-commitify-text">
                       "{agent.quote}"
                     </div>
                   </div>
