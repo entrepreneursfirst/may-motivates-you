@@ -1,52 +1,75 @@
 
 import React from 'react';
-import { Check } from 'lucide-react';
+import { Check, Phone, MemoryStick, Mic, Star, Plus, CalendarIcon, CircleDollarSign } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 const plans = [
   {
-    name: "Quick Kickstart",
-    description: "Perfect for that one crucial task",
-    price: "$1.99",
+    name: "Acquaintance",
+    description: "Perfect for getting started",
+    price: "$3.75",
+    period: "per week",
+    calls: 3,
     features: [
-      "1 call right now",
-      "Choose your coach voice",
-      "24-hour support",
+      "Motivational voice agent",
+      "Basic AI memory (short-term)",
+      "Fixed voice tone",
     ],
     popular: false,
-    buttonText: "Get Started"
+    buttonText: "Get Started",
+    gradient: "from-blue-50 to-blue-100"
   },
   {
-    name: "Focus Pack",
-    description: "Keep on track throughout the week",
-    price: "$4.99",
+    name: "Bestie",
+    description: "Our most popular choice",
+    price: "$5.00",
     period: "per week",
+    calls: 5,
     features: [
-      "3 calls per week",
-      "Progress tracking",
-      "All coach voices",
-      "Call scheduling",
+      "Motivational voice agent",
+      "Basic AI memory (short-term)",
+      "Fixed voice tone",
+      "Long-term memory",
+      "Add your own voice",
+      "Weekly progress tracking",
     ],
     popular: true,
-    buttonText: "Most Popular"
+    buttonText: "Most Popular",
+    gradient: "from-yellow-50 to-amber-100"
   },
   {
-    name: "Power-Up Plan",
+    name: "Ride or Die",
     description: "Maximum accountability",
-    price: "$9.99",
+    price: "$6.67",
     period: "per week",
+    calls: 8,
     features: [
-      "Daily calls",
+      "Motivational voice agent",
+      "Basic AI memory (short-term)",
+      "Fixed voice tone",
       "Long-term memory",
-      "Custom call scripts",
+      "Add your own voice",
+      "Weekly progress tracking",
       "Calendar integration",
-      "Voice customization",
+      "Access to all current and future voices",
     ],
     popular: false,
-    buttonText: "Go Premium"
+    buttonText: "Go Premium",
+    gradient: "from-purple-50 to-purple-100"
   }
 ];
+
+const extraCallPack = {
+  name: "Extra Call Pack",
+  description: "One-time top-up",
+  price: "$1.25",
+  calls: 1,
+  buttonText: "Add Call",
+  gradient: "from-green-50 to-emerald-100"
+};
 
 const Pricing = () => {
   const { toast } = useToast();
@@ -73,27 +96,35 @@ const Pricing = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {plans.map((plan, index) => (
-            <div 
+            <Card 
               key={index}
-              className={`bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${plan.popular ? 'border-commitify-yellow' : 'border-gray-100'}`}
+              className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${plan.popular ? 'border-commitify-yellow' : 'border-gray-100'} bg-gradient-to-br ${plan.gradient}`}
             >
               {plan.popular && (
-                <div className="bg-commitify-yellow text-commitify-text text-center py-2 font-medium">
+                <div className="bg-commitify-yellow text-commitify-text text-center py-2 font-medium flex items-center justify-center">
+                  <Star className="w-4 h-4 mr-2" />
                   Most Popular
                 </div>
               )}
               
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
-                <p className="text-commitify-secondary mb-4">{plan.description}</p>
-                <div className="mb-6">
-                  <span className="text-3xl font-bold">{plan.price}</span>
-                  {plan.period && (
+              <CardHeader className="pb-0">
+                <CardTitle className="text-xl">{plan.name}</CardTitle>
+                <CardDescription>{plan.description}</CardDescription>
+              </CardHeader>
+              
+              <CardContent className="space-y-6">
+                <div className="pt-4">
+                  <div className="flex items-center mb-2">
+                    <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
+                    <span className="font-medium">{plan.calls} calls per week</span>
+                  </div>
+                  <div className="mb-6">
+                    <span className="text-3xl font-bold">{plan.price}</span>
                     <span className="text-commitify-secondary ml-1">{plan.period}</span>
-                  )}
+                  </div>
                 </div>
                 
-                <ul className="mb-8 space-y-3">
+                <ul className="space-y-3">
                   {plan.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-center">
                       <Check className="text-green-500 w-5 h-5 mr-2 flex-shrink-0" />
@@ -101,16 +132,53 @@ const Pricing = () => {
                     </li>
                   ))}
                 </ul>
-                
+              </CardContent>
+              
+              <CardFooter className="pt-4">
                 <Button 
                   className={`w-full ${plan.popular ? 'bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text' : 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'} rounded-full`}
                   onClick={() => handleSelectPlan(plan.name)}
                 >
                   {plan.buttonText}
                 </Button>
-              </div>
-            </div>
+              </CardFooter>
+            </Card>
           ))}
+        </div>
+        
+        {/* Extra Call Pack */}
+        <div className="mt-12 max-w-xs mx-auto">
+          <Card className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100 bg-gradient-to-br ${extraCallPack.gradient}`}>
+            <CardHeader className="pb-0">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg">Extra Call Pack</CardTitle>
+                <Plus className="text-green-500 w-5 h-5" />
+              </div>
+              <CardDescription>{extraCallPack.description}</CardDescription>
+            </CardHeader>
+            
+            <CardContent className="pt-4">
+              <div className="flex items-center mb-2">
+                <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
+                <span className="font-medium">+{extraCallPack.calls} extra call</span>
+              </div>
+              <div className="mb-2">
+                <div className="flex items-center">
+                  <CircleDollarSign className="w-5 h-5 mr-2 text-green-500" />
+                  <span className="text-xl font-bold">{extraCallPack.price}</span>
+                </div>
+              </div>
+            </CardContent>
+            
+            <CardFooter className="pt-2">
+              <Button 
+                className="w-full bg-green-500 hover:bg-green-600 text-white rounded-full"
+                onClick={() => handleSelectPlan(extraCallPack.name)}
+              >
+                {extraCallPack.buttonText}
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
         
         <p className="text-center text-commitify-secondary mt-8">
