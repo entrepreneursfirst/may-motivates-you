@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 const WhyWeBuiltThis = () => {
@@ -10,7 +11,7 @@ const WhyWeBuiltThis = () => {
         
         <div className="bg-commitify-yellow/20 p-10 md:p-16 rounded-3xl relative overflow-hidden">
           <h2 className="text-4xl md:text-5xl font-extrabold mb-8 text-center md:text-left relative z-10">
-            Why We Built <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Commitify</span>
+            Why We Built <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Commitify</span>
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">

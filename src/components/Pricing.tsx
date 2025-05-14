@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Check, Phone, MemoryStick, Mic, Star, CalendarIcon, CircleDollarSign, HandHeart, Hand, Rocket } from 'lucide-react';
+import { Check, Phone, Star } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -109,7 +108,7 @@ const Pricing = () => {
     <section id="pricing" className="py-20">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Pricing</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Pricing</span>
         </h2>
         <div className="text-center mb-16">
           <h3 className="text-3xl md:text-4xl font-bold">Try your first call for $0</h3>

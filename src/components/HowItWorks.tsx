@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
@@ -5,21 +6,21 @@ import { Button } from "@/components/ui/button";
 const step1 = {
   imageSrc: "/lovable-uploads/2c682f5d-9441-4c38-bb50-0e5b969df930.png",
   title: <>
-      <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">Upload</span> your schedule & goals
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Upload</span> your schedule & goals
     </>,
   description: "Introduce yourself, explain your to-dos, integrate your schedule, or upload files."
 };
 const step2 = {
   imageSrc: "/lovable-uploads/bff9745b-e164-44f7-afc9-26c5b1823fce.png",
   title: <>
-      Set the <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">call time</span>, vibe & frequency
+      Set the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">call time</span>, vibe & frequency
     </>,
   description: "Choose when you want to be called—and who you want the caller to be."
 };
 const step3 = {
   imageSrc: "/lovable-uploads/44c37770-c3f4-4735-8bf2-a7bc177b82ad.png",
   title: <>
-      Get phone call check-ins from your <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">AI Coach</span>
+      Get phone call check-ins from your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">AI Coach</span>
     </>,
   description: "Your AI will remember what you said, follow up, and helps you follow through."
 };
@@ -38,7 +39,7 @@ const HowItWorks = () => {
       
       <div className="bg-commitify-yellow/20 p-10 md:p-16 rounded-3xl relative z-10">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
-          How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Works</span>
+          How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Works</span>
         </h2>
         <p className="text-center text-commitify-secondary text-xl mb-8">
           Three simple steps to boost your productivity
