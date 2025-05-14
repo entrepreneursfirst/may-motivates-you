@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Check, Phone, MemoryStick, Mic, Star, Plus, CalendarIcon, CircleDollarSign } from 'lucide-react';
+import { Check, Phone, MemoryStick, Mic, Star, CalendarIcon, CircleDollarSign } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,11 +8,28 @@ import { Badge } from "@/components/ui/badge";
 
 const plans = [
   {
+    name: "One-off",
+    description: "Just dip your toes in",
+    price: "$7.50",
+    period: "one-time",
+    callCount: 3,
+    features: [
+      "Motivational voice agent",
+      "Basic AI memory",
+      "3 calls only",
+    ],
+    popular: false,
+    buttonText: "Try Now",
+    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
+    headerText: "Try it out",
+    billingNote: "One-time payment"
+  },
+  {
     name: "Acquaintance",
     description: "Perfect for getting started",
     price: "$3.75",
     period: "per week",
-    minutes: 15, // 3 calls × 5 minutes
+    callCount: 3,
     features: [
       "Motivational voice agent",
       "Basic AI memory (short-term)",
@@ -20,14 +37,15 @@ const plans = [
     popular: false,
     buttonText: "Get Started",
     icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
-    headerText: "For the curious"
+    headerText: "For the curious",
+    billingNote: "Billed Monthly"
   },
   {
     name: "Bestie",
     description: "Our most popular choice",
     price: "$5.00",
     period: "per week",
-    minutes: 25, // 5 calls × 5 minutes
+    callCount: 5,
     features: [
       "Everything in Acquaintance, and...",
       "Long-term memory",
@@ -37,14 +55,15 @@ const plans = [
     popular: true,
     buttonText: "Most Popular",
     icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
-    headerText: "Most Popular"
+    headerText: "Most Popular",
+    billingNote: "Billed Monthly"
   },
   {
     name: "Ride or Die",
     description: "Maximum accountability",
     price: "$6.50",
     period: "per week",
-    minutes: 40, // 8 calls × 5 minutes
+    callCount: 8,
     features: [
       "Everything in Bestie, and...",
       "Calendar integration",
@@ -53,7 +72,8 @@ const plans = [
     popular: false,
     buttonText: "Go Premium",
     icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
-    headerText: "For the committed"
+    headerText: "For the committed",
+    billingNote: "Billed Monthly"
   }
 ];
 
@@ -82,7 +102,7 @@ const Pricing = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
             <Card 
               key={index}
@@ -119,12 +139,13 @@ const Pricing = () => {
                 <div className="pt-4">
                   <div className="flex items-center mb-2">
                     {plan.icon}
-                    <span className="font-medium">{plan.minutes} minutes per week</span>
+                    <span className="font-medium">{plan.callCount} calls per week</span>
                   </div>
-                  <div className="mb-6">
+                  <div className="mb-1">
                     <span className="text-3xl font-bold">{plan.price}</span>
                     <span className="text-commitify-secondary ml-1">{plan.period}</span>
                   </div>
+                  <div className="text-xs text-commitify-secondary">{plan.billingNote}</div>
                 </div>
                 
                 <ul className="space-y-3">
