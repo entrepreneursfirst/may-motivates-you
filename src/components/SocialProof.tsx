@@ -49,7 +49,7 @@ const SocialProof = () => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16 relative">
           <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-            Members Are Enjoying <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Happier And Healthier</span> Lives
+            Real Calls, Real Results. This is What Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Members</span>  Say 
           </h2>
           <img 
             src="/lovable-uploads/d2c6c635-074a-4194-ad78-9aa1d54f6d17.png" 
