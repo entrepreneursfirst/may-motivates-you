@@ -92,15 +92,18 @@ const Pricing = () => {
               key={index}
               className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${plan.popular ? 'border-commitify-yellow' : 'border-gray-100'} bg-gradient-to-br from-violet-50 to-violet-100 h-full flex flex-col`}
             >
-              {plan.popular && (
-                <div className="bg-commitify-yellow text-commitify-text text-center py-2 font-medium flex items-center justify-center">
-                  <Star className="w-4 h-4 mr-2" />
-                  Most Popular
-                </div>
-              )}
+              {/* Fixed height container for "Most Popular" badge */}
+              <div className="h-[40px] flex items-center justify-center">
+                {plan.popular && (
+                  <div className="bg-commitify-yellow text-commitify-text text-center py-2 font-medium flex items-center justify-center w-full">
+                    <Star className="w-4 h-4 mr-2" />
+                    Most Popular
+                  </div>
+                )}
+              </div>
               
               <CardHeader className="pb-0">
-                <div className="h-16 flex items-start">
+                <div className="h-12 flex items-center">
                   <CardTitle className="text-xl">{plan.name}</CardTitle>
                 </div>
                 <CardDescription>{plan.description}</CardDescription>
@@ -144,7 +147,7 @@ const Pricing = () => {
         <div className="mt-12 max-w-xs mx-auto">
           <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100 bg-gradient-to-br from-violet-50 to-violet-100 flex flex-col h-full">
             <CardHeader className="pb-0">
-              <div className="h-16 flex items-start">
+              <div className="h-12 flex items-center">
                 <div className="flex items-center justify-between w-full">
                   <CardTitle className="text-lg">{extraCallPack.name}</CardTitle>
                   <Plus className="text-green-500 w-5 h-5" />
