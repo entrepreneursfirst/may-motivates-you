@@ -15,9 +15,9 @@ const WhyWeBuiltThis = () => {
             Why We Built <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Commitify</span>
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-            {/* Left text section - made narrower */}
-            <div className="md:col-span-1 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+            {/* Left text section - now 50% of the space */}
+            <div className="space-y-6">
               <p className="text-lg">AI has proven itself as a powerful reflection partner. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in a way that sticks. Is it a journaling app? A chatbot you open when you're feeling stuck? A dashboard that tracks your progress and sends push notifications? </p>
               
               <p className="text-lg">These formats all have promise — but they rely on one thing: you deciding to sit down, open the app, and reflect. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.</p>
@@ -25,34 +25,28 @@ const WhyWeBuiltThis = () => {
               <p className="text-lg">What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — you answer.</p>
             </div>
             
-            {/* Right founder section - made wider */}
-            <div className="md:col-span-2 space-y-6">
-              {/* Founder's story */}
-              <div className="bg-white rounded-2xl p-6 shadow-lg">
-                <h3 className="text-2xl font-bold mb-4">The Founder's Story</h3>
-                
-                <p className="italic text-commitify-secondary mb-6">"As someone with ADHD, I built this after missing too many personal deadlines. I never missed meetings with others — only my own goals.</p>
-                
-                <p className="italic text-commitify-secondary mb-6">Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
-                
-                <div className="flex items-center">
-                  <img src="/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png" alt="Founder" className="w-12 h-12 rounded-full object-cover mr-4" />
-                  <div>
-                    <p className="font-bold">Mehdi Greefhorst</p>
-                    <p className="text-sm text-commitify-secondary">Founder</p>
+            {/* Right founder section - now 50% of the space */}
+            <div className="space-y-6">
+              {/* Founders grid - 2x2 with Mehdi moved to the grid */}
+              <div className="grid grid-cols-2 gap-4">
+                {/* Mehdi Greefhorst */}
+                <div className="bg-white rounded-2xl p-4 shadow-lg">
+                  <div className="flex items-center">
+                    <img src="/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png" alt="Founder" className="w-12 h-12 rounded-full object-cover mr-4" />
+                    <div>
+                      <p className="font-bold">Mehdi Greefhorst</p>
+                      <p className="text-sm text-commitify-secondary">Founder</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              {/* 2x2 Grid for founders */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
                 {/* Carlo Porcelli */}
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
                   <div className="flex items-center">
                     <img src="/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png" alt="Carlo Porcelli" className="w-12 h-12 rounded-full object-cover mr-4" />
                     <div>
                       <p className="font-bold">Carlo Porcelli</p>
-                      <p className="text-sm text-commitify-secondary">Co-founder</p>
+                      <p className="text-sm text-commitify-secondary">Founder</p>
                     </div>
                   </div>
                 </div>
@@ -63,7 +57,7 @@ const WhyWeBuiltThis = () => {
                     <img src="/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png" alt="Mustafa Yenler" className="w-12 h-12 rounded-full object-cover mr-4" />
                     <div>
                       <p className="font-bold">Mustafa Yenler</p>
-                      <p className="text-sm text-commitify-secondary">Co-founder</p>
+                      <p className="text-sm text-commitify-secondary">Founder</p>
                     </div>
                   </div>
                 </div>
@@ -74,23 +68,19 @@ const WhyWeBuiltThis = () => {
                     <img src="/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png" alt="Gijs de Bruin" className="w-12 h-12 rounded-full object-cover mr-4" />
                     <div>
                       <p className="font-bold">Gijs de Bruin</p>
-                      <p className="text-sm text-commitify-secondary">Co-founder</p>
+                      <p className="text-sm text-commitify-secondary">Founder</p>
                     </div>
                   </div>
                 </div>
+              </div>
+              
+              {/* Founder's story */}
+              <div className="bg-white rounded-2xl p-6 shadow-lg">
+                <h3 className="text-2xl font-bold mb-4">The Founder's Story</h3>
                 
-                {/* Fourth founder placeholder */}
-                <div className="bg-white rounded-2xl p-4 shadow-lg">
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 rounded-full bg-gray-200 mr-4 flex items-center justify-center">
-                      <span className="text-gray-500 text-xl">+</span>
-                    </div>
-                    <div>
-                      <p className="font-bold">Join Us</p>
-                      <p className="text-sm text-commitify-secondary">Co-founder</p>
-                    </div>
-                  </div>
-                </div>
+                <p className="italic text-commitify-secondary mb-6">"As someone with ADHD, I built this after missing too many personal deadlines. I never missed meetings with others — only my own goals.</p>
+                
+                <p className="italic text-commitify-secondary mb-6">Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
               </div>
             </div>
           </div>
