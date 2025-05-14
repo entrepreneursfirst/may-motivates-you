@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -234,14 +235,14 @@ const UserEnvironment = () => {
   };
 
   return (
-    <div className="min-h-screen bg-commitify-background">
+    <div className="min-h-screen relative overflow-hidden bg-commitify-background">
       {/* Warm radial gradient background */}
       <BackgroundGradient />
       
       {/* Header with logo */}
       <Header />
       
-      <div className="container mx-auto px-4 py-8 pt-24">
+      <div className="container mx-auto px-4 py-8 pt-24 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Left Sidebar: Profile Card */}
           <div className="md:col-span-1">
