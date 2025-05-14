@@ -269,7 +269,7 @@ const UserEnvironment = () => {
                 <div>
                   <CardTitle className="flex items-center gap-2">
                     <UserRound className="w-5 h-5 text-commitify-text" />
-                    Profile
+                    Your Profile
                   </CardTitle>
                   <CardDescription>Manage your personal information</CardDescription>
                 </div>
@@ -416,10 +416,8 @@ const UserEnvironment = () => {
               </CardContent>
             </Card>
             
-            {/* Data Input & Preferences Section */}
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Data Input & Preferences</h2>
-              
+            {/* Call Schedule Card - Removed the "Data Input & Preferences" heading */}
+            <div className="space-y-8">
               {/* First row - Call Schedule (3 columns wide) */}
               <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
                 <Card>
