@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { 
   Calendar, 
@@ -28,30 +29,50 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 
-// Agent data
-const agents = [
-  {
-    id: 1,
-    name: "Dr. Emilia",
-    image: "/lovable-uploads/58d0c2bf-1239-4fe5-aaa0-516a235d9258.png",
-    emoji: "👩‍⚕️",
-    description: "Medical and health coach who helps you stay on track with your health goals."
-  },
-  {
-    id: 2,
-    name: "Coach Mike",
-    image: "/lovable-uploads/c967a7e7-5403-4fe3-ba1e-52fa5eba1841.png",
-    emoji: "🏋️‍♂️",
-    description: "Fitness coach who checks in on your workout routine and motivates you."
-  },
-  {
-    id: 3,
-    name: "Lisa",
-    image: "/lovable-uploads/f3b4d8ae-527f-4545-9a2d-e5e13253d587.png",
-    emoji: "💼",
-    description: "Career advisor who helps track job applications and interview prep."
-  }
-];
+// Import agents from the Agents component
+const agents = [{
+  id: 1,
+  name: "Life Coach",
+  image: "/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png",
+  emoji: "🧍‍♀️",
+  description: "Your personal growth guru who turns goals into daily wins with calm encouragement.",
+  quote: "Let's break this into steps — and nail the first one today."
+}, {
+  id: 2,
+  name: "Zen Master",
+  image: "/lovable-uploads/758609d4-c1fe-450e-926b-5afdf6650e3d.png",
+  emoji: "🧘",
+  description: "The chill philosopher who reminds you to breathe, reflect, and stay centered.",
+  quote: "The task exists. It waits for you. Are you ready?"
+}, {
+  id: 3,
+  name: "Slay Bestie",
+  image: "/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png",
+  emoji: "💅",
+  description: "The glitter-drenched voice that drags you out of bed and into your power.",
+  quote: "Slay the day or stay in delay — your call, babe."
+}, {
+  id: 4,
+  name: "Hype Beast",
+  image: "/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png",
+  emoji: "🏋️",
+  description: "Pure energy in your ear yelling \"LET'S GOOOOOOOO\" until you move.",
+  quote: "YOU GOT THIS! Time to level up your game!"
+}, {
+  id: 5,
+  name: "Drill Sergeant",
+  image: "/lovable-uploads/4d5b4382-c347-4c68-b807-b3d21cfef20c.png",
+  emoji: "🎖️",
+  description: "No excuses, no delays — just clear orders, structure, and discipline.",
+  quote: "YOU SAID 10AM. IT'S 10:03. WHY AREN'T YOU MOVING?"
+}, {
+  id: 6,
+  name: "CEO,000,000",
+  image: "/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png",
+  emoji: "💼",
+  description: "Laser-focused leadership who turns your chaos into calendar blocks and KPIs.",
+  quote: "This task has no ROI unless you execute."
+}];
 
 const UserEnvironment = () => {
   // State for user profile
@@ -208,7 +229,7 @@ const UserEnvironment = () => {
                       </div>
                       <p className="text-sm mb-3">{activeAgent.description}</p>
                       <div className="bg-white/40 backdrop-blur-sm p-3 rounded-lg italic text-sm">
-                        "I'm here to help you stay on track with your commitments!"
+                        "{activeAgent.quote}"
                       </div>
                     </div>
                   </div>
