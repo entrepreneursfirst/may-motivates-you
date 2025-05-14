@@ -1,43 +1,34 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
 // Step content as separate objects for better editability
 const step1 = {
   imageSrc: "/lovable-uploads/2c682f5d-9441-4c38-bb50-0e5b969df930.png",
-  title: (
-    <>
+  title: <>
       <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">Upload</span> your schedule & goals
-    </>
-  ),
+    </>,
   description: "Introduce yourself, explain your to-dos, integrate your schedule, or upload files."
 };
 const step2 = {
   imageSrc: "/lovable-uploads/bff9745b-e164-44f7-afc9-26c5b1823fce.png",
-  title: (
-    <>
+  title: <>
       Set the <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">call time</span>, frequency & vibe
-    </>
-  ),
+    </>,
   description: "Choose when you want to be called—and who you want the caller to be."
 };
 const step3 = {
   imageSrc: "/lovable-uploads/44c37770-c3f4-4735-8bf2-a7bc177b82ad.png",
-  title: (
-    <>
+  title: <>
       Get phone call check-ins from your <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">AI Coach</span>
-    </>
-  ),
+    </>,
   description: "Your AI will remember what you said, follow up, and helps you follow through."
 };
-
 const HowItWorks = () => {
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({
       behavior: 'smooth'
     });
   };
-  
   return <section id="how-it-works" className="py-24 overflow-hidden">
     <div className="container mx-auto px-4 relative">
       {/* Rainbow Sticker - Now positioned relative to container */}
@@ -108,5 +99,4 @@ const HowItWorks = () => {
     </div>
   </section>;
 };
-
 export default HowItWorks;
