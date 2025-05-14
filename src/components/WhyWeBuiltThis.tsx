@@ -1,7 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useIsMobile } from "@/hooks/use-mobile";
+
 const WhyWeBuiltThis = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useIsMobile();
+  
   return <section id="why" className="py-24 overflow-hidden">
       <div className="container mx-auto px-4 relative">
         {/* Updated sticker with larger size and moved to the right and up */}
@@ -15,16 +23,48 @@ const WhyWeBuiltThis = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-            {/* Left text section - now 50% of the space */}
+            {/* Left text section - now with collapsible content on mobile */}
             <div className="space-y-6">
-              <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in  <span className="font-bold">a way that sticks</span>. Is it a journaling app? A chatbot you open when you're feeling stuck? A dashboard that tracks your progress and sends push notifications?</p>
-              
-              <p className="text-lg">These formats all have promise — but they rely on one thing:  <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.</p>
-              
-              <p className="text-lg">What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.</p>
+              {isMobile ? (
+                <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-6">
+                  {/* First paragraph always visible */}
+                  <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in  <span className="font-bold">a way that sticks</span>.</p>
+                  
+                  {/* Hidden content */}
+                  <CollapsibleContent className="space-y-6">
+                    <p className="text-lg">These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.</p>
+                    
+                    <p className="text-lg">What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.</p>
+                  </CollapsibleContent>
+                  
+                  {/* Read more gradient button */}
+                  <CollapsibleTrigger asChild>
+                    <div className="relative">
+                      {!isOpen && (
+                        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-commitify-yellow/20 to-transparent pointer-events-none"></div>
+                      )}
+                      <Button
+                        variant="ghost"
+                        className={`w-full mt-0 ${isOpen ? "" : "mt-2"} bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26] hover:opacity-90 text-white flex items-center justify-center`}
+                      >
+                        {isOpen ? "Show less" : "Read more"}
+                        <ChevronDown className={`ml-2 h-4 w-4 transition-transform duration-200 ${isOpen ? "transform rotate-180" : ""}`} />
+                      </Button>
+                    </div>
+                  </CollapsibleTrigger>
+                </Collapsible>
+              ) : (
+                <>
+                  <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in  <span className="font-bold">a way that sticks</span>. Is it a journaling app? A chatbot you open when you're feeling stuck? A dashboard that tracks your progress and sends push notifications?</p>
+                  
+                  <p className="text-lg">These formats all have promise — but they rely on one thing:  <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.</p>
+                  
+                  <p className="text-lg">What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.</p>
+                </>
+              )}
             </div>
             
-            {/* Right founder section - now 50% of the space */}
+            {/* Right founder section - Stack on mobile */}
             <div className="space-y-6">
               {/* Founder's story - moved above the grid */}
               <div className="bg-white rounded-2xl p-6 shadow-lg">
@@ -35,8 +75,8 @@ const WhyWeBuiltThis = () => {
                 <p className="italic text-commitify-secondary mb-6">Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
               </div>
               
-              {/* Founders grid - 2x2 */}
-              <div className="grid grid-cols-2 gap-4">
+              {/* Founders - vertical on mobile, grid on desktop */}
+              <div className={`${isMobile ? "flex flex-col" : "grid grid-cols-2"} gap-4`}>
                 {/* Mehdi Greefhorst */}
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
                   <div className="flex items-center">
@@ -87,4 +127,5 @@ const WhyWeBuiltThis = () => {
       </div>
     </section>;
 };
+
 export default WhyWeBuiltThis;
