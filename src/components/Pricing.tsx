@@ -21,7 +21,7 @@ const plans = [
     ],
     popular: false,
     buttonText: "Try Now",
-    icon: <Phone className="w-5 h-5 mr-2 text-white" />,
+    icon: <Phone className="w-5 h-5 mr-2 text-[#1EAEDB]" />,
     headerText: "Try it out",
     billingNote: "One-time payment",
     color: "bg-[#1EAEDB] hover:bg-[#1EAEDB]/90 text-white",
@@ -50,7 +50,7 @@ const plans = [
   },
   {
     name: "Bestie",
-    emoji: <HandHeart className="w-5 h-5" />,
+    emoji: "🫶",
     description: "Our most popular choice",
     price: "$5.00",
     period: "per week",
@@ -72,7 +72,7 @@ const plans = [
   },
   {
     name: "Ride or Die",
-    emoji: <Rocket className="w-5 h-5" />,
+    emoji: "💯",
     description: "Maximum accountability",
     price: "$6.50",
     period: "per week",
