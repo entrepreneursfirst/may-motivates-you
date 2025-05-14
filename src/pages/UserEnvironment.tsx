@@ -1,5 +1,7 @@
+
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button"; // Add this import
 import Footer from '@/components/Footer';
 import ProfileCard from '@/components/UserEnvironment/ProfileCard';
 import ActiveAgentCard from '@/components/UserEnvironment/ActiveAgentCard';
