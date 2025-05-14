@@ -54,7 +54,7 @@ const SocialProof = () => {
           <img 
             src="/lovable-uploads/d2c6c635-074a-4194-ad78-9aa1d54f6d17.png" 
             alt="Happy emoji" 
-            className="w-60 h-60 absolute -right-80 md:right-[-24rem] top-0 md:-top-6 object-contain"
+            className="w-72 h-auto absolute -right-64 md:right-[-20rem] top-0 md:-top-6 object-contain"
           />
           <p className="text-xl text-commitify-secondary">
             Real results from real people who got the push they needed.
@@ -65,7 +65,7 @@ const SocialProof = () => {
           {testimonials.map((testimonial) => (
             <div 
               key={testimonial.id}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border border-gray-100"
+              className="bg-transparent backdrop-blur-sm p-8 rounded-2xl border border-black shadow-md hover:shadow-lg transition-all"
             >
               <div className="flex justify-between mb-4 items-center">
                 <div className="flex items-center">
