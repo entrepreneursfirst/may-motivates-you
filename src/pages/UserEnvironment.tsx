@@ -244,16 +244,18 @@ const UserEnvironment = () => {
       
       <div className="container mx-auto px-4 py-8 pt-24 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Left Sidebar: Profile Card */}
-          <div className="md:col-span-1">
-            <ProfileCard 
-              userProfile={userProfile}
-              setUserProfile={setUserProfile}
-              activePlan={activePlan}
-              activePlanDetails={activePlanDetails}
-              handleChangeSubscription={handleChangeSubscription}
-              handleCancelSubscription={handleCancelSubscription}
-            />
+          {/* Left Sidebar: Profile Card - Now fixed position on desktop */}
+          <div className="md:col-span-1 relative">
+            <div className="md:sticky md:top-24">
+              <ProfileCard 
+                userProfile={userProfile}
+                setUserProfile={setUserProfile}
+                activePlan={activePlan}
+                activePlanDetails={activePlanDetails}
+                handleChangeSubscription={handleChangeSubscription}
+                handleCancelSubscription={handleCancelSubscription}
+              />
+            </div>
           </div>
           
           {/* Main Content Area */}

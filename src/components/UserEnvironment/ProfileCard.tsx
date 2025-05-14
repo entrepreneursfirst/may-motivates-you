@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { CalendarIcon, Edit, Phone, UserRound, X, Check } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -65,7 +64,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   };
 
   return (
-    <Card className="sticky top-24 z-10">
+    <Card className="z-10">
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
           <CardTitle className="flex items-center gap-2">
