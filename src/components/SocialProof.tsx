@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MessageCircle, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 // Testimonial data with information about the person and their experience
 const testimonials = [
@@ -10,7 +11,7 @@ const testimonials = [
     name: "Lina",
     role: "26",
     avatar: "L",
-    agentName: "CEO",
+    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=150&h=150&fit=crop&crop=faces",
     stars: 5
   },
   {
@@ -19,7 +20,7 @@ const testimonials = [
     name: "Mark",
     role: "30",
     avatar: "M",
-    agentName: "Zen Master",
+    image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=150&h=150&fit=crop&crop=faces",
     stars: 5
   },
   {
@@ -28,7 +29,7 @@ const testimonials = [
     name: "Jamie",
     role: "19",
     avatar: "J",
-    agentName: "Slay Bestie",
+    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=faces",
     stars: 5
   },
   {
@@ -37,7 +38,7 @@ const testimonials = [
     name: "Ravi",
     role: "32",
     avatar: "R",
-    agentName: "Squad",
+    image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=150&h=150&fit=crop&crop=faces",
     stars: 5
   }
 ];
@@ -64,7 +65,7 @@ const SocialProof = () => {
               <div className="flex justify-between mb-4 items-center">
                 <div className="flex items-center">
                   <Avatar className="h-12 w-12 mr-3 border-2 border-commitify-yellow">
-                    <AvatarImage src="" />
+                    <AvatarImage src={testimonial.image} />
                     <AvatarFallback className="bg-commitify-blue text-white font-bold">
                       {testimonial.avatar}
                     </AvatarFallback>
@@ -87,11 +88,6 @@ const SocialProof = () => {
               <p className="text-lg mb-4">
                 "{testimonial.text}"
               </p>
-              
-              <div className="flex items-center text-commitify-blue">
-                <MessageCircle className="w-5 h-5 mr-2" />
-                <p className="text-sm font-medium">Coached by {testimonial.agentName}</p>
-              </div>
             </div>
           ))}
         </div>
