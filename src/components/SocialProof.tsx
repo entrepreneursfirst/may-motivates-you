@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MessageCircle, Star } from 'lucide-react';
@@ -7,38 +6,38 @@ import { MessageCircle, Star } from 'lucide-react';
 const testimonials = [
   {
     id: 1,
-    text: "The morning check-ins with Coach Sarah completely turned my productivity around. I've finished more projects in a month than I did all last quarter!",
-    name: "Michael T.",
-    role: "Marketing Director",
-    avatar: "M",
-    agentName: "Coach Sarah",
+    text: "I genuinely forgot this wasn't a real person. The CEO agent called me out harder than my manager ever has.",
+    name: "Lina",
+    role: "26",
+    avatar: "L",
+    agentName: "CEO",
     stars: 5
   },
   {
     id: 2,
-    text: "As someone with ADHD, the gentle reminders from Max keep me focused without feeling pressured. I'm finally sticking to my meditation routine!",
-    name: "Emma L.",
-    role: "Software Developer",
-    avatar: "E",
-    agentName: "Max",
+    text: "I thought it was just another reminder app. Then the Zen Master told me to breathe and do one small thing. It worked.",
+    name: "Mark",
+    role: "30",
+    avatar: "M",
+    agentName: "Zen Master",
     stars: 5
   },
   {
     id: 3,
-    text: "Maya's evening check-ins helped me establish a proper sleep schedule after years of insomnia. The accountability is what I needed.",
-    name: "David K.",
-    role: "Fitness Instructor",
-    avatar: "D",
-    agentName: "Maya",
-    stars: 4
+    text: "Slay Bestie had me laughing and then… somehow I actually cleaned my room. 10/10.",
+    name: "Jamie",
+    role: "19",
+    avatar: "J",
+    agentName: "Slay Bestie",
+    stars: 5
   },
   {
     id: 4,
-    text: "I was skeptical at first, but Alex's weekly goal reviews have helped me save more money in 3 months than I did all last year!",
-    name: "Jennifer P.",
-    role: "Financial Analyst",
-    avatar: "J",
-    agentName: "Alex",
+    text: "It's weirdly personal. Like a squad that actually checks in. I use it daily now — even on good days.",
+    name: "Ravi",
+    role: "32",
+    avatar: "R",
+    agentName: "Squad",
     stars: 5
   }
 ];
