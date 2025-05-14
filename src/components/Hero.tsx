@@ -156,7 +156,7 @@ const Hero = () => {
                       type="tel" 
                       value={phoneNumber} 
                       onChange={e => setPhoneNumber(e.target.value)} 
-                      className={`py-6 rounded-none border-l-0 border-r-0 ${isMobile ? 'w-[120px] sm:w-[160px]' : 'w-[180px] sm:w-[220px]'}
+                      className={`py-6 rounded-none border-l-0 border-r-0 ${isMobile ? 'w-[100px] sm:w-[140px]' : 'w-[180px] sm:w-[220px]'}
                           shadow-[0_0_15px_rgba(178,107,202,0.7)] focus:shadow-[0_0_25px_rgba(178,107,202,0.9)]
                           border-commitify-purple/30 focus:border-commitify-purple/50 
                           outline-none ring-2 ring-commitify-yellow/30 focus:ring-commitify-yellow/50`} 
@@ -176,12 +176,15 @@ const Hero = () => {
                   </Button>}
               </div>
               
+              {/* For desktop, add margin-left that kicks in BEFORE the expansion completes */}
               <Button 
                 variant="outline" 
-                className={`border-2 border-commitify-blue text-commitify-blue hover:bg-commitify-blue/10 font-medium text-lg px-8 py-6 rounded-full transition-all duration-700 ${isPhoneInputActive && !isMobile ? 'translate-x-4' : ''}`} 
-                onClick={() => scrollToSection('how-it-works')}
+                className={`border-2 border-commitify-blue text-commitify-blue hover:bg-commitify-blue/10 font-medium text-lg px-8 py-6 rounded-full 
+                  ${isMobile ? (isPhoneInputActive ? 'w-full mt-4' : 'w-full') : 'transition-all duration-700'} 
+                  ${!isMobile && isPhoneInputActive ? 'translate-x-8' : ''}`}
+                onClick={() => scrollToSection(isMobile ? 'agents' : 'how-it-works')}
               >
-                Learn More
+                {isMobile ? "Meet Our Agents" : "Learn More"}
               </Button>
             </div>
           </div>
