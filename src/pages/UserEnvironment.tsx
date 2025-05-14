@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Calendar as CalendarIcon, 
@@ -13,7 +12,8 @@ import {
   UserRound,
   Trash2,
   X,
-  Check
+  Check,
+  ArrowLeft
 } from 'lucide-react';
 import { 
   Card, 
@@ -37,6 +37,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ScheduledCall } from "@/components/ScheduledCall";
 import { TimeSelector } from "@/components/TimeSelector";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useNavigate } from 'react-router-dom';
 
 // Import agents from the Agents component
 const agents = [{
@@ -120,6 +121,9 @@ const plans = [
 ];
 
 const UserEnvironment = () => {
+  // Add navigate function for routing
+  const navigate = useNavigate();
+  
   // Toast notifications
   const { toast } = useToast();
 
@@ -259,6 +263,16 @@ const UserEnvironment = () => {
               <span>Commitify</span>
             </span>
           </a>
+          
+          {/* Back to landing page button */}
+          <Button 
+            variant="outline" 
+            onClick={() => navigate('/')} 
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Home
+          </Button>
         </div>
       </header>
       
