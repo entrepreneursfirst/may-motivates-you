@@ -110,7 +110,7 @@ const Hero = () => {
   // Render the phone input form (visible or invisible based on state)
   const renderPhoneInput = (visible: boolean) => {
     return (
-      <div className={`${visible ? 'opacity-100 h-auto' : 'opacity-0 h-0 overflow-hidden'} transition-opacity duration-300`}>
+      <div className={`${visible ? 'opacity-100 h-auto' : 'opacity-0 h-0 overflow-hidden'} transition-opacity duration-300 w-full`}>
         <div className="flex items-center w-full">
           <Popover>
             <PopoverTrigger asChild>
@@ -139,7 +139,7 @@ const Hero = () => {
             type="tel" 
             value={visible ? phoneNumber : ''}
             onChange={e => visible && setPhoneNumber(e.target.value)} 
-            className={`py-6 rounded-none border-l-0 border-r-0 ${isMobile ? 'w-[100px] sm:w-[140px]' : 'w-[180px] sm:w-[220px]'}
+            className={`py-6 rounded-none border-l-0 border-r-0 flex-1
                 shadow-[0_0_15px_rgba(178,107,202,0.7)] focus:shadow-[0_0_25px_rgba(178,107,202,0.9)]
                 border-commitify-purple/30 focus:border-commitify-purple/50 
                 outline-none ring-2 ring-commitify-yellow/30 focus:ring-commitify-yellow/50`} 
