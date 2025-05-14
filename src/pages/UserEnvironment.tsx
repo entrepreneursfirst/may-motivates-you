@@ -252,7 +252,7 @@ const UserEnvironment = () => {
             </span>
           </a>
           
-          {/* Home button - updated text from "Back to Home" to "Home" */}
+          {/* Home button */}
           <Button variant="outline" onClick={() => navigate('/')} className="flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" />
             Home
@@ -266,12 +266,12 @@ const UserEnvironment = () => {
           <div className="md:col-span-1">
             <Card className="sticky top-24 z-10">
               <CardHeader className="flex flex-row items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <UserRound className="w-5 h-5 text-commitify-text" />
-                  <div>
-                    <CardTitle>Profile</CardTitle>
-                    <CardDescription>Manage your personal information</CardDescription>
-                  </div>
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <UserRound className="w-5 h-5 text-commitify-text" />
+                    Profile
+                  </CardTitle>
+                  <CardDescription>Manage your personal information</CardDescription>
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => setIsEditingProfile(!isEditingProfile)}>
                   {isEditingProfile ? <X className="h-4 w-4" /> : <Edit className="h-4 w-4" />}
@@ -379,13 +379,11 @@ const UserEnvironment = () => {
             {/* Active Agent Section */}
             <Card>
               <CardHeader>
-                <div className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2">
                   <Bot className="w-5 h-5 text-commitify-text" />
-                  <div>
-                    <CardTitle>Your Active Agent</CardTitle>
-                    <CardDescription>Manage your active agent and preferences</CardDescription>
-                  </div>
-                </div>
+                  Your Active Agent
+                </CardTitle>
+                <CardDescription>Manage your active agent and preferences</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="p-4 bg-gradient-to-r from-[#FFC371] via-[#FFAA5B] to-[#FDE365] rounded-lg text-commitify-text mb-6">
