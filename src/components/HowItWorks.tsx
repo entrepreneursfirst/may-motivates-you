@@ -97,9 +97,7 @@ const HowItWorks = () => {
         </div>
         
         <div className="mt-16 text-center">
-          <Button onClick={() => scrollToSection('pricing')} className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-bold py-4 px-10 rounded-full shadow-lg hover:shadow-xl transition-all">
-            Try It Now
-          </Button>
+          <Button onClick={() => scrollToSection('pricing')} className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-bold py-4 px-10 rounded-full shadow-lg hover:shadow-xl transition-all">Explore Our Subscriptions</Button>
         </div>
       </div>
     </div>
