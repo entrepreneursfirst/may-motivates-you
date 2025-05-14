@@ -13,7 +13,7 @@ const step1 = {
 const step2 = {
   imageSrc: "/lovable-uploads/bff9745b-e164-44f7-afc9-26c5b1823fce.png",
   title: <>
-      Set the <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">call time</span>, frequency & vibe
+      Set the <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">call time</span>, vibe & frequency
     </>,
   description: "Choose when you want to be called—and who you want the caller to be."
 };
@@ -65,7 +65,7 @@ const HowItWorks = () => {
           {/* Step 2 */}
           <div className="flex flex-col items-center text-center">
             <div className="mb-2 flex items-center justify-center h-[350px] md:h-[350px]">
-              <img src={step2.imageSrc} alt="Set the call time, frequency & vibe" className="object-contain md:w-[350px] w-[297.5px] md:h-[350px] h-[297.5px]" />
+              <img src={step2.imageSrc} alt="Set the call time, vibe & frequency" className="object-contain md:w-[350px] w-[297.5px] md:h-[350px] h-[297.5px]" />
             </div>
             <div className="h-16 md:h-20 flex items-start justify-center mb-1">
               <h3 className="text-3xl font-extrabold mb-1 md:mb-1">
