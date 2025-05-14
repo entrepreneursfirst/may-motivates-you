@@ -29,12 +29,12 @@ const FixedCTA = () => {
   
   return (
     <div className="fixed bottom-6 left-0 right-0 z-40 px-4">
-      <div className="max-w-lg mx-auto bg-white border border-gray-200 rounded-full shadow-lg p-3 flex items-center justify-between">
+      <div className="max-w-lg mx-auto bg-white border border-gray-200 rounded-full shadow-lg p-3 flex items-center justify-between md:justify-between justify-center">
         <p className="ml-2 font-semibold hidden md:block">
           Let your AI coach call you now
         </p>
         <Button 
-          className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text rounded-full flex items-center gap-2"
+          className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text rounded-full flex items-center gap-2 md:ml-0 mx-auto md:mx-0"
           onClick={scrollToTop}
         >
           <Phone className="w-4 h-4" />
