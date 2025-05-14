@@ -38,6 +38,7 @@ import { ScheduledCall } from "@/components/ScheduledCall";
 import { TimeSelector } from "@/components/TimeSelector";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useNavigate } from 'react-router-dom';
+import Footer from '@/components/Footer';
 
 // Import agents from the Agents component
 const agents = [{
@@ -638,6 +639,9 @@ const UserEnvironment = () => {
           </div>
         </div>
       </div>
+      
+      {/* Add the Footer component */}
+      <Footer />
       
       {/* Subscription Plan Selection Dialog */}
       <Dialog open={showPlanDialog} onOpenChange={setShowPlanDialog}>
