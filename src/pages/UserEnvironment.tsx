@@ -1,29 +1,6 @@
 import React, { useState } from 'react';
-import { 
-  Calendar as CalendarIcon, 
-  Clock, 
-  Edit,
-  File, 
-  FileText,
-  Mail, 
-  MessageSquare, 
-  Phone, 
-  Settings, 
-  UserRound,
-  Trash2,
-  X,
-  Check,
-  ArrowLeft,
-  Bot
-} from 'lucide-react';
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
+import { Calendar as CalendarIcon, Clock, Edit, File, FileText, Mail, MessageSquare, Phone, Settings, UserRound, Trash2, X, Check, ArrowLeft, Bot } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -87,51 +64,47 @@ const agents = [{
 }];
 
 // Get plans data from Pricing component
-const plans = [
-  {
-    name: "Cold Call",
-    emoji: "❄️",
-    description: "Just dip your toes in",
-    price: "$7.50",
-    period: "one-time",
-    color: "bg-[#1EAEDB]/20 text-[#1EAEDB]",
-    billingNote: "One-time payment"
-  },
-  {
-    name: "Acquaintance",
-    emoji: "👋",
-    description: "Perfect for getting started",
-    price: "$3.75",
-    period: "per week",
-    color: "bg-commitify-blue/20 text-commitify-blue",
-    billingNote: "Billed Monthly"
-  },
-  {
-    name: "Bestie",
-    emoji: "🫶",
-    description: "Our most popular choice",
-    price: "$5.00",
-    period: "per week",
-    color: "bg-commitify-yellow/20 text-commitify-text",
-    billingNote: "Billed Monthly"
-  },
-  {
-    name: "Ride or Die",
-    emoji: "💯",
-    description: "Maximum accountability",
-    price: "$6.50",
-    period: "per week",
-    color: "bg-commitify-blue/20 text-commitify-blue",
-    billingNote: "Billed Monthly"
-  }
-];
-
+const plans = [{
+  name: "Cold Call",
+  emoji: "❄️",
+  description: "Just dip your toes in",
+  price: "$7.50",
+  period: "one-time",
+  color: "bg-[#1EAEDB]/20 text-[#1EAEDB]",
+  billingNote: "One-time payment"
+}, {
+  name: "Acquaintance",
+  emoji: "👋",
+  description: "Perfect for getting started",
+  price: "$3.75",
+  period: "per week",
+  color: "bg-commitify-blue/20 text-commitify-blue",
+  billingNote: "Billed Monthly"
+}, {
+  name: "Bestie",
+  emoji: "🫶",
+  description: "Our most popular choice",
+  price: "$5.00",
+  period: "per week",
+  color: "bg-commitify-yellow/20 text-commitify-text",
+  billingNote: "Billed Monthly"
+}, {
+  name: "Ride or Die",
+  emoji: "💯",
+  description: "Maximum accountability",
+  price: "$6.50",
+  period: "per week",
+  color: "bg-commitify-blue/20 text-commitify-blue",
+  billingNote: "Billed Monthly"
+}];
 const UserEnvironment = () => {
   // Add navigate function for routing
   const navigate = useNavigate();
-  
+
   // Toast notifications
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
 
   // State for editing profile
   const [isEditingProfile, setIsEditingProfile] = useState(false);
@@ -144,7 +117,7 @@ const UserEnvironment = () => {
     gender: "Male",
     birthdate: new Date(1990, 0, 1)
   });
-  
+
   // State for active agent
   const [activeAgentId, setActiveAgentId] = useState(1);
 
@@ -164,14 +137,17 @@ const UserEnvironment = () => {
   const [timeRangeMode, setTimeRangeMode] = useState(false);
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("17:00");
-  
+
   // Scheduled calls
   const [scheduledCalls, setScheduledCalls] = useState<Array<{
     date: Date;
     time: string | null;
-    timeRange?: { start: string; end: string } | null;
+    timeRange?: {
+      start: string;
+      end: string;
+    } | null;
   }>>([]);
-  
+
   // Get active agent
   const activeAgent = agents.find(agent => agent.id === activeAgentId) || agents[0];
 
@@ -193,7 +169,10 @@ const UserEnvironment = () => {
         setScheduledCalls([...scheduledCalls, {
           date: selectedDate,
           time: null,
-          timeRange: { start: rangeStart, end: rangeEnd }
+          timeRange: {
+            start: rangeStart,
+            end: rangeEnd
+          }
         }]);
       }
     } else if (time && selectedDate) {
@@ -202,15 +181,14 @@ const UserEnvironment = () => {
         time: time
       }]);
     }
-    
+
     // Reset selection states
     setSelectedDate(undefined);
     setShowTimeSelector(false);
     setSelectedTime(null);
-    
     toast({
       title: "Call scheduled",
-      description: "Your call has been added to the schedule.",
+      description: "Your call has been added to the schedule."
     });
   };
 
@@ -219,10 +197,9 @@ const UserEnvironment = () => {
     const updatedCalls = [...scheduledCalls];
     updatedCalls.splice(index, 1);
     setScheduledCalls(updatedCalls);
-    
     toast({
       title: "Call removed",
-      description: "The call has been removed from your schedule.",
+      description: "The call has been removed from your schedule."
     });
   };
 
@@ -236,16 +213,15 @@ const UserEnvironment = () => {
   const handleSelectPlan = (planName: string) => {
     setSelectedPlan(planName);
   };
-  
+
   // Handle plan confirmation
   const handleConfirmPlan = () => {
     if (selectedPlan) {
       setActivePlan(selectedPlan);
       setShowPlanDialog(false);
-      
       toast({
         title: "Plan updated",
-        description: `Your subscription has been updated to ${selectedPlan}.`,
+        description: `Your subscription has been updated to ${selectedPlan}.`
       });
     }
   };
@@ -255,21 +231,15 @@ const UserEnvironment = () => {
     toast({
       title: "Cancel subscription",
       description: "Are you sure you want to cancel your subscription?",
-      action: (
-        <Button variant="destructive" size="sm" onClick={() => 
-          toast({
-            title: "Subscription canceled",
-            description: "Your subscription has been canceled.",
-          })
-        }>
+      action: <Button variant="destructive" size="sm" onClick={() => toast({
+        title: "Subscription canceled",
+        description: "Your subscription has been canceled."
+      })}>
           Confirm
         </Button>
-      ),
     });
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-commitify-background to-commitify-background/90">
+  return <div className="min-h-screen bg-gradient-to-br from-commitify-background to-commitify-background/90">
       {/* Header with logo */}
       <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -278,16 +248,12 @@ const UserEnvironment = () => {
               <span className="bg-commitify-yellow rounded-full p-1">
                 <Clock className="w-5 h-5 text-commitify-text" />
               </span>
-              <span>Commitify</span>
+              <span>Commitify | User Environment</span>
             </span>
           </a>
           
           {/* Back to landing page button */}
-          <Button 
-            variant="outline" 
-            onClick={() => navigate('/')} 
-            className="flex items-center gap-2"
-          >
+          <Button variant="outline" onClick={() => navigate('/')} className="flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" />
             Back to Home
           </Button>
@@ -307,11 +273,7 @@ const UserEnvironment = () => {
                     <CardDescription>Manage your personal information</CardDescription>
                   </div>
                 </div>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  onClick={() => setIsEditingProfile(!isEditingProfile)}
-                >
+                <Button variant="ghost" size="icon" onClick={() => setIsEditingProfile(!isEditingProfile)}>
                   {isEditingProfile ? <X className="h-4 w-4" /> : <Edit className="h-4 w-4" />}
                 </Button>
               </CardHeader>
@@ -319,107 +281,72 @@ const UserEnvironment = () => {
                 <div className="space-y-3">
                   <div className="space-y-1">
                     <Label>Name</Label>
-                    {isEditingProfile ? (
-                      <Input 
-                        value={userProfile.name} 
-                        onChange={e => setUserProfile({...userProfile, name: e.target.value})}
-                      />
-                    ) : (
-                      <p className="text-base">{userProfile.name}</p>
-                    )}
+                    {isEditingProfile ? <Input value={userProfile.name} onChange={e => setUserProfile({
+                    ...userProfile,
+                    name: e.target.value
+                  })} /> : <p className="text-base">{userProfile.name}</p>}
                   </div>
                   
                   <div className="space-y-1">
                     <Label>Phone</Label>
-                    {isEditingProfile ? (
-                      <div className="flex items-center space-x-2">
+                    {isEditingProfile ? <div className="flex items-center space-x-2">
                         <Phone className="w-4 h-4 text-muted-foreground" />
-                        <Input 
-                          value={userProfile.phone} 
-                          onChange={e => setUserProfile({...userProfile, phone: e.target.value})}
-                        />
-                      </div>
-                    ) : (
-                      <p className="text-base flex items-center gap-2">
+                        <Input value={userProfile.phone} onChange={e => setUserProfile({
+                      ...userProfile,
+                      phone: e.target.value
+                    })} />
+                      </div> : <p className="text-base flex items-center gap-2">
                         <Phone className="w-4 h-4 text-muted-foreground" />
                         {userProfile.phone}
-                      </p>
-                    )}
+                      </p>}
                   </div>
                   
                   <div className="space-y-1">
                     <Label>Location</Label>
-                    {isEditingProfile ? (
-                      <Input 
-                        value={userProfile.location} 
-                        onChange={e => setUserProfile({...userProfile, location: e.target.value})}
-                      />
-                    ) : (
-                      <p className="text-base">{userProfile.location}</p>
-                    )}
+                    {isEditingProfile ? <Input value={userProfile.location} onChange={e => setUserProfile({
+                    ...userProfile,
+                    location: e.target.value
+                  })} /> : <p className="text-base">{userProfile.location}</p>}
                   </div>
                   
                   <div className="space-y-1">
                     <Label>Gender</Label>
-                    {isEditingProfile ? (
-                      <select 
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        value={userProfile.gender}
-                        onChange={e => setUserProfile({...userProfile, gender: e.target.value})}
-                      >
+                    {isEditingProfile ? <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" value={userProfile.gender} onChange={e => setUserProfile({
+                    ...userProfile,
+                    gender: e.target.value
+                  })}>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Non-binary">Non-binary</option>
                         <option value="Prefer not to say">Prefer not to say</option>
-                      </select>
-                    ) : (
-                      <p className="text-base">{userProfile.gender}</p>
-                    )}
+                      </select> : <p className="text-base">{userProfile.gender}</p>}
                   </div>
                   
                   <div className="space-y-1">
                     <Label>Birth Date</Label>
-                    {isEditingProfile ? (
-                      <Popover>
+                    {isEditingProfile ? <Popover>
                         <PopoverTrigger asChild>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-full justify-start text-left font-normal",
-                              !userProfile.birthdate && "text-muted-foreground"
-                            )}
-                          >
+                          <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !userProfile.birthdate && "text-muted-foreground")}>
                             <CalendarIcon className="mr-2 h-4 w-4" />
                             {userProfile.birthdate ? format(userProfile.birthdate, "PPP") : <span>Pick a date</span>}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0">
-                          <CalendarComponent
-                            mode="single"
-                            selected={userProfile.birthdate}
-                            onSelect={(date) => date && setUserProfile({...userProfile, birthdate: date})}
-                            initialFocus
-                            className={cn("p-3 pointer-events-auto")}
-                          />
+                          <CalendarComponent mode="single" selected={userProfile.birthdate} onSelect={date => date && setUserProfile({
+                        ...userProfile,
+                        birthdate: date
+                      })} initialFocus className={cn("p-3 pointer-events-auto")} />
                         </PopoverContent>
-                      </Popover>
-                    ) : (
-                      <p className="text-base">
+                      </Popover> : <p className="text-base">
                         {userProfile.birthdate ? format(userProfile.birthdate, "PPP") : "Not provided"}
-                      </p>
-                    )}
+                      </p>}
                   </div>
                 </div>
                 
-                {isEditingProfile && (
-                  <Button
-                    onClick={() => setIsEditingProfile(false)}
-                    className="w-full"
-                  >
+                {isEditingProfile && <Button onClick={() => setIsEditingProfile(false)} className="w-full">
                     <Check className="mr-2 h-4 w-4" />
                     Save Changes
-                  </Button>
-                )}
+                  </Button>}
                 
                 {/* Subscription Plan Section */}
                 <div className="space-y-4 border-t pt-4">
@@ -435,18 +362,10 @@ const UserEnvironment = () => {
                   </div>
                   
                   <div className="flex flex-col space-y-2">
-                    <Button 
-                      onClick={handleChangeSubscription}
-                      variant="outline"
-                      className="w-full"
-                    >
+                    <Button onClick={handleChangeSubscription} variant="outline" className="w-full">
                       Change Plan
                     </Button>
-                    <Button 
-                      onClick={handleCancelSubscription}
-                      variant="ghost" 
-                      className="w-full text-muted-foreground hover:text-destructive"
-                    >
+                    <Button onClick={handleCancelSubscription} variant="ghost" className="w-full text-muted-foreground hover:text-destructive">
                       Cancel Subscription
                     </Button>
                   </div>
@@ -472,11 +391,7 @@ const UserEnvironment = () => {
                 <div className="p-4 bg-gradient-to-r from-[#FFC371] via-[#FFAA5B] to-[#FDE365] rounded-lg text-commitify-text mb-6">
                   <div className="flex items-start gap-4">
                     <div className="w-24 h-24 rounded-full bg-white p-1 overflow-hidden flex-shrink-0">
-                      <img 
-                        src={activeAgent.image} 
-                        alt={activeAgent.name} 
-                        className="w-full h-full object-cover object-top rounded-full"
-                      />
+                      <img src={activeAgent.image} alt={activeAgent.name} className="w-full h-full object-cover object-top rounded-full" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2 mb-2">
@@ -493,22 +408,12 @@ const UserEnvironment = () => {
                 
                 <h4 className="font-medium mb-3">Select a different agent</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {agents.map(agent => (
-                    <button
-                      key={agent.id}
-                      className={`p-3 rounded-lg border-2 transition-all ${
-                        agent.id === activeAgentId 
-                          ? "border-commitify-yellow bg-commitify-yellow/10" 
-                          : "border-transparent hover:border-commitify-yellow/50"
-                      }`}
-                      onClick={() => setActiveAgentId(agent.id)}
-                    >
+                  {agents.map(agent => <button key={agent.id} className={`p-3 rounded-lg border-2 transition-all ${agent.id === activeAgentId ? "border-commitify-yellow bg-commitify-yellow/10" : "border-transparent hover:border-commitify-yellow/50"}`} onClick={() => setActiveAgentId(agent.id)}>
                       <div className="flex items-center gap-2">
                         <span className="text-xl">{agent.emoji}</span>
                         <span className="font-medium">{agent.name}</span>
                       </div>
-                    </button>
-                  ))}
+                    </button>)}
                 </div>
               </CardContent>
             </Card>
@@ -534,59 +439,32 @@ const UserEnvironment = () => {
                       {/* Calendar for date selection */}
                       <div className="border rounded-md p-4">
                         <h4 className="font-medium mb-3">Select dates for calls</h4>
-                        <CalendarComponent
-                          mode="single"
-                          selected={selectedDate}
-                          onSelect={handleDateSelect}
-                          className={cn("mx-auto p-3 pointer-events-auto")}
-                        />
+                        <CalendarComponent mode="single" selected={selectedDate} onSelect={handleDateSelect} className={cn("mx-auto p-3 pointer-events-auto")} />
                       </div>
                       
                       {/* Time selection when date is selected */}
                       <div className="border rounded-md p-4">
-                        {showTimeSelector ? (
-                          <>
+                        {showTimeSelector ? <>
                             <h4 className="font-medium mb-3">
                               Select time for {selectedDate ? format(selectedDate, "MMMM d, yyyy") : "call"}
                             </h4>
-                            <TimeSelector
-                              onTimeSelect={handleTimeSelect}
-                              rangeMode={timeRangeMode}
-                              setRangeMode={setTimeRangeMode}
-                              startTime={startTime}
-                              endTime={endTime}
-                              setStartTime={setStartTime}
-                              setEndTime={setEndTime}
-                            />
-                          </>
-                        ) : (
-                          <div className="flex items-center justify-center h-full">
+                            <TimeSelector onTimeSelect={handleTimeSelect} rangeMode={timeRangeMode} setRangeMode={setTimeRangeMode} startTime={startTime} endTime={endTime} setStartTime={setStartTime} setEndTime={setEndTime} />
+                          </> : <div className="flex items-center justify-center h-full">
                             <p className="text-muted-foreground text-center">
                               Select a date from the calendar to schedule a call
                             </p>
-                          </div>
-                        )}
+                          </div>}
                       </div>
                     </div>
                     
                     {/* Scheduled calls list */}
                     <div className="mt-6 border rounded-md p-4">
                       <h4 className="font-medium mb-3">Scheduled calls</h4>
-                      {scheduledCalls.length === 0 ? (
-                        <p className="text-muted-foreground text-center py-4">
+                      {scheduledCalls.length === 0 ? <p className="text-muted-foreground text-center py-4">
                           No calls scheduled yet. Select a date above to schedule a call.
-                        </p>
-                      ) : (
-                        <div className="space-y-2">
-                          {scheduledCalls.map((call, index) => (
-                            <ScheduledCall 
-                              key={index}
-                              call={call}
-                              onDelete={() => handleDeleteCall(index)}
-                            />
-                          ))}
-                        </div>
-                      )}
+                        </p> : <div className="space-y-2">
+                          {scheduledCalls.map((call, index) => <ScheduledCall key={index} call={call} onDelete={() => handleDeleteCall(index)} />)}
+                        </div>}
                     </div>
                   </CardContent>
                 </Card>
@@ -605,10 +483,7 @@ const UserEnvironment = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Textarea 
-                      placeholder="E.g., I want to track my workout progress, remind me to exercise 3 times a week..."
-                      className="min-h-[150px]"
-                    />
+                    <Textarea placeholder="E.g., I want to track my workout progress, remind me to exercise 3 times a week..." className="min-h-[150px]" />
                     <Button className="w-full mt-4">
                       Submit to Agent
                     </Button>
@@ -676,14 +551,7 @@ const UserEnvironment = () => {
             </DialogDescription>
           </DialogHeader>
           <div className="grid grid-cols-1 gap-4 py-4">
-            {plans.map(plan => (
-              <button
-                key={plan.name}
-                className={`p-4 rounded-lg ${plan.color} flex items-center justify-between hover:opacity-90 transition-opacity ${
-                  selectedPlan === plan.name ? 'ring-2 ring-primary' : ''
-                }`}
-                onClick={() => handleSelectPlan(plan.name)}
-              >
+            {plans.map(plan => <button key={plan.name} className={`p-4 rounded-lg ${plan.color} flex items-center justify-between hover:opacity-90 transition-opacity ${selectedPlan === plan.name ? 'ring-2 ring-primary' : ''}`} onClick={() => handleSelectPlan(plan.name)}>
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">{plan.emoji}</span>
                   <div className="text-left">
@@ -696,24 +564,18 @@ const UserEnvironment = () => {
                   <p className="text-xs">{plan.period}</p>
                   {plan.billingNote && <p className="text-xs opacity-70">{plan.billingNote}</p>}
                 </div>
-              </button>
-            ))}
+              </button>)}
           </div>
           <DialogFooter className="flex justify-between items-center mt-4">
             <Button variant="outline" onClick={() => setShowPlanDialog(false)}>
               Cancel
             </Button>
-            <Button 
-              onClick={handleConfirmPlan} 
-              disabled={!selectedPlan}
-            >
+            <Button onClick={handleConfirmPlan} disabled={!selectedPlan}>
               Confirm
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
-  );
+    </div>;
 };
-
 export default UserEnvironment;
