@@ -19,7 +19,8 @@ const plans = [
     ],
     popular: false,
     buttonText: "Get Started",
-    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
+    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
+    headerText: "For the curious"
   },
   {
     name: "Bestie",
@@ -35,7 +36,8 @@ const plans = [
     ],
     popular: true,
     buttonText: "Most Popular",
-    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
+    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
+    headerText: "Most Popular"
   },
   {
     name: "Ride or Die",
@@ -50,7 +52,8 @@ const plans = [
     ],
     popular: false,
     buttonText: "Go Premium",
-    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
+    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
+    headerText: "For the committed"
   }
 ];
 
@@ -99,12 +102,16 @@ const Pricing = () => {
                   : 'border-gray-100'
               } bg-gradient-to-br from-violet-50 to-violet-100 h-full flex flex-col`}
             >
-              {/* Fixed height container for "Most Popular" badge */}
+              {/* Fixed height container for header */}
               <div className="h-[40px] flex items-center justify-center">
-                {plan.popular && (
-                  <div className="bg-commitify-yellow text-commitify-text text-center py-2 font-medium flex items-center justify-center w-full">
-                    <Star className="w-4 h-4 mr-2" />
-                    Most Popular
+                {(plan.popular || plan.headerText) && (
+                  <div className={`${
+                    plan.popular 
+                      ? 'bg-commitify-yellow text-commitify-text' 
+                      : 'bg-commitify-blue text-white'
+                    } text-center py-2 font-medium flex items-center justify-center w-full`}>
+                    {plan.popular ? <Star className="w-4 h-4 mr-2" /> : null}
+                    {plan.headerText}
                   </div>
                 )}
               </div>
