@@ -41,7 +41,7 @@ const WhyWeBuiltThis = () => {
                 {/* Mehdi Greefhorst */}
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
                   <div className="flex items-center">
-                    <img src="/lovable-uploads/04aa2041-2f74-4ee1-9cc8-644ca6e5fc26.png" alt="Mehdi Greefhorst" className="w-12 h-12 rounded-full object-cover mr-4" />
+                    <img src="/lovable-uploads/58d0c2bf-1239-4fe5-aaa0-516a235d9258.png" alt="Mehdi Greefhorst" className="w-12 h-12 rounded-full object-cover mr-4" />
                     <div>
                       <p className="font-bold">Mehdi Greefhorst</p>
                       <p className="text-sm text-commitify-secondary">Founder</p>
@@ -52,7 +52,7 @@ const WhyWeBuiltThis = () => {
                 {/* Carlo Porcelli */}
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
                   <div className="flex items-center">
-                    <img src="/lovable-uploads/58d0c2bf-1239-4fe5-aaa0-516a235d9258.png" alt="Carlo Porcelli" className="w-12 h-12 rounded-full object-cover mr-4" />
+                    <img src="/lovable-uploads/04aa2041-2f74-4ee1-9cc8-644ca6e5fc26.png" alt="Carlo Porcelli" className="w-12 h-12 rounded-full object-cover mr-4" />
                     <div>
                       <p className="font-bold">Carlo Porcelli</p>
                       <p className="text-sm text-commitify-secondary">Founder</p>
