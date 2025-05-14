@@ -95,6 +95,7 @@ const plans = [
     price: "$7.50",
     period: "one-time",
     color: "bg-[#1EAEDB]/20 text-[#1EAEDB]",
+    billingNote: "One-time payment"
   },
   {
     name: "Acquaintance",
@@ -103,6 +104,7 @@ const plans = [
     price: "$3.75",
     period: "per week",
     color: "bg-commitify-blue/20 text-commitify-blue",
+    billingNote: "Billed Monthly"
   },
   {
     name: "Bestie",
@@ -111,6 +113,7 @@ const plans = [
     price: "$5.00",
     period: "per week",
     color: "bg-commitify-yellow/20 text-commitify-text",
+    billingNote: "Billed Monthly"
   },
   {
     name: "Ride or Die",
@@ -119,6 +122,7 @@ const plans = [
     price: "$6.50",
     period: "per week",
     color: "bg-commitify-blue/20 text-commitify-blue",
+    billingNote: "Billed Monthly"
   }
 ];
 
@@ -692,6 +696,7 @@ const UserEnvironment = () => {
                 <div className="text-right">
                   <p className="font-bold">{plan.price}</p>
                   <p className="text-xs">{plan.period}</p>
+                  {plan.billingNote && <p className="text-xs opacity-70">{plan.billingNote}</p>}
                 </div>
               </button>
             ))}
