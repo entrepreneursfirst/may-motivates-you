@@ -141,10 +141,10 @@ const Pricing = () => {
               <CardFooter className="pt-4 mt-auto">
                 <Button 
                   className={`w-full ${
-                    selectedPlan === plan.name
-                      ? 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'
-                      : plan.popular 
+                    plan.popular 
                       ? 'bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text' 
+                      : selectedPlan === plan.name
+                      ? 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'
                       : 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'
                   } rounded-full`}
                   onClick={() => handleSelectPlan(plan.name)}
