@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -128,7 +129,7 @@ const SocialProof = () => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16 relative">
           <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-            What Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Members</span> Say 
+            What Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Members</span> Say 
           </h2>
           <img src="/lovable-uploads/d2c6c635-074a-4194-ad78-9aa1d54f6d17.png" alt="Happy emoji" className="w-48 h-auto absolute -right-64 md:right-[-20rem] top-0 md:-top-6 object-contain" />
           <p className="text-xl text-commitify-secondary">Real calls leading to real results: these people got the push they needed.</p>
