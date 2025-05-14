@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Clock, Info, HelpCircle, Mail } from 'lucide-react';
+import { Clock, Info, Mail } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
@@ -43,15 +43,6 @@ const Footer = () => {
             >
               Contact
               <Mail className="w-4 h-4" />
-              <span className="text-sm ml-1">help@commitify.me</span>
-            </a>
-            
-            <a 
-              href="mailto:help@commitify.me" 
-              className="text-commitify-secondary hover:text-commitify-blue transition-colors flex items-center gap-1"
-            >
-              Help
-              <HelpCircle className="w-4 h-4" />
               <span className="text-sm ml-1">help@commitify.me</span>
             </a>
           </div>
