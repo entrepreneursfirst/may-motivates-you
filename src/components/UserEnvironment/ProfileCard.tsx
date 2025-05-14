@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { useToast } from "@/hooks/use-toast";
+import CancelSubscriptionDialog from './CancelSubscriptionDialog';
 
 interface ProfileCardProps {
   userProfile: {
@@ -47,7 +48,21 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   handleCancelSubscription,
 }) => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
   const { toast } = useToast();
+
+  const handleConfirmCancel = (feedback?: string) => {
+    setShowCancelDialog(false);
+    handleCancelSubscription();
+    
+    // Display a message about the feedback if provided
+    if (feedback && feedback.trim()) {
+      toast({
+        title: "Thank you for your feedback",
+        description: "We appreciate you taking the time to share your thoughts."
+      });
+    }
+  };
 
   return (
     <Card className="sticky top-24 z-10">
@@ -151,11 +166,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             <Button onClick={handleChangeSubscription} variant="outline" className="w-full">
               Change Plan
             </Button>
-            <Button onClick={handleCancelSubscription} variant="ghost" className="w-full text-muted-foreground hover:text-destructive">
+            <Button onClick={() => setShowCancelDialog(true)} variant="ghost" className="w-full text-muted-foreground hover:text-destructive">
               Cancel Subscription
             </Button>
           </div>
         </div>
+
+        {/* Cancel Subscription Dialog */}
+        <CancelSubscriptionDialog 
+          open={showCancelDialog}
+          onOpenChange={setShowCancelDialog}
+          onConfirmCancel={handleConfirmCancel}
+        />
       </CardContent>
     </Card>
   );

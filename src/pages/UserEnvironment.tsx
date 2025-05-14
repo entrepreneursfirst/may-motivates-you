@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button"; // Add this import
+import { Button } from "@/components/ui/button";
 import Footer from '@/components/Footer';
 import ProfileCard from '@/components/UserEnvironment/ProfileCard';
 import ActiveAgentCard from '@/components/UserEnvironment/ActiveAgentCard';
@@ -226,15 +225,10 @@ const UserEnvironment = () => {
 
   // Handle cancel subscription
   const handleCancelSubscription = () => {
+    // Here you would typically call an API to cancel the subscription
     toast({
-      title: "Cancel subscription",
-      description: "Are you sure you want to cancel your subscription?",
-      action: <Button variant="destructive" size="sm" onClick={() => toast({
-        title: "Subscription canceled",
-        description: "Your subscription has been canceled."
-      })}>
-          Confirm
-        </Button>
+      title: "Subscription canceled",
+      description: "Your subscription has been canceled successfully."
     });
   };
 
