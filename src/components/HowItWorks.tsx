@@ -45,49 +45,49 @@ const HowItWorks = () => {
           Three simple steps to boost your productivity
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-6 md:gap-10">
           {/* Step 1 - Each section is now individually editable */}
           <div className="flex flex-col items-center text-center">
-            <div className="mb-2 flex items-center justify-center h-[350px] md:h-[350px]">
-              <img src={step1.imageSrc} alt="Upload your schedule & goals" className="object-contain md:w-[350px] w-[297.5px] md:h-[350px] h-[297.5px]" />
+            <div className="mb-4 md:mb-2 flex items-center justify-center h-auto md:h-[350px]">
+              <img src={step1.imageSrc} alt="Upload your schedule & goals" className="object-contain w-full max-w-[300px] h-auto" />
             </div>
-            {/* All titles use the same fixed height with top alignment */}
-            <div className="h-16 md:h-20 flex items-start justify-center mb-1">
-              <h3 className="text-3xl font-extrabold mb-1 md:mb-1">
+            {/* All titles use the same styling with better mobile responsiveness */}
+            <div className="flex items-start justify-center mb-1 text-center">
+              <h3 className="text-2xl md:text-3xl font-extrabold mb-2 text-center">
                 {step1.title}
               </h3>
             </div>
-            <p className="text-commitify-secondary text-lg mt-4 md:mt-1">
+            <p className="text-commitify-secondary text-base mt-2 md:mt-1">
               {step1.description}
             </p>
           </div>
           
           {/* Step 2 */}
           <div className="flex flex-col items-center text-center">
-            <div className="mb-2 flex items-center justify-center h-[350px] md:h-[350px]">
-              <img src={step2.imageSrc} alt="Set the call time, vibe & frequency" className="object-contain md:w-[350px] w-[297.5px] md:h-[350px] h-[297.5px]" />
+            <div className="mb-4 md:mb-2 flex items-center justify-center h-auto md:h-[350px]">
+              <img src={step2.imageSrc} alt="Set the call time, vibe & frequency" className="object-contain w-full max-w-[300px] h-auto" />
             </div>
-            <div className="h-16 md:h-20 flex items-start justify-center mb-1">
-              <h3 className="text-3xl font-extrabold mb-1 md:mb-1">
+            <div className="flex items-start justify-center mb-1 text-center">
+              <h3 className="text-2xl md:text-3xl font-extrabold mb-2 text-center">
                 {step2.title}
               </h3>
             </div>
-            <p className="text-commitify-secondary text-lg mt-4 md:mt-1">
+            <p className="text-commitify-secondary text-base mt-2 md:mt-1">
               {step2.description}
             </p>
           </div>
           
           {/* Step 3 */}
           <div className="flex flex-col items-center text-center">
-            <div className="mb-2 flex items-center justify-center h-[350px] md:h-[350px]">
-              <img src={step3.imageSrc} alt="Get phone call check-ins from your AI coach" className="object-contain md:w-[350px] w-[297.5px] md:h-[350px] h-[297.5px]" />
+            <div className="mb-4 md:mb-2 flex items-center justify-center h-auto md:h-[350px]">
+              <img src={step3.imageSrc} alt="Get phone call check-ins from your AI coach" className="object-contain w-full max-w-[300px] h-auto" />
             </div>
-            <div className="h-16 md:h-20 flex items-start justify-center mb-1">
-              <h3 className="text-3xl font-extrabold mb-1 md:mb-1">
+            <div className="flex items-start justify-center mb-1 text-center">
+              <h3 className="text-2xl md:text-3xl font-extrabold mb-2 text-center">
                 {step3.title}
               </h3>
             </div>
-            <p className="text-commitify-secondary text-lg mt-4 md:mt-1">
+            <p className="text-commitify-secondary text-base mt-2 md:mt-1">
               {step3.description}
             </p>
           </div>

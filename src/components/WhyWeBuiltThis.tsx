@@ -15,7 +15,7 @@ const WhyWeBuiltThis = () => {
             Why We Built <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Commitify</span>
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
             <div className="md:col-span-2 space-y-6 pr-4 md:pr-8 lg:pr-12">
               <p className="text-lg">AI has proven itself as a powerful reflection partner. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in a way that sticks. Is it a journaling app? A chatbot you open when you're feeling stuck? A dashboard that tracks your progress and sends push notifications? </p>
               
