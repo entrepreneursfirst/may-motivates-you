@@ -107,7 +107,7 @@ const Agents = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="relative">
           {/* Flower sticker positioned relative to the container - moved down on mobile */}
-          <div className={`absolute -left-10 ${isMobile ? 'top-[120px]' : 'top-0'} w-24 md:w-32 lg:w-40 h-auto z-0 opacity-90`}>
+          <div className={`absolute -left-10 ${isMobile ? 'top-[60px]' : 'top-0'} w-24 md:w-32 lg:w-40 h-auto z-0 opacity-90`}>
             <img src="/lovable-uploads/10ed87d9-b6c4-46ea-b814-44c6687e494f.png" alt="Flower sticker" className="w-full h-auto" />
           </div>
           
