@@ -37,15 +37,22 @@ const WhyWeBuiltThis = () => {
                     <p className="text-lg">What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.</p>
                   </CollapsibleContent>
                   
-                  {/* Read more gradient button */}
+                  {/* Read more button - now transparent with glimpse of next content */}
                   <CollapsibleTrigger asChild>
                     <div className="relative">
                       {!isOpen && (
-                        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-commitify-yellow/20 to-transparent pointer-events-none"></div>
+                        <>
+                          {/* Preview text glimpse with gradient overlay */}
+                          <div className="mt-2 text-lg opacity-60 line-clamp-2">
+                            These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off...
+                          </div>
+                          {/* Gradient overlay */}
+                          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-commitify-yellow/20 to-transparent pointer-events-none"></div>
+                        </>
                       )}
                       <Button
                         variant="ghost"
-                        className={`w-full mt-0 ${isOpen ? "" : "mt-2"} bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26] hover:opacity-90 text-white flex items-center justify-center`}
+                        className={`w-full mt-4 bg-transparent hover:bg-transparent border border-[#FF914D]/20 hover:border-[#FF914D]/40 text-[#E57040] flex items-center justify-center`}
                       >
                         {isOpen ? "Show less" : "Read more"}
                         <ChevronDown className={`ml-2 h-4 w-4 transition-transform duration-200 ${isOpen ? "transform rotate-180" : ""}`} />
