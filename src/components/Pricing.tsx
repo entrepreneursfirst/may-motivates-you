@@ -20,7 +20,7 @@ const plans = [
     ],
     popular: false,
     buttonText: "Get Started",
-    gradient: "from-blue-50 to-blue-100"
+    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
   },
   {
     name: "Bestie",
@@ -38,7 +38,7 @@ const plans = [
     ],
     popular: true,
     buttonText: "Most Popular",
-    gradient: "from-yellow-50 to-amber-100"
+    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
   },
   {
     name: "Ride or Die",
@@ -58,7 +58,7 @@ const plans = [
     ],
     popular: false,
     buttonText: "Go Premium",
-    gradient: "from-purple-50 to-purple-100"
+    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
   }
 ];
 
@@ -68,7 +68,6 @@ const extraCallPack = {
   price: "$1.25",
   calls: 1,
   buttonText: "Add Call",
-  gradient: "from-green-50 to-emerald-100"
 };
 
 const Pricing = () => {
@@ -98,7 +97,7 @@ const Pricing = () => {
           {plans.map((plan, index) => (
             <Card 
               key={index}
-              className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${plan.popular ? 'border-commitify-yellow' : 'border-gray-100'} bg-gradient-to-br ${plan.gradient}`}
+              className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${plan.popular ? 'border-commitify-yellow' : 'border-gray-100'} bg-gradient-to-br from-purple-50 to-purple-100 h-full flex flex-col`}
             >
               {plan.popular && (
                 <div className="bg-commitify-yellow text-commitify-text text-center py-2 font-medium flex items-center justify-center">
@@ -112,10 +111,10 @@ const Pricing = () => {
                 <CardDescription>{plan.description}</CardDescription>
               </CardHeader>
               
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 flex-grow">
                 <div className="pt-4">
                   <div className="flex items-center mb-2">
-                    <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
+                    {plan.icon}
                     <span className="font-medium">{plan.calls} calls per week</span>
                   </div>
                   <div className="mb-6">
@@ -134,7 +133,7 @@ const Pricing = () => {
                 </ul>
               </CardContent>
               
-              <CardFooter className="pt-4">
+              <CardFooter className="pt-4 mt-auto">
                 <Button 
                   className={`w-full ${plan.popular ? 'bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text' : 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'} rounded-full`}
                   onClick={() => handleSelectPlan(plan.name)}
@@ -148,16 +147,16 @@ const Pricing = () => {
         
         {/* Extra Call Pack */}
         <div className="mt-12 max-w-xs mx-auto">
-          <Card className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100 bg-gradient-to-br ${extraCallPack.gradient}`}>
+          <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100 bg-gradient-to-br from-purple-50 to-purple-100 flex flex-col h-full">
             <CardHeader className="pb-0">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">Extra Call Pack</CardTitle>
+                <CardTitle className="text-lg">{extraCallPack.name}</CardTitle>
                 <Plus className="text-green-500 w-5 h-5" />
               </div>
               <CardDescription>{extraCallPack.description}</CardDescription>
             </CardHeader>
             
-            <CardContent className="pt-4">
+            <CardContent className="pt-4 flex-grow">
               <div className="flex items-center mb-2">
                 <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
                 <span className="font-medium">+{extraCallPack.calls} extra call</span>
@@ -170,7 +169,7 @@ const Pricing = () => {
               </div>
             </CardContent>
             
-            <CardFooter className="pt-2">
+            <CardFooter className="pt-2 mt-auto">
               <Button 
                 className="w-full bg-green-500 hover:bg-green-600 text-white rounded-full"
                 onClick={() => handleSelectPlan(extraCallPack.name)}
