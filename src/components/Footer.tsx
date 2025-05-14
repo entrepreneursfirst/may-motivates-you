@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Clock, Info, Help, Mail } from 'lucide-react';
+import { Clock, Info, HelpCircle, Mail } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
@@ -56,7 +56,7 @@ const Footer = () => {
                 <TooltipTrigger asChild>
                   <a href="#" className="text-commitify-secondary hover:text-commitify-blue transition-colors flex items-center gap-1">
                     Help
-                    <Help className="w-4 h-4" />
+                    <HelpCircle className="w-4 h-4" />
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
