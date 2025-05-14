@@ -122,16 +122,55 @@ const Footer = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Privacy Dialog - Using the same format but with privacy content */}
+      {/* Privacy Dialog - Updated with comprehensive privacy policy content */}
       <Dialog open={openDialog === 'privacy'} onOpenChange={() => setOpenDialog(null)}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Privacy Policy</DialogTitle>
           </DialogHeader>
           <div className="text-sm space-y-4 mt-4">
-            <p>Date: 14 May 2025</p>
-            <p>At Commitify, we take your privacy seriously. This privacy policy explains how we collect, use, and protect your personal information.</p>
-            <p>For any privacy-related questions, please contact us at help@commitify.com</p>
+            <p>Effective Date: 14 May 2025</p>
+            
+            <p>We respect your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use our AI Call Agent service.</p>
+            
+            <div className="space-y-2">
+              <h3 className="font-bold">1. Information We Collect</h3>
+              <p>We may collect:</p>
+              <ul className="list-disc pl-6 space-y-1">
+                <li>Your name, phone number, and email address</li>
+                <li>Call times, preferences, and usage behavior</li>
+                <li>Feedback you share with the AI agent</li>
+                <li>Call audio recordings, which are stored securely on Retell AI servers</li>
+              </ul>
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="font-bold">2. How We Use Your Information</h3>
+              <p>We use your information to:</p>
+              <ul className="list-disc pl-6 space-y-1">
+                <li>Deliver personalized AI calls and reminders</li>
+                <li>Improve and fine-tune the performance of our AI agents</li>
+                <li>Analyze usage trends to enhance the user experience</li>
+              </ul>
+              <p>We do not sell your personal data to third parties.</p>
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="font-bold">3. Data Security</h3>
+              <p>All data, including call audio, is securely stored using industry-standard encryption. Audio recordings are hosted on Retell AI's secure servers, which comply with relevant data protection protocols.</p>
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="font-bold">4. Your Choices</h3>
+              <p>You can update or delete your account at any time. You can opt out of receiving calls, texts, or emails through your settings or by contacting us directly.</p>
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="font-bold">5. Children's Privacy</h3>
+              <p>Our service is not intended for users under 13. We do not knowingly collect personal data from children.</p>
+            </div>
+            
+            <p>For any questions, please contact us at help@commitify.com</p>
           </div>
         </DialogContent>
       </Dialog>
