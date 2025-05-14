@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Agents from '@/components/Agents';
 import HowItWorks from '@/components/HowItWorks';
+import SocialProof from '@/components/SocialProof';
 import WhyWeBuiltThis from '@/components/WhyWeBuiltThis';
 import Pricing from '@/components/Pricing';
 import Footer from '@/components/Footer';
@@ -16,6 +17,7 @@ const Index = () => {
       <Hero />
       <Agents />
       <HowItWorks />
+      <SocialProof />
       <WhyWeBuiltThis />
       <Pricing />
       <Footer />
