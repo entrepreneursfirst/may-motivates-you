@@ -12,7 +12,7 @@ const plans = [
     description: "Perfect for getting started",
     price: "$3.75",
     period: "per week",
-    calls: 3,
+    minutes: 15, // 3 calls × 5 minutes
     features: [
       "Motivational voice agent",
       "Basic AI memory (short-term)",
@@ -26,7 +26,7 @@ const plans = [
     description: "Our most popular choice",
     price: "$5.00",
     period: "per week",
-    calls: 5,
+    minutes: 25, // 5 calls × 5 minutes
     features: [
       "Everything in Acquaintance, and...",
       "Long-term memory",
@@ -42,7 +42,7 @@ const plans = [
     description: "Maximum accountability",
     price: "$6.50",
     period: "per week",
-    calls: 8,
+    minutes: 40, // 8 calls × 5 minutes
     features: [
       "Everything in Bestie, and...",
       "Calendar integration",
@@ -120,7 +120,7 @@ const Pricing = () => {
                 <div className="pt-4">
                   <div className="flex items-center mb-2">
                     {plan.icon}
-                    <span className="font-medium">{plan.calls} calls per week</span>
+                    <span className="font-medium">{plan.minutes} minutes per week</span>
                   </div>
                   <div className="mb-6">
                     <span className="text-3xl font-bold">{plan.price}</span>
