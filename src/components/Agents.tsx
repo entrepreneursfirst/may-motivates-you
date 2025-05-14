@@ -1,4 +1,3 @@
-
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, PhoneCall } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -177,7 +176,7 @@ const Agents = () => {
                     <img src={agent.image} alt={agent.name} className="w-full h-full object-cover object-top" />
                   </div>
                   
-                  <div className="p-6 bg-gradient-to-br from-[#EFAF26] via-[#FF914D] to-[#E57040] text-commitify-text">
+                  <div className="p-6 bg-gradient-to-r from-commitify-purple/90 via-commitify-blue/80 to-commitify-purple/70 text-white">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-2xl">{agent.emoji}</span>
                       <h3 className="font-bold text-xl">{agent.name}</h3>
@@ -187,7 +186,7 @@ const Agents = () => {
                       {agent.description}
                     </p>
                     
-                    <div className="bg-white/70 p-3 rounded-lg italic text-sm text-commitify-text">
+                    <div className="bg-white/30 backdrop-blur-sm p-3 rounded-lg italic text-sm text-white">
                       "{agent.quote}"
                     </div>
                   </div>

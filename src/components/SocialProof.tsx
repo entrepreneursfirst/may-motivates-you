@@ -41,7 +41,7 @@ const testimonials = [{
 }];
 const TestimonialCard = ({
   testimonial
-}) => <div className="bg-transparent backdrop-blur-sm p-8 rounded-2xl border border-black shadow-md hover:shadow-lg transition-all h-full">
+}) => <div className="bg-gradient-to-r from-commitify-purple/10 via-commitify-blue/5 to-commitify-purple/10 backdrop-blur-sm p-8 rounded-2xl border border-black/10 shadow-md hover:shadow-lg transition-all h-full">
     <div className="flex justify-between mb-4 items-center">
       <div className="flex items-center">
         <Avatar className="h-12 w-12 mr-3 border-2 border-commitify-yellow">
