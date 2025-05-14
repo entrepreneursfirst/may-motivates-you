@@ -20,7 +20,7 @@ const WhyWeBuiltThis = () => {
               
               <p className="text-lg">These formats all have promise — but they rely on one thing:  <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.</p>
               
-              <p className="text-lg">What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — you <span className="font-bold">answer</span>.</p>
+              <p className="text-lg">What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.</p>
             </div>
             
             {/* Right founder section - now 50% of the space */}
