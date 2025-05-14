@@ -15,7 +15,7 @@ const step2 = {
 };
 const step3 = {
   imageSrc: "/lovable-uploads/44c37770-c3f4-4735-8bf2-a7bc177b82ad.png",
-  title: "Get check-ins from your AI coach",
+  title: "Get phone call check-ins from your AI coach",
   description: "Your AI will remember what you said, follow up, and helps you follow through."
 };
 const HowItWorks = () => {
