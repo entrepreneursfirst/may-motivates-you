@@ -1,7 +1,6 @@
-
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Star } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   Carousel, 
@@ -10,6 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious
 } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
 
 // Testimonial data with information about the person and their experience
 const testimonials = [{
@@ -74,6 +74,54 @@ const TestimonialCard = ({ testimonial }) => (
 
 const SocialProof = () => {
   const isMobile = useIsMobile();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
+  // New state to track scroll position indicators
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+  
+  // New effect to track scroll position and update arrow visibility
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || !isMobile) return;
+    
+    const handleScroll = () => {
+      // Show left arrow if not at the beginning
+      setShowLeftArrow(container.scrollLeft > 20);
+      
+      // Show right arrow if not at the end
+      const isAtEnd = Math.abs(
+        container.scrollWidth - container.scrollLeft - container.clientWidth
+      ) < 20;
+      
+      setShowRightArrow(!isAtEnd);
+    };
+    
+    // Initial check
+    handleScroll();
+    
+    // Add scroll event listener
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [isMobile]);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: -300,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 300,
+        behavior: 'smooth'
+      });
+    }
+  };
   
   return (
     <section className="py-24 bg-commitify-background overflow-hidden relative">
@@ -87,18 +135,52 @@ const SocialProof = () => {
         </div>
         
         {isMobile ? (
-          <div className="relative px-4">
-            <Carousel className="w-full">
-              <CarouselContent>
+          <div className="relative px-4 py-4">
+            <div className="relative overflow-hidden">
+              <div 
+                ref={scrollContainerRef}
+                className="flex overflow-x-auto gap-4 pb-8 px-4 scroll-container"
+              >
                 {testimonials.map(testimonial => (
-                  <CarouselItem key={testimonial.id} className="pl-1">
+                  <div 
+                    key={testimonial.id} 
+                    className="flex-shrink-0 min-w-[280px] max-w-[280px]"
+                  >
                     <TestimonialCard testimonial={testimonial} />
-                  </CarouselItem>
+                  </div>
                 ))}
-              </CarouselContent>
-              <CarouselPrevious className="absolute -left-4 bg-white/80 border-commitify-blue text-commitify-blue" />
-              <CarouselNext className="absolute -right-4 bg-white/80 border-commitify-blue text-commitify-blue" />
-            </Carousel>
+              </div>
+            </div>
+            
+            {/* Left fade-out gradient overlay */}
+            <div className="absolute left-0 top-0 bottom-0 w-10 z-[5] pointer-events-none bg-gradient-to-r from-commitify-background to-transparent"></div>
+            
+            {/* Mobile left navigation arrow - only show when scrolled */}
+            {showLeftArrow && (
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 border-commitify-blue text-commitify-blue rounded-full shadow-md" 
+                onClick={scrollLeft}
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+            )}
+            
+            {/* Right fade-out gradient overlay */}
+            <div className="absolute right-0 top-0 bottom-0 w-10 z-[5] pointer-events-none bg-gradient-to-l from-commitify-background to-transparent"></div>
+            
+            {/* Mobile right navigation arrow - only show when not at end */}
+            {showRightArrow && (
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 border-commitify-blue text-commitify-blue rounded-full shadow-md" 
+                onClick={scrollRight}
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
