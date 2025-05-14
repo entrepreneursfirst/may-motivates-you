@@ -29,7 +29,7 @@ const WhyWeBuiltThis = () => {
               <div className="bg-white rounded-2xl p-6 shadow-lg">
                 <h3 className="text-2xl font-bold mb-4">Note from One of the Founders</h3>
                 
-                <p className="italic text-commitify-secondary mb-6">"As someone with ADHD, I built this after missing too many personal deadlines. I never missed meetings with others — only my own goals.</p>
+                <p className="italic text-commitify-secondary mb-6">"As someone with ADHD, I wanted to build something I could actually use after missing too many personal deadlines. I never missed meetings with others — only my own goals.</p>
                 
                 <p className="italic text-commitify-secondary mb-6">Commitify replicates the real-world accountability of a check-in call, so others can get the same gentle (or tough) push to follow through. The calls create a sense of social commitment that notifications simply can't match."</p>
               </div>
