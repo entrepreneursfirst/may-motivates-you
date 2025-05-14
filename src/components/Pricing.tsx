@@ -57,14 +57,6 @@ const plans = [
   }
 ];
 
-const extraCallPack = {
-  name: "One More Thing",
-  description: "One-time top-up",
-  price: "$1.25",
-  minutes: 5,
-  buttonText: "Add Minutes",
-};
-
 const Pricing = () => {
   const { toast } = useToast();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -161,49 +153,6 @@ const Pricing = () => {
               </CardFooter>
             </Card>
           ))}
-        </div>
-        
-        {/* Extra Minutes Pack */}
-        <div className="mt-12 max-w-xs mx-auto">
-          <Card className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${
-            selectedPlan === extraCallPack.name ? 'border-4 border-green-500' : 'border-gray-100'
-          } bg-gradient-to-br from-violet-50 to-violet-100 flex flex-col h-full`}>
-            <CardHeader className="pb-0">
-              <div className="h-12 flex items-center">
-                <div className="flex items-center justify-between w-full">
-                  <CardTitle className="text-lg">{extraCallPack.name}</CardTitle>
-                  <Plus className="text-green-500 w-5 h-5" />
-                </div>
-              </div>
-              <CardDescription>{extraCallPack.description}</CardDescription>
-            </CardHeader>
-            
-            <CardContent className="pt-4 flex-grow">
-              <div className="flex items-center mb-2">
-                <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
-                <span className="font-medium">+{extraCallPack.minutes} extra minutes</span>
-              </div>
-              <div className="mb-2">
-                <div className="flex items-center">
-                  <CircleDollarSign className="w-5 h-5 mr-2 text-green-500" />
-                  <span className="text-xl font-bold">{extraCallPack.price}</span>
-                </div>
-              </div>
-            </CardContent>
-            
-            <CardFooter className="pt-2 mt-auto">
-              <Button 
-                className={`w-full ${
-                  selectedPlan === extraCallPack.name
-                    ? 'bg-green-600 hover:bg-green-700'
-                    : 'bg-green-500 hover:bg-green-600'
-                } text-white rounded-full`}
-                onClick={() => handleSelectPlan(extraCallPack.name)}
-              >
-                {selectedPlan === extraCallPack.name ? 'Selected' : extraCallPack.buttonText}
-              </Button>
-            </CardFooter>
-          </Card>
         </div>
         
         <p className="text-center text-commitify-secondary mt-8">
