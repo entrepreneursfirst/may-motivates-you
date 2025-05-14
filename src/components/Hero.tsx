@@ -210,14 +210,14 @@ const Hero = () => {
                 )}
               </div>
               
-              {/* Button with consistent width on mobile and smooth transition on desktop */}
+              {/* Changed "Learn More" to "Meet Our Agents" for both mobile and desktop */}
               <Button 
                 variant="outline" 
                 className={`border-2 border-commitify-blue text-commitify-blue hover:bg-commitify-blue/10 font-medium text-lg px-8 py-6 rounded-full
                   ${isMobile ? 'w-full mt-4' : 'transition-all duration-500'}`}
-                onClick={() => scrollToSection(isMobile ? 'agents' : 'how-it-works')}
+                onClick={() => scrollToSection('agents')}
               >
-                {isMobile ? "Meet Our Agents" : "Learn More"}
+                Meet Our Agents
               </Button>
             </div>
           </div>
