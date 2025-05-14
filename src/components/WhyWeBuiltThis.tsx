@@ -29,52 +29,41 @@ const WhyWeBuiltThis = () => {
                   {/* First paragraph always visible */}
                   <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in <span className="font-bold">a way that sticks</span>.</p>
                   
-                  {/* Hidden content with smooth transition */}
-                  <div 
-                    className={`relative overflow-hidden transition-all duration-500 ease-in-out ${
-                      isOpen ? 'max-h-[800px] opacity-100' : 'max-h-[120px] opacity-95'
-                    }`}
+                  {/* Collapsible content */}
+                  <div
+                    className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                      isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-[140px] opacity-95'
+                    } relative mt-6`}
                   >
-                    <div className="text-lg mt-6">
-                      These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.
+                    <div className="text-lg space-y-6">
+                      <p>
+                        These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.
+                      </p>
+                      <p>
+                        What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.
+                      </p>
                     </div>
-                    
-                    <div className="text-lg mt-6">
-                      What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.
-                    </div>
-                    
-                    {/* Updated gradient fade with solid end that stops right above the button */}
+
+                    {/* Fade Overlay */}
                     {!isOpen && (
-                      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-commitify-yellow/20 via-commitify-yellow/20 to-transparent pointer-events-none" />
+                      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-commitify-yellow/20 to-transparent pointer-events-none"></div>
                     )}
                   </div>
-                  
-                  {/* Clean, minimal Read more / Show less toggle with solid background */}
-                  {!isOpen ? (
-                    <div className="absolute bottom-0 left-0 w-full flex justify-center pb-1">
-                      <div className="bg-commitify-yellow/20 px-4 py-1 rounded-md">
-                        <button
-                          onClick={() => setIsOpen(true)}
-                          className="text-[#E57040] hover:text-[#E57040]/80 font-medium flex items-center transition-all duration-300 z-10"
-                        >
-                          Read more
-                          <ChevronDown className="ml-1 h-4 w-4 transition-transform" />
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex justify-center mt-4">
-                      <div className="bg-commitify-yellow/20 px-4 py-1 rounded-md">
-                        <button
-                          onClick={() => setIsOpen(false)}
-                          className="text-[#E57040] hover:text-[#E57040]/80 font-medium flex items-center transition-all duration-300"
-                        >
-                          Show less
-                          <ChevronDown className="ml-1 h-4 w-4 transform rotate-180 transition-transform" />
-                        </button>
-                      </div>
-                    </div>
-                  )}
+
+                  {/* Read more / Show less button properly positioned below the content */}
+                  <div className="flex justify-center mt-4">
+                    <button
+                      onClick={() => setIsOpen(!isOpen)}
+                      className="text-[#E57040] hover:text-[#E57040]/80 font-medium flex items-center bg-commitify-yellow/20 px-4 py-1 rounded-md transition-all duration-300"
+                    >
+                      {isOpen ? 'Show less' : 'Read more'}
+                      <ChevronDown
+                        className={`ml-1 h-4 w-4 transition-transform ${
+                          isOpen ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <>
