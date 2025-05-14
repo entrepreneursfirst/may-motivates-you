@@ -1,11 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, Clock, Phone } from 'lucide-react';
+import { Menu, Clock, Phone, UserRound } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import LoginDialog from './LoginDialog';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const navigate = useNavigate();
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -21,6 +25,11 @@ const Navbar = () => {
     scrollToSection('hero');
     // Dispatch custom event to activate phone input
     window.dispatchEvent(new CustomEvent('activatePhoneInput'));
+  };
+  
+  // Function to open login dialog
+  const openLoginDialog = () => {
+    setIsLoginOpen(true);
   };
   
   useEffect(() => {
@@ -79,6 +88,13 @@ const Navbar = () => {
             <Phone className="w-4 h-4" />
             Get a Call
           </Button>
+          <Button 
+            onClick={openLoginDialog}
+            className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full p-2 flex items-center justify-center"
+            aria-label="User profile"
+          >
+            <UserRound className="w-5 h-5" />
+          </Button>
         </div>
 
         {/* Mobile Menu */}
@@ -107,9 +123,19 @@ const Navbar = () => {
                 <Phone className="w-4 h-4" />
                 Get a Call
               </Button>
+              <Button 
+                onClick={openLoginDialog}
+                className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full w-full flex items-center justify-center gap-2"
+              >
+                <UserRound className="w-4 h-4" />
+                Profile
+              </Button>
             </div>
           </div>
         )}
+        
+        {/* Login Dialog */}
+        <LoginDialog isOpen={isLoginOpen} setIsOpen={setIsLoginOpen} />
       </div>
     </nav>
   );
