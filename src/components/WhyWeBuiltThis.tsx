@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -44,32 +43,36 @@ const WhyWeBuiltThis = () => {
                       What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.
                     </div>
                     
-                    {/* Fade overlay only when collapsed */}
+                    {/* Updated gradient fade with solid end that stops right above the button */}
                     {!isOpen && (
-                      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-commitify-yellow/20 via-commitify-yellow/20 to-transparent pointer-events-none" />
+                      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-commitify-yellow/20 via-commitify-yellow/20 to-transparent pointer-events-none" />
                     )}
                   </div>
                   
-                  {/* Clean, minimal Read more / Show less toggle */}
+                  {/* Clean, minimal Read more / Show less toggle with solid background */}
                   {!isOpen ? (
                     <div className="absolute bottom-0 left-0 w-full flex justify-center pb-1">
-                      <button
-                        onClick={() => setIsOpen(true)}
-                        className="text-[#E57040] hover:text-[#E57040]/80 font-medium flex items-center transition-all duration-300 z-10"
-                      >
-                        Read more
-                        <ChevronDown className="ml-1 h-4 w-4 transition-transform" />
-                      </button>
+                      <div className="bg-commitify-yellow/20 px-4 py-1 rounded-md">
+                        <button
+                          onClick={() => setIsOpen(true)}
+                          className="text-[#E57040] hover:text-[#E57040]/80 font-medium flex items-center transition-all duration-300 z-10"
+                        >
+                          Read more
+                          <ChevronDown className="ml-1 h-4 w-4 transition-transform" />
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div className="flex justify-center mt-4">
-                      <button
-                        onClick={() => setIsOpen(false)}
-                        className="text-[#E57040] hover:text-[#E57040]/80 font-medium flex items-center transition-all duration-300"
-                      >
-                        Show less
-                        <ChevronDown className="ml-1 h-4 w-4 transform rotate-180 transition-transform" />
-                      </button>
+                      <div className="bg-commitify-yellow/20 px-4 py-1 rounded-md">
+                        <button
+                          onClick={() => setIsOpen(false)}
+                          className="text-[#E57040] hover:text-[#E57040]/80 font-medium flex items-center transition-all duration-300"
+                        >
+                          Show less
+                          <ChevronDown className="ml-1 h-4 w-4 transform rotate-180 transition-transform" />
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
