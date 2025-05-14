@@ -27,7 +27,7 @@ const WhyWeBuiltThis = () => {
             <div className="space-y-6">
               {isMobile ? (
                 <div className="relative">
-                  <div className={`relative overflow-hidden ${isOpen ? 'max-h-full' : 'max-h-[170px]'} transition-all duration-300`}>
+                  <div className={`relative overflow-hidden ${isOpen ? 'max-h-full' : 'max-h-[200px]'} transition-all duration-300`}>
                     <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in <span className="font-bold">a way that sticks</span>.</p>
                     
                     <div className="text-lg mt-6 space-y-6">
@@ -39,14 +39,14 @@ const WhyWeBuiltThis = () => {
                       </p>
                     </div>
                     
-                    {/* Gradient overlay when collapsed - updated to match bg color */}
+                    {/* Improved gradient overlay when collapsed - exact match to bg-commitify-yellow/20 */}
                     {!isOpen && (
-                      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-commitify-yellow/20 to-transparent"></div>
+                      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-commitify-yellow/20 via-commitify-yellow/10 to-transparent"></div>
                     )}
                   </div>
                   
-                  {/* Read more button on top of gradient - moved down */}
-                  <div className="flex justify-center mt-4">
+                  {/* Read more button positioned further down */}
+                  <div className="flex justify-center mt-6">
                     <button 
                       onClick={() => setIsOpen(!isOpen)}
                       className="text-[#E57040] flex items-center gap-1 py-1 px-3 rounded-md transition-all hover:bg-commitify-yellow/10 text-sm font-medium"
