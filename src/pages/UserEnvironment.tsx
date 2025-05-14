@@ -262,9 +262,9 @@ const UserEnvironment = () => {
       
       <div className="container mx-auto px-4 py-8 pt-24">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Left Sidebar: Profile Card - Now sticky positioned */}
+          {/* Left Sidebar: Profile Card - Now with fixed positioning */}
           <div className="md:col-span-1">
-            <Card className="sticky top-24">
+            <Card className="sticky top-24 z-10">
               <CardHeader className="flex flex-row items-center justify-between">
                 <div className="flex items-center gap-2">
                   <UserRound className="w-5 h-5 text-commitify-text" />
