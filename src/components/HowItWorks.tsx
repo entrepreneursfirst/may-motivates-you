@@ -79,7 +79,7 @@ const HowItWorks = () => {
           {/* Step 3 */}
           <div className="flex flex-col items-center text-center">
             <div className="mb-4 md:mb-2 flex items-center justify-center h-auto md:h-[350px]">
-              <img src={step3.imageSrc} alt="Get phone call check-ins from your AI coach" className="object-contain w-full max-w-[210px] h-auto" />
+              <img src={step3.imageSrc} alt="Get phone call check-ins from your AI coach" className="object-contain w-full max-w-[250px] h-auto" />
             </div>
             <div className="flex items-start justify-center mb-1 text-center">
               <h3 className="text-2xl md:text-3xl font-extrabold mb-2 text-center">
