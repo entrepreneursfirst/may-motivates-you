@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { PhoneCall, PhoneOff } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -49,6 +48,14 @@ const PhoneAnimation = ({
   const [imagesPreloaded, setImagesPreloaded] = useState(false);
   const nextImageRef = useRef<HTMLImageElement | null>(null);
   const timerRef = useRef<number | null>(null);
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   // Preload all agent images to prevent flashing
   useEffect(() => {
@@ -115,12 +122,22 @@ const PhoneAnimation = ({
   const currentAgent = agents[currentAgentIndex];
   
   const handleAnswer = () => {
+    // Scroll to top on mobile devices
+    if (window.innerWidth < 768) {
+      scrollToTop();
+    }
+    
     if (onAnswerCall) {
       onAnswerCall();
     }
   };
   
   const handleHangUp = () => {
+    // Scroll to top on mobile devices
+    if (window.innerWidth < 768) {
+      scrollToTop();
+    }
+    
     if (onHangUp) {
       onHangUp();
     }
