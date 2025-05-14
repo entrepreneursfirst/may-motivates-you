@@ -18,7 +18,7 @@ const WhyWeBuiltThis = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
             {/* Left text section - now 50% of the space */}
             <div className="space-y-6">
-              <p className="text-lg">AI has proven itself as **a powerful reflection partner**. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in a way that sticks. Is it a journaling app? A chatbot you open when you're feeling stuck? A dashboard that tracks your progress and sends push notifications? </p>
+              <p className="text-lg">AI has proven itself as a powerful reflection partner. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in a way that sticks. Is it a journaling app? A chatbot you open when you're feeling stuck? A dashboard that tracks your progress and sends push notifications? </p>
               
               <p className="text-lg">These formats all have promise — but they rely on one thing: you deciding to sit down, open the app, and reflect. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.</p>
               
