@@ -34,6 +34,11 @@ const Testimonials = () => {
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
+        {/* Rainbow Sticker - Moved 1 cm to the left */}
+        <div className="absolute left-[3cm] -top-[3cm] z-0 opacity-90">
+          <img src="/lovable-uploads/c967a7e7-5403-4fe3-ba1e-52fa5eba1841.png" alt="Rainbow sticker" className="w-64 md:w-72 lg:w-80 object-contain" />
+        </div>
+        
         <h2 className="text-4xl md:text-5xl font-bold text-center font-outfit mb-4">
           What People Are <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Saying</span>
         </h2>
