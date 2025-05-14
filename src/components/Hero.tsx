@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -95,8 +96,8 @@ const Hero = () => {
       
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center relative">
-          {/* Sun Sticker with floating animation */}
-          <div className="absolute top-[0%] left-[43%] md:-top[0%] md:left-[43%] lg:top-[0%] lg:left-[43%] w-24 md:w-32 lg:w-40 -z-10">
+          {/* Sun Sticker with floating animation - Updated positioning for mobile */}
+          <div className="absolute top-[0%] left-[60%] md:left-[43%] lg:top-[0%] lg:left-[43%] w-24 md:w-32 lg:w-40 -z-10">
             <img src="/lovable-uploads/7699a50a-72f1-4d30-9cd6-720d836c481f.png" alt="Sun Sticker" className="w-full h-auto" />
           </div>
           
