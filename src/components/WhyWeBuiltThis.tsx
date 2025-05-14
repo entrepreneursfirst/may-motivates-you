@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
@@ -7,6 +7,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const WhyWeBuiltThis = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
   
   return <section id="why" className="py-24 overflow-hidden">
@@ -22,19 +23,37 @@ const WhyWeBuiltThis = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-            {/* Left text section - removed read more experience */}
+            {/* Left text section with read more dropdown */}
             <div className="space-y-6">
               {isMobile ? (
                 <div className="relative">
-                  <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in <span className="font-bold">a way that sticks</span>.</p>
+                  <div className={`relative overflow-hidden ${isOpen ? 'max-h-full' : 'max-h-[130px]'} transition-all duration-300`}>
+                    <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in <span className="font-bold">a way that sticks</span>.</p>
+                    
+                    <div className="text-lg mt-6 space-y-6">
+                      <p>
+                        These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.
+                      </p>
+                      <p>
+                        What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.
+                      </p>
+                    </div>
+                    
+                    {/* Gradient overlay when collapsed */}
+                    {!isOpen && (
+                      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-commitify-yellow/20 to-transparent"></div>
+                    )}
+                  </div>
                   
-                  <div className="text-lg mt-6 space-y-6">
-                    <p>
-                      These formats all have promise — but they rely on one thing: <span className="font-bold">you deciding to sit down, open the app, and reflect</span>. And that's where most people fall off. Because in the moments when reflection matters most, we're often too busy, distracted, or overwhelmed to seek it out ourselves.
-                    </p>
-                    <p>
-                      What if, instead, AI came to you? What if it reached out — like a real friend would? Not just another ping or silent notification. A voice. A check-in. A moment that cuts through the noise. Because we've learned something simple: When someone calls to ask how you're doing — <span className="font-bold">you answer</span>.
-                    </p>
+                  {/* Read more button on top of gradient */}
+                  <div className="flex justify-center mt-2">
+                    <button 
+                      onClick={() => setIsOpen(!isOpen)}
+                      className="text-[#E57040] flex items-center gap-1 py-1 px-3 rounded-md transition-all hover:bg-commitify-yellow/10 text-sm font-medium"
+                    >
+                      {isOpen ? 'Read less' : 'Read more'}
+                      <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                    </button>
                   </div>
                 </div>
               ) : (
