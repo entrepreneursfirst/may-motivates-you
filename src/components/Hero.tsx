@@ -190,35 +190,62 @@ const Hero = () => {
             <p className="text-left text-commitify-secondary text-xl mb-4 max-w-3xl">Meet Commitify — the AI that calls when motivation runs out and procrastination kicks in.</p>
             
             {/* Button area with improved layout handling */}
-            <div className={`flex ${isMobile ? 'flex-col' : 'items-center'} gap-4 w-full`}>
-              <div className={`${isMobile ? 'w-full' : 'w-[450px]'} transition-all duration-500 ease-in-out`}>
-                {isPhoneInputActive ? (
-                  renderPhoneInput(true)
-                ) : (
-                  <div className="flex items-center w-full">
-                    <Button 
-                      className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all w-[168px]" 
-                      onClick={handlePhoneInput}
-                    >
-                      Try it for $0
-                    </Button>
-                    {/* Hidden space placeholder - renders the same dimensions but invisible */}
-                    <div className="invisible h-0 absolute">
-                      {renderPhoneInput(false)}
-                    </div>
+            <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-4 w-full`}>
+              {/* On mobile, stacking buttons vertically */}
+              {isMobile ? (
+                <>
+                  <div className="w-full transition-all duration-500 ease-in-out">
+                    {isPhoneInputActive ? (
+                      renderPhoneInput(true)
+                    ) : (
+                      <div className="flex items-center w-full">
+                        <Button 
+                          className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all w-full" 
+                          onClick={handlePhoneInput}
+                        >
+                          Try it for $0
+                        </Button>
+                        {/* Hidden space placeholder - renders the same dimensions but invisible */}
+                        <div className="invisible h-0 absolute">
+                          {renderPhoneInput(false)}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              
-              {/* Changed "Learn More" to "Meet Our Agents" for both mobile and desktop */}
-              <Button 
-                variant="outline" 
-                className={`border-2 border-commitify-blue text-commitify-blue hover:bg-commitify-blue/10 font-medium text-lg px-8 py-6 rounded-full
-                  ${isMobile ? 'w-full mt-4' : 'transition-all duration-500'}`}
-                onClick={() => scrollToSection('agents')}
-              >
-                Meet Our Agents
-              </Button>
+                  
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-2 border-commitify-blue text-commitify-blue hover:bg-commitify-blue/10 font-medium text-lg px-8 py-6 rounded-full"
+                    onClick={() => scrollToSection('agents')}
+                  >
+                    Meet Our Agents
+                  </Button>
+                </>
+              ) : (
+                // On desktop, placing buttons side by side with smooth transitions
+                <div className="flex items-center space-x-4 transition-all duration-300 ease-in-out">
+                  <div className={`transition-all duration-300 ease-in-out ${isPhoneInputActive ? 'w-[450px]' : 'w-[168px]'}`}>
+                    {isPhoneInputActive ? (
+                      renderPhoneInput(true)
+                    ) : (
+                      <Button 
+                        className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all w-[168px]" 
+                        onClick={handlePhoneInput}
+                      >
+                        Try it for $0
+                      </Button>
+                    )}
+                  </div>
+                  
+                  <Button 
+                    variant="outline" 
+                    className="border-2 border-commitify-blue text-commitify-blue hover:bg-commitify-blue/10 font-medium text-lg px-8 py-6 rounded-full transition-all duration-300"
+                    onClick={() => scrollToSection('agents')}
+                  >
+                    Meet Our Agents
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
           
