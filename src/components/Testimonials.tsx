@@ -35,7 +35,7 @@ const Testimonials = () => {
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center font-outfit mb-4">
-          What People Are <span className="text-neon">Saying</span>
+          What People Are <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Saying</span>
         </h2>
         <p className="text-center text-gray-600 text-lg mb-16">
           Real people, real results
