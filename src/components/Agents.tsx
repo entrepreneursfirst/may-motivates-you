@@ -177,7 +177,7 @@ const Agents = () => {
                     <img src={agent.image} alt={agent.name} className="w-full h-full object-cover object-top" />
                   </div>
                   
-                  <div className="p-6 bg-gradient-to-br from-[#FF914D] via-[#E57040] to-[#EFAF26] text-white">
+                  <div className="p-6 bg-gradient-to-br from-[#FFC1A0] via-[#FFA77E] to-[#FFDA8A] text-commitify-text">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-2xl">{agent.emoji}</span>
                       <h3 className="font-bold text-xl">{agent.name}</h3>
