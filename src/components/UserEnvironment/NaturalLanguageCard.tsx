@@ -8,18 +8,31 @@ import { useToast } from "@/hooks/use-toast";
 
 const NaturalLanguageCard = () => {
   const [inputText, setInputText] = useState('');
+  const [isSaved, setIsSaved] = useState(false);
   const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(e.target.value);
+    // Reset saved state when user changes input
+    if (isSaved) {
+      setIsSaved(false);
+    }
   };
 
   const handleSave = () => {
-    // Save functionality can be expanded later
-    toast({
-      title: "Input saved",
-      description: "Your natural language input has been saved."
-    });
+    if (inputText.trim()) {
+      setIsSaved(true);
+      toast({
+        title: "Input saved",
+        description: "Your natural language input has been saved."
+      });
+    } else {
+      toast({
+        title: "Empty input",
+        description: "Please enter some text to save.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -36,7 +49,7 @@ const NaturalLanguageCard = () => {
       <CardContent>
         <Textarea 
           placeholder="E.g., I want to track my workout progress, remind me to exercise 3 times a week..." 
-          className="min-h-[150px]"
+          className={`min-h-[150px] ${isSaved ? 'text-muted-foreground' : ''}`}
           value={inputText}
           onChange={handleInputChange}
         />
