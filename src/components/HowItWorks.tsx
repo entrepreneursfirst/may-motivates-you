@@ -48,7 +48,7 @@ const HowItWorks = () => {
           {/* Step 1 - Each section is now individually editable */}
           <div className="flex flex-col items-center text-center">
             <div className="mb-4 md:mb-2 flex items-center justify-center h-auto md:h-[350px]">
-              <img src={step1.imageSrc} alt="Upload your schedule & goals" className="object-contain w-full max-w-[300px] h-auto" />
+              <img src={step1.imageSrc} alt="Upload your schedule & goals" className="object-contain w-full max-w-[400px] h-auto" />
             </div>
             {/* All titles use the same styling with better mobile responsiveness */}
             <div className="flex items-start justify-center mb-1 text-center">
