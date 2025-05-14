@@ -63,11 +63,11 @@ const plans = [
 ];
 
 const extraCallPack = {
-  name: "Extra Call Pack",
+  name: "One More Thing",
   description: "One-time top-up",
   price: "$1.25",
-  calls: 1,
-  buttonText: "Add Call",
+  minutes: 5,
+  buttonText: "Add Minutes",
 };
 
 const Pricing = () => {
@@ -97,7 +97,7 @@ const Pricing = () => {
           {plans.map((plan, index) => (
             <Card 
               key={index}
-              className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${plan.popular ? 'border-commitify-yellow' : 'border-gray-100'} bg-gradient-to-br from-purple-50 to-purple-100 h-full flex flex-col`}
+              className={`overflow-hidden shadow-lg hover:shadow-xl transition-shadow border ${plan.popular ? 'border-commitify-yellow' : 'border-gray-100'} bg-gradient-to-br from-violet-50 to-violet-100 h-full flex flex-col`}
             >
               {plan.popular && (
                 <div className="bg-commitify-yellow text-commitify-text text-center py-2 font-medium flex items-center justify-center">
@@ -107,7 +107,7 @@ const Pricing = () => {
               )}
               
               <CardHeader className="pb-0">
-                <CardTitle className="text-xl">{plan.name}</CardTitle>
+                <CardTitle className="text-xl h-[28px] flex items-center">{plan.name}</CardTitle>
                 <CardDescription>{plan.description}</CardDescription>
               </CardHeader>
               
@@ -145,12 +145,12 @@ const Pricing = () => {
           ))}
         </div>
         
-        {/* Extra Call Pack */}
+        {/* Extra Minutes Pack */}
         <div className="mt-12 max-w-xs mx-auto">
-          <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100 bg-gradient-to-br from-purple-50 to-purple-100 flex flex-col h-full">
+          <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100 bg-gradient-to-br from-violet-50 to-violet-100 flex flex-col h-full">
             <CardHeader className="pb-0">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">{extraCallPack.name}</CardTitle>
+                <CardTitle className="text-lg h-[28px] flex items-center">{extraCallPack.name}</CardTitle>
                 <Plus className="text-green-500 w-5 h-5" />
               </div>
               <CardDescription>{extraCallPack.description}</CardDescription>
@@ -159,7 +159,7 @@ const Pricing = () => {
             <CardContent className="pt-4 flex-grow">
               <div className="flex items-center mb-2">
                 <Phone className="w-5 h-5 mr-2 text-commitify-blue" />
-                <span className="font-medium">+{extraCallPack.calls} extra call</span>
+                <span className="font-medium">+{extraCallPack.minutes} extra minutes</span>
               </div>
               <div className="mb-2">
                 <div className="flex items-center">
