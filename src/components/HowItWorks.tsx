@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
@@ -30,7 +31,7 @@ const HowItWorks = () => {
         <img src="/lovable-uploads/c967a7e7-5403-4fe3-ba1e-52fa5eba1841.png" alt="Rainbow sticker" className="w-64 md:w-72 lg:w-80 object-contain" />
       </div>
       
-      <div className="relative z-10">
+      <div className="bg-commitify-yellow/20 p-10 md:p-16 rounded-3xl relative z-10">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
           How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Works</span>
         </h2>
