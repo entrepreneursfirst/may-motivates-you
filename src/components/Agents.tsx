@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, PhoneCall } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const agents = [{
   name: "Life Coach",
@@ -49,6 +50,7 @@ const Agents = () => {
   const [selectedAgent, setSelectedAgent] = useState<number | null>(null);
   const [index, setIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const isMobile = useIsMobile();
   
   // Animation effect for cycling through words
   useEffect(() => {
@@ -104,8 +106,8 @@ const Agents = () => {
   return <section id="agents" className="py-20 relative bg-commitify-background">
       <div className="container mx-auto px-4 relative z-10">
         <div className="relative">
-          {/* Flower sticker positioned relative to the container */}
-          <div className="absolute -left-10 top-0 w-24 md:w-32 lg:w-40 h-auto z-0 opacity-90">
+          {/* Flower sticker positioned relative to the container - moved down on mobile */}
+          <div className={`absolute -left-10 ${isMobile ? 'top-[120px]' : 'top-0'} w-24 md:w-32 lg:w-40 h-auto z-0 opacity-90`}>
             <img src="/lovable-uploads/10ed87d9-b6c4-46ea-b814-44c6687e494f.png" alt="Flower sticker" className="w-full h-auto" />
           </div>
           
