@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { 
-  Calendar, 
+  Calendar as CalendarIcon, 
   Clock, 
   File, 
   FileText,
@@ -9,7 +9,8 @@ import {
   MessageSquare, 
   Phone, 
   Settings, 
-  UserRound 
+  UserRound,
+  Trash2
 } from 'lucide-react';
 import { 
   Card, 
@@ -28,6 +29,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
+import { ScheduledCall } from "@/components/ScheduledCall";
+import { TimeSelector } from "@/components/TimeSelector";
 
 // Import agents from the Agents component
 const agents = [{
@@ -74,7 +79,46 @@ const agents = [{
   quote: "This task has no ROI unless you execute."
 }];
 
+// Get plans data from Pricing component
+const plans = [
+  {
+    name: "Cold Call",
+    emoji: "❄️",
+    description: "Just dip your toes in",
+    price: "$7.50",
+    period: "one-time",
+    color: "bg-[#1EAEDB]/20 text-[#1EAEDB]",
+  },
+  {
+    name: "Acquaintance",
+    emoji: "👋",
+    description: "Perfect for getting started",
+    price: "$3.75",
+    period: "per week",
+    color: "bg-commitify-blue/20 text-commitify-blue",
+  },
+  {
+    name: "Bestie",
+    emoji: "🫶",
+    description: "Our most popular choice",
+    price: "$5.00",
+    period: "per week",
+    color: "bg-commitify-yellow/20 text-commitify-text",
+  },
+  {
+    name: "Ride or Die",
+    emoji: "💯",
+    description: "Maximum accountability",
+    price: "$6.50",
+    period: "per week",
+    color: "bg-commitify-blue/20 text-commitify-blue",
+  }
+];
+
 const UserEnvironment = () => {
+  // Toast notifications
+  const { toast } = useToast();
+
   // State for user profile
   const [userProfile, setUserProfile] = useState({
     name: "John Doe",
@@ -86,20 +130,103 @@ const UserEnvironment = () => {
   
   // State for active agent
   const [activeAgentId, setActiveAgentId] = useState(1);
-  
-  // State for call schedule
-  const [callSchedule, setCallSchedule] = useState({
-    frequency: "weekly",
-    time: "09:00",
-    day: "Monday",
-    date: new Date()
-  });
-  
-  // State for natural language input
-  const [naturalLanguageInput, setNaturalLanguageInput] = useState("");
 
+  // State for active plan (mock data - in a real app this would come from an API)
+  const [activePlan, setActivePlan] = useState("Bestie");
+
+  // Date selection states
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [showTimeSelector, setShowTimeSelector] = useState(false);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [timeRangeMode, setTimeRangeMode] = useState(false);
+  const [startTime, setStartTime] = useState("09:00");
+  const [endTime, setEndTime] = useState("17:00");
+  
+  // Scheduled calls
+  const [scheduledCalls, setScheduledCalls] = useState<Array<{
+    date: Date;
+    time: string | null;
+    timeRange?: { start: string; end: string } | null;
+  }>>([]);
+  
   // Get active agent
   const activeAgent = agents.find(agent => agent.id === activeAgentId) || agents[0];
+
+  // Get active plan details
+  const activePlanDetails = plans.find(plan => plan.name === activePlan) || plans[0];
+
+  // Handle date selection
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      setSelectedDate(date);
+      setShowTimeSelector(true);
+    }
+  };
+
+  // Handle time selection
+  const handleTimeSelect = (time: string | null, isRange: boolean, rangeStart?: string, rangeEnd?: string) => {
+    if (isRange && rangeStart && rangeEnd) {
+      if (selectedDate) {
+        setScheduledCalls([...scheduledCalls, {
+          date: selectedDate,
+          time: null,
+          timeRange: { start: rangeStart, end: rangeEnd }
+        }]);
+      }
+    } else if (time && selectedDate) {
+      setScheduledCalls([...scheduledCalls, {
+        date: selectedDate,
+        time: time
+      }]);
+    }
+    
+    // Reset selection states
+    setSelectedDate(undefined);
+    setShowTimeSelector(false);
+    setSelectedTime(null);
+    
+    toast({
+      title: "Call scheduled",
+      description: "Your call has been added to the schedule.",
+    });
+  };
+
+  // Handle call deletion
+  const handleDeleteCall = (index: number) => {
+    const updatedCalls = [...scheduledCalls];
+    updatedCalls.splice(index, 1);
+    setScheduledCalls(updatedCalls);
+    
+    toast({
+      title: "Call removed",
+      description: "The call has been removed from your schedule.",
+    });
+  };
+
+  // Handle subscription changes
+  const handleChangeSubscription = () => {
+    toast({
+      title: "Subscription management",
+      description: "Opening subscription management portal...",
+    });
+  };
+
+  const handleCancelSubscription = () => {
+    toast({
+      title: "Cancel subscription",
+      description: "Are you sure you want to cancel your subscription?",
+      action: (
+        <Button variant="destructive" size="sm" onClick={() => 
+          toast({
+            title: "Subscription canceled",
+            description: "Your subscription has been canceled.",
+          })
+        }>
+          Confirm
+        </Button>
+      ),
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-commitify-background to-commitify-background/90 pt-24">
@@ -107,7 +234,7 @@ const UserEnvironment = () => {
         <h1 className="text-3xl font-bold mb-8">Your Commitify Environment</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Left Sidebar: Profile Card - Now fixed positioning */}
+          {/* Left Sidebar: Profile Card - Now sticky positioning */}
           <div className="md:col-span-1">
             <Card className="sticky top-24">
               <CardHeader>
@@ -170,7 +297,7 @@ const UserEnvironment = () => {
                             !userProfile.birthdate && "text-muted-foreground"
                           )}
                         >
-                          <Calendar className="mr-2 h-4 w-4" />
+                          <CalendarIcon className="mr-2 h-4 w-4" />
                           {userProfile.birthdate ? format(userProfile.birthdate, "PPP") : <span>Pick a date</span>}
                         </Button>
                       </PopoverTrigger>
@@ -180,10 +307,41 @@ const UserEnvironment = () => {
                           selected={userProfile.birthdate}
                           onSelect={(date) => date && setUserProfile({...userProfile, birthdate: date})}
                           initialFocus
-                          className="p-3 pointer-events-auto"
+                          className={cn("p-3 pointer-events-auto")}
                         />
                       </PopoverContent>
                     </Popover>
+                  </div>
+                </div>
+                
+                {/* Subscription Plan Section */}
+                <div className="space-y-4 border-t pt-4">
+                  <div>
+                    <h3 className="font-medium mb-2">Current Subscription</h3>
+                    <div className={`p-3 rounded-lg ${activePlanDetails.color} flex items-center`}>
+                      <span className="text-xl mr-2">{activePlanDetails.emoji}</span>
+                      <div>
+                        <p className="font-medium">{activePlanDetails.name}</p>
+                        <p className="text-xs">{activePlanDetails.price} {activePlanDetails.period}</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col space-y-2">
+                    <Button 
+                      onClick={handleChangeSubscription}
+                      variant="outline"
+                      className="w-full"
+                    >
+                      Change Plan
+                    </Button>
+                    <Button 
+                      onClick={handleCancelSubscription}
+                      variant="outline" 
+                      className="w-full text-red-500 hover:bg-red-50"
+                    >
+                      Cancel Subscription
+                    </Button>
                   </div>
                 </div>
               </CardContent>
@@ -264,8 +422,6 @@ const UserEnvironment = () => {
                   <CardContent>
                     <Textarea 
                       placeholder="E.g., I want to track my workout progress, remind me to exercise 3 times a week..."
-                      value={naturalLanguageInput}
-                      onChange={(e) => setNaturalLanguageInput(e.target.value)}
                       className="min-h-[150px]"
                     />
                   </CardContent>
@@ -276,94 +432,67 @@ const UserEnvironment = () => {
                   </CardFooter>
                 </Card>
                 
-                {/* Call Frequency and Schedule */}
-                <Card>
+                {/* Call Schedule - Updated */}
+                <Card className="md:col-span-2">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Clock className="w-5 h-5" />
-                      Call Frequency & Schedule
+                      Call Schedule
                     </CardTitle>
                     <CardDescription>
-                      Set how often your agent should call you
+                      Schedule when your agent should call you
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Frequency</Label>
-                      <select 
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        value={callSchedule.frequency}
-                        onChange={e => setCallSchedule({...callSchedule, frequency: e.target.value})}
-                      >
-                        <option value="daily">Daily</option>
-                        <option value="weekly">Weekly</option>
-                        <option value="biweekly">Bi-weekly</option>
-                        <option value="monthly">Monthly</option>
-                      </select>
-                    </div>
-                    
-                    {callSchedule.frequency === "weekly" || callSchedule.frequency === "biweekly" && (
-                      <div className="space-y-2">
-                        <Label>Day of week</Label>
-                        <select 
-                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                          value={callSchedule.day}
-                          onChange={e => setCallSchedule({...callSchedule, day: e.target.value})}
-                        >
-                          <option value="Monday">Monday</option>
-                          <option value="Tuesday">Tuesday</option>
-                          <option value="Wednesday">Wednesday</option>
-                          <option value="Thursday">Thursday</option>
-                          <option value="Friday">Friday</option>
-                          <option value="Saturday">Saturday</option>
-                          <option value="Sunday">Sunday</option>
-                        </select>
-                      </div>
-                    )}
-                    
-                    <div className="space-y-2">
-                      <Label>Preferred time</Label>
-                      <Input 
-                        type="time" 
-                        value={callSchedule.time}
-                        onChange={e => setCallSchedule({...callSchedule, time: e.target.value})}
+                    {/* Calendar for date selection */}
+                    <div className="border rounded-md p-4">
+                      <h4 className="font-medium mb-3">Select dates for calls</h4>
+                      <CalendarComponent
+                        mode="single"
+                        selected={selectedDate}
+                        onSelect={handleDateSelect}
+                        className={cn("mx-auto p-3 pointer-events-auto")}
                       />
                     </div>
                     
-                    {callSchedule.frequency === "monthly" && (
-                      <div className="space-y-2">
-                        <Label>Date of month</Label>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full justify-start text-left font-normal",
-                                !callSchedule.date && "text-muted-foreground"
-                              )}
-                            >
-                              <Calendar className="mr-2 h-4 w-4" />
-                              {callSchedule.date ? format(callSchedule.date, "do 'of each month'") : <span>Pick a date</span>}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0">
-                            <CalendarComponent
-                              mode="single"
-                              selected={callSchedule.date}
-                              onSelect={(date) => date && setCallSchedule({...callSchedule, date: date})}
-                              initialFocus
-                              className="p-3 pointer-events-auto"
-                            />
-                          </PopoverContent>
-                        </Popover>
+                    {/* Time selection when date is selected */}
+                    {showTimeSelector && (
+                      <div className="border rounded-md p-4">
+                        <h4 className="font-medium mb-3">
+                          Select time for {selectedDate ? format(selectedDate, "MMMM d, yyyy") : "call"}
+                        </h4>
+                        <TimeSelector
+                          onTimeSelect={handleTimeSelect}
+                          rangeMode={timeRangeMode}
+                          setRangeMode={setTimeRangeMode}
+                          startTime={startTime}
+                          endTime={endTime}
+                          setStartTime={setStartTime}
+                          setEndTime={setEndTime}
+                        />
                       </div>
                     )}
+                    
+                    {/* Scheduled calls list */}
+                    <div className="border rounded-md p-4">
+                      <h4 className="font-medium mb-3">Scheduled calls</h4>
+                      {scheduledCalls.length === 0 ? (
+                        <p className="text-muted-foreground text-center py-4">
+                          No calls scheduled yet. Select a date above to schedule a call.
+                        </p>
+                      ) : (
+                        <div className="space-y-2">
+                          {scheduledCalls.map((call, index) => (
+                            <ScheduledCall 
+                              key={index}
+                              call={call}
+                              onDelete={() => handleDeleteCall(index)}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </CardContent>
-                  <CardFooter>
-                    <Button className="w-full">
-                      Save Schedule
-                    </Button>
-                  </CardFooter>
                 </Card>
                 
                 {/* Upcoming Integrations */}
@@ -388,7 +517,7 @@ const UserEnvironment = () => {
                     </div>
                     
                     <div className="p-4 border border-dashed rounded-lg flex items-center gap-3 opacity-60">
-                      <Calendar className="w-5 h-5" />
+                      <CalendarIcon className="w-5 h-5" />
                       <div>
                         <h4 className="font-medium">Calendar Sync</h4>
                         <p className="text-sm text-muted-foreground">Sync with your preferred calendar app</p>
