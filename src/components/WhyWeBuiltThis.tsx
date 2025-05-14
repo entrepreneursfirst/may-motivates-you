@@ -6,7 +6,7 @@ const WhyWeBuiltThis = () => {
   return <section id="why" className="py-24 overflow-hidden">
       <div className="container mx-auto px-4 relative">
         {/* Updated sticker with larger size and moved to the right and up */}
-        <div className="absolute left-[2cm] md:left-[2cm] -top-[3.1cm] md:-top-[7cm] z-0 transform rotate-[-20deg] opacity-90">
+        <div className="absolute left-[2cm] md:left-[2cm] -top-[3.1cm] md:-top-[2cm] z-0 transform rotate-[-20deg] opacity-90">
           <img src="/lovable-uploads/99634d53-7783-4dd8-a3d9-bf614fb19fcf.png" alt="Cool sticker" className="w-40 md:w-50 lg:w-50 h-auto" />
         </div>
         
