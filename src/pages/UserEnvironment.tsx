@@ -9,6 +9,7 @@ import NaturalLanguageCard from '@/components/UserEnvironment/NaturalLanguageCar
 import IntegrationsCard from '@/components/UserEnvironment/IntegrationsCard';
 import PlanSelectionDialog from '@/components/UserEnvironment/PlanSelectionDialog';
 import Header from '@/components/UserEnvironment/Header';
+import BackgroundGradient from '@/components/UserEnvironment/BackgroundGradient';
 
 // Agent data
 const agents = [
@@ -233,7 +234,10 @@ const UserEnvironment = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-commitify-background to-commitify-background/90">
+    <div className="min-h-screen bg-commitify-background">
+      {/* Warm radial gradient background */}
+      <BackgroundGradient />
+      
       {/* Header with logo */}
       <Header />
       
