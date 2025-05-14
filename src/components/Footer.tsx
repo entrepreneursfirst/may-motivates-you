@@ -37,33 +37,23 @@ const Footer = () => {
               Privacy
             </button>
             
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <a href="#" className="text-commitify-secondary hover:text-commitify-blue transition-colors flex items-center gap-1">
-                    Contact
-                    <Mail className="w-4 h-4" />
-                  </a>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>help@commitify.com</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <a 
+              href="mailto:help@commitify.me" 
+              className="text-commitify-secondary hover:text-commitify-blue transition-colors flex items-center gap-1"
+            >
+              Contact
+              <Mail className="w-4 h-4" />
+              <span className="text-sm ml-1">help@commitify.me</span>
+            </a>
             
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <a href="#" className="text-commitify-secondary hover:text-commitify-blue transition-colors flex items-center gap-1">
-                    Help
-                    <HelpCircle className="w-4 h-4" />
-                  </a>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>help@commitify.com</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <a 
+              href="mailto:help@commitify.me" 
+              className="text-commitify-secondary hover:text-commitify-blue transition-colors flex items-center gap-1"
+            >
+              Help
+              <HelpCircle className="w-4 h-4" />
+              <span className="text-sm ml-1">help@commitify.me</span>
+            </a>
           </div>
         </div>
         
@@ -117,7 +107,7 @@ const Footer = () => {
             
             <p>By continuing to use the service, you acknowledge and agree to these terms.</p>
             
-            <p>Questions? Please do not hesitate to reach us at help@commitify.com</p>
+            <p>Questions? Please do not hesitate to reach us at help@commitify.me</p>
           </div>
         </DialogContent>
       </Dialog>
@@ -170,7 +160,7 @@ const Footer = () => {
               <p>Our service is not intended for users under 13. We do not knowingly collect personal data from children.</p>
             </div>
             
-            <p>For any questions, please contact us at help@commitify.com</p>
+            <p>For any questions, please contact us at help@commitify.me</p>
           </div>
         </DialogContent>
       </Dialog>
