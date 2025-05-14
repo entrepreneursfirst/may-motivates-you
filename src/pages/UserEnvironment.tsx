@@ -389,12 +389,12 @@ const UserEnvironment = () => {
               </CardHeader>
               <CardContent>
                 <div className="p-4 bg-gradient-to-r from-[#FFC371] via-[#FFAA5B] to-[#FDE365] rounded-lg text-commitify-text mb-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-24 h-24 rounded-full bg-white p-1 overflow-hidden flex-shrink-0">
+                  <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
+                    <div className="w-24 h-24 rounded-full bg-white p-1 overflow-hidden flex-shrink-0 mx-auto md:mx-0">
                       <img src={activeAgent.image} alt={activeAgent.name} className="w-full h-full object-cover object-top rounded-full" />
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
+                    <div className="text-center md:text-left">
+                      <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
                         <span className="text-2xl">{activeAgent.emoji}</span>
                         <h3 className="font-bold text-xl">{activeAgent.name}</h3>
                       </div>
