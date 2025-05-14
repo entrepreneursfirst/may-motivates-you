@@ -5,25 +5,39 @@ import { Button } from "@/components/ui/button";
 // Step content as separate objects for better editability
 const step1 = {
   imageSrc: "/lovable-uploads/2c682f5d-9441-4c38-bb50-0e5b969df930.png",
-  title: "Upload your schedule & goals",
+  title: (
+    <>
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">Upload</span> your schedule & goals
+    </>
+  ),
   description: "Introduce yourself, explain your to-dos, integrate your schedule, or upload files."
 };
 const step2 = {
   imageSrc: "/lovable-uploads/bff9745b-e164-44f7-afc9-26c5b1823fce.png",
-  title: "Set the call time, frequency & vibe",
+  title: (
+    <>
+      Set the <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">call time</span>, frequency & vibe
+    </>
+  ),
   description: "Choose when you want to be called—and who you want the caller to be."
 };
 const step3 = {
   imageSrc: "/lovable-uploads/44c37770-c3f4-4735-8bf2-a7bc177b82ad.png",
-  title: "Get phone call check-ins from your AI coach",
+  title: (
+    <>
+      Get phone call check-ins from your <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-blue-400">AI Coach</span>
+    </>
+  ),
   description: "Your AI will remember what you said, follow up, and helps you follow through."
 };
+
 const HowItWorks = () => {
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({
       behavior: 'smooth'
     });
   };
+  
   return <section id="how-it-works" className="py-24 overflow-hidden">
     <div className="container mx-auto px-4 relative">
       {/* Rainbow Sticker - Now positioned relative to container */}
@@ -42,15 +56,12 @@ const HowItWorks = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Step 1 - Each section is now individually editable */}
           <div className="flex flex-col items-center text-center">
-            <div className="mb-8 flex items-center justify-center h-[350px]">
-              <img src={step1.imageSrc} alt={step1.title} className="object-contain" style={{
-                width: "350px",
-                height: "350px"
-              }} />
+            <div className="mb-8 flex items-center justify-center h-[350px] md:h-[350px]">
+              <img src={step1.imageSrc} alt="Upload your schedule & goals" className="object-contain md:w-[350px] w-[297.5px] md:h-[350px] h-[297.5px]" />
             </div>
             {/* All titles use the same fixed height with top alignment */}
-            <div className="h-20 flex items-start justify-center mb-2">
-              <h3 className="text-3xl font-extrabold">
+            <div className="h-20 flex items-start justify-center mb-2 md:mb-2">
+              <h3 className="text-3xl font-extrabold mb-3 md:mb-1">
                 {step1.title}
               </h3>
             </div>
@@ -61,14 +72,11 @@ const HowItWorks = () => {
           
           {/* Step 2 */}
           <div className="flex flex-col items-center text-center">
-            <div className="mb-8 flex items-center justify-center h-[350px]">
-              <img src={step2.imageSrc} alt={step2.title} className="object-contain" style={{
-                width: "350px",
-                height: "350px"
-              }} />
+            <div className="mb-8 flex items-center justify-center h-[350px] md:h-[350px]">
+              <img src={step2.imageSrc} alt="Set the call time, frequency & vibe" className="object-contain md:w-[350px] w-[297.5px] md:h-[350px] h-[297.5px]" />
             </div>
-            <div className="h-20 flex items-start justify-center mb-2">
-              <h3 className="text-3xl font-extrabold">
+            <div className="h-20 flex items-start justify-center mb-2 md:mb-2">
+              <h3 className="text-3xl font-extrabold mb-3 md:mb-1">
                 {step2.title}
               </h3>
             </div>
@@ -77,17 +85,13 @@ const HowItWorks = () => {
             </p>
           </div>
           
-          {/* Step 3 - Making this stickman 10% smaller */}
+          {/* Step 3 */}
           <div className="flex flex-col items-center text-center">
-            <div className="mb-8 flex items-center justify-center h-[350px]">
-              <img src={step3.imageSrc} alt={step3.title} className="object-contain" style={{
-                width: "315px",
-                /* 350px - 10% = 315px */
-                height: "315px" /* 350px - 10% = 315px */
-              }} />
+            <div className="mb-8 flex items-center justify-center h-[350px] md:h-[350px]">
+              <img src={step3.imageSrc} alt="Get phone call check-ins from your AI coach" className="object-contain md:w-[350px] w-[297.5px] md:h-[350px] h-[297.5px]" />
             </div>
-            <div className="h-20 flex items-start justify-center mb-2">
-              <h3 className="text-3xl font-extrabold">
+            <div className="h-20 flex items-start justify-center mb-2 md:mb-2">
+              <h3 className="text-3xl font-extrabold mb-3 md:mb-1">
                 {step3.title}
               </h3>
             </div>
@@ -104,4 +108,5 @@ const HowItWorks = () => {
     </div>
   </section>;
 };
+
 export default HowItWorks;
