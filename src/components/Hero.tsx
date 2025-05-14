@@ -107,6 +107,64 @@ const Hero = () => {
     setPhoneNumber('');
   };
 
+  // Render the phone input form (visible or invisible based on state)
+  const renderPhoneInput = (visible: boolean) => {
+    return (
+      <div className={`${visible ? 'opacity-100 h-auto' : 'opacity-0 h-0 overflow-hidden'} transition-opacity duration-300`}>
+        <div className="flex items-center w-full">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button className="bg-white border border-gray-300 text-gray-700 px-3 py-6 rounded-l-full hover:bg-gray-50 flex items-center min-w-[90px] justify-center gap-1">
+                {selectedCountryCode.flag} {selectedCountryCode.code} <ChevronDown className="h-4 w-4" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0 max-h-[300px] overflow-y-auto bg-white">
+              <div className="grid">
+                {countryCodes.map(country => (
+                  <div 
+                    key={country.code} 
+                    className="flex items-center p-2 hover:bg-gray-100 cursor-pointer" 
+                    onClick={() => handleSelectCountry(country)}
+                  >
+                    <span className="mr-2 text-lg">{country.flag}</span>
+                    <span className="font-medium">{country.code}</span>
+                    <span className="ml-2 text-sm text-gray-600">{country.name}</span>
+                  </div>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
+          
+          <Input 
+            type="tel" 
+            value={visible ? phoneNumber : ''}
+            onChange={e => visible && setPhoneNumber(e.target.value)} 
+            className={`py-6 rounded-none border-l-0 border-r-0 ${isMobile ? 'w-[100px] sm:w-[140px]' : 'w-[180px] sm:w-[220px]'}
+                shadow-[0_0_15px_rgba(178,107,202,0.7)] focus:shadow-[0_0_25px_rgba(178,107,202,0.9)]
+                border-commitify-purple/30 focus:border-commitify-purple/50 
+                outline-none ring-2 ring-commitify-yellow/30 focus:ring-commitify-yellow/50`} 
+            placeholder={visible ? "Phone number" : ""} 
+          />
+          
+          <div className="flex">
+            <Button 
+              onClick={visible ? handleSubmit : undefined} 
+              className="bg-commitify-yellow text-commitify-text hover:bg-commitify-yellow/90 px-4 py-6 rounded-none shadow-[0_0_10px_rgba(252,192,27,0.5)]"
+            >
+              <Check className="w-5 h-5" />
+            </Button>
+            <Button 
+              onClick={visible ? handleCancel : undefined} 
+              className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-6 rounded-r-full"
+            >
+              <X className="w-5 h-5" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return <section id="hero" className="pt-40 pb-28 relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute top-40 left-10 w-72 h-72 bg-commitify-yellow opacity-10 rounded-full blur-3xl"></div>
@@ -131,57 +189,32 @@ const Hero = () => {
             {/* Subtext - Changed from text-center to text-left */}
             <p className="text-left text-commitify-secondary text-xl mb-4 max-w-3xl">Meet Commitify — the AI that calls when motivation runs out and procrastination kicks in.</p>
             
-            {/* Button area with smooth horizontal expansion - Updated for mobile layout */}
-            <div className={`flex ${isMobile ? 'flex-col' : 'items-center'} gap-4`}>
-              <div className={`transition-all duration-700 ease-in-out ${isPhoneInputActive ? (isMobile ? 'w-full' : 'w-[450px]') : 'w-[168px]'}`}>
-                {isPhoneInputActive ? <div className="flex items-center w-full">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button className="bg-white border border-gray-300 text-gray-700 px-3 py-6 rounded-l-full hover:bg-gray-50 flex items-center min-w-[90px] justify-center gap-1">
-                          {selectedCountryCode.flag} {selectedCountryCode.code} <ChevronDown className="h-4 w-4" />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0 max-h-[300px] overflow-y-auto bg-white">
-                        <div className="grid">
-                          {countryCodes.map(country => <div key={country.code} className="flex items-center p-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleSelectCountry(country)}>
-                              <span className="mr-2 text-lg">{country.flag}</span>
-                              <span className="font-medium">{country.code}</span>
-                              <span className="ml-2 text-sm text-gray-600">{country.name}</span>
-                            </div>)}
-                        </div>
-                      </PopoverContent>
-                    </Popover>
-                    
-                    <Input 
-                      type="tel" 
-                      value={phoneNumber} 
-                      onChange={e => setPhoneNumber(e.target.value)} 
-                      className={`py-6 rounded-none border-l-0 border-r-0 ${isMobile ? 'w-[100px] sm:w-[140px]' : 'w-[180px] sm:w-[220px]'}
-                          shadow-[0_0_15px_rgba(178,107,202,0.7)] focus:shadow-[0_0_25px_rgba(178,107,202,0.9)]
-                          border-commitify-purple/30 focus:border-commitify-purple/50 
-                          outline-none ring-2 ring-commitify-yellow/30 focus:ring-commitify-yellow/50`} 
-                      placeholder="Phone number" 
-                    />
-                    
-                    <div className="flex">
-                      <Button onClick={handleSubmit} className="bg-commitify-yellow text-commitify-text hover:bg-commitify-yellow/90 px-4 py-6 rounded-none shadow-[0_0_10px_rgba(252,192,27,0.5)]">
-                        <Check className="w-5 h-5" />
-                      </Button>
-                      <Button onClick={handleCancel} className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-6 rounded-r-full">
-                        <X className="w-5 h-5" />
-                      </Button>
+            {/* Button area with improved layout handling */}
+            <div className={`flex ${isMobile ? 'flex-col' : 'items-center'} gap-4 w-full`}>
+              <div className={`${isMobile ? 'w-full' : 'w-[450px]'} transition-all duration-500 ease-in-out`}>
+                {isPhoneInputActive ? (
+                  renderPhoneInput(true)
+                ) : (
+                  <div className="flex items-center w-full">
+                    <Button 
+                      className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all w-[168px]" 
+                      onClick={handlePhoneInput}
+                    >
+                      Try it for $0
+                    </Button>
+                    {/* Hidden space placeholder - renders the same dimensions but invisible */}
+                    <div className="invisible h-0 absolute">
+                      {renderPhoneInput(false)}
                     </div>
-                  </div> : <Button className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all w-full" onClick={handlePhoneInput}>
-                    Try it for $0
-                  </Button>}
+                  </div>
+                )}
               </div>
               
-              {/* For desktop, add margin-left that kicks in BEFORE the expansion completes */}
+              {/* Button with consistent width on mobile and smooth transition on desktop */}
               <Button 
                 variant="outline" 
-                className={`border-2 border-commitify-blue text-commitify-blue hover:bg-commitify-blue/10 font-medium text-lg px-8 py-6 rounded-full 
-                  ${isMobile ? (isPhoneInputActive ? 'w-full mt-4' : 'w-full') : 'transition-all duration-700'} 
-                  ${!isMobile && isPhoneInputActive ? 'translate-x-8' : ''}`}
+                className={`border-2 border-commitify-blue text-commitify-blue hover:bg-commitify-blue/10 font-medium text-lg px-8 py-6 rounded-full
+                  ${isMobile ? 'w-full mt-4' : 'transition-all duration-500'}`}
                 onClick={() => scrollToSection(isMobile ? 'agents' : 'how-it-works')}
               >
                 {isMobile ? "Meet Our Agents" : "Learn More"}
