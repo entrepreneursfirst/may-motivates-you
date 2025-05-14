@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
@@ -34,7 +35,7 @@ const HowItWorks = () => {
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
           How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-commitify-blue to-commitify-purple">Works</span>
         </h2>
-        <p className="text-center text-commitify-secondary text-xl mb-16 max-w-3xl mx-auto">
+        <p className="text-center text-commitify-secondary text-xl mb-8">
           Three simple steps to boost your productivity
         </p>
         
