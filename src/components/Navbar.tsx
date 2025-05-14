@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, Clock, Phone, UserRound } from 'lucide-react';
+import { Menu, Clock, Phone, LogIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import LoginDialog from './LoginDialog';
 
@@ -90,10 +90,11 @@ const Navbar = () => {
           </Button>
           <Button 
             onClick={openLoginDialog}
-            className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full p-2 flex items-center justify-center"
-            aria-label="User profile"
+            className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full px-6 flex items-center gap-2"
+            aria-label="Login"
           >
-            <UserRound className="w-5 h-5" />
+            <LogIn className="w-4 h-4" />
+            Log In
           </Button>
         </div>
 
@@ -127,8 +128,8 @@ const Navbar = () => {
                 onClick={openLoginDialog}
                 className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full w-full flex items-center justify-center gap-2"
               >
-                <UserRound className="w-4 h-4" />
-                Profile
+                <LogIn className="w-4 h-4" />
+                Log In
               </Button>
             </div>
           </div>
