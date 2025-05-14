@@ -7,7 +7,7 @@ const BackgroundGradient: React.FC = () => {
       <div
         className="absolute w-[150vw] h-[150vw] top-[-25%] left-[-25%] rounded-full"
         style={{
-          background: 'radial-gradient(circle, #FEF7CD 0%, #FEC6A1 40%, #F97316 80%)',
+          background: 'radial-gradient(circle, #F97316 0%, #FEC6A1 60%, #FEF7CD 100%)',
           opacity: 0.25,
           filter: 'blur(100px)',
         }}
