@@ -1,8 +1,6 @@
-
 import React from 'react';
 import { Bot } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
 interface Agent {
   id: number;
   name: string;
@@ -11,28 +9,25 @@ interface Agent {
   description: string;
   quote: string;
 }
-
 interface ActiveAgentCardProps {
   activeAgent: Agent;
   activeAgentId: number;
   setActiveAgentId: React.Dispatch<React.SetStateAction<number>>;
   agents: Agent[];
 }
-
 const ActiveAgentCard: React.FC<ActiveAgentCardProps> = ({
   activeAgent,
   activeAgentId,
   setActiveAgentId,
   agents
 }) => {
-  return (
-    <Card>
+  return <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Bot className="w-5 h-5 text-commitify-text" />
           Your Active Agent
         </CardTitle>
-        <CardDescription>Manage your active agent and preferences</CardDescription>
+        <CardDescription>Manage your active agent</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="p-4 bg-gradient-to-r from-[#FFC371] via-[#FFAA5B] to-[#FDE365] rounded-lg text-commitify-text mb-6">
@@ -55,22 +50,14 @@ const ActiveAgentCard: React.FC<ActiveAgentCardProps> = ({
         
         <h4 className="font-medium mb-3">Select a different agent</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {agents.map(agent => (
-            <button 
-              key={agent.id} 
-              className={`p-3 rounded-lg border-2 transition-all ${agent.id === activeAgentId ? "border-commitify-yellow bg-commitify-yellow/10" : "border-transparent hover:border-commitify-yellow/50"}`} 
-              onClick={() => setActiveAgentId(agent.id)}
-            >
+          {agents.map(agent => <button key={agent.id} className={`p-3 rounded-lg border-2 transition-all ${agent.id === activeAgentId ? "border-commitify-yellow bg-commitify-yellow/10" : "border-transparent hover:border-commitify-yellow/50"}`} onClick={() => setActiveAgentId(agent.id)}>
               <div className="flex items-center gap-2">
                 <span className="text-xl">{agent.emoji}</span>
                 <span className="font-medium">{agent.name}</span>
               </div>
-            </button>
-          ))}
+            </button>)}
         </div>
       </CardContent>
-    </Card>
-  );
+    </Card>;
 };
-
 export default ActiveAgentCard;
