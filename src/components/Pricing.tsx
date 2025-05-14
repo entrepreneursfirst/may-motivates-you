@@ -29,9 +29,7 @@ const plans = [
     period: "per week",
     calls: 5,
     features: [
-      "Motivational voice agent",
-      "Basic AI memory (short-term)",
-      "Fixed voice tone",
+      "Everything in Acquaintance, and...",
       "Long-term memory",
       "Add your own voice",
       "Weekly progress tracking",
@@ -47,12 +45,7 @@ const plans = [
     period: "per week",
     calls: 8,
     features: [
-      "Motivational voice agent",
-      "Basic AI memory (short-term)",
-      "Fixed voice tone",
-      "Long-term memory",
-      "Add your own voice",
-      "Weekly progress tracking",
+      "Everything in Bestie, and...",
       "Calendar integration",
       "Access to all current and future voices",
     ],
@@ -107,7 +100,9 @@ const Pricing = () => {
               )}
               
               <CardHeader className="pb-0">
-                <CardTitle className="text-xl h-[28px] flex items-center">{plan.name}</CardTitle>
+                <div className="h-16 flex items-start">
+                  <CardTitle className="text-xl">{plan.name}</CardTitle>
+                </div>
                 <CardDescription>{plan.description}</CardDescription>
               </CardHeader>
               
@@ -149,9 +144,11 @@ const Pricing = () => {
         <div className="mt-12 max-w-xs mx-auto">
           <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100 bg-gradient-to-br from-violet-50 to-violet-100 flex flex-col h-full">
             <CardHeader className="pb-0">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg h-[28px] flex items-center">{extraCallPack.name}</CardTitle>
-                <Plus className="text-green-500 w-5 h-5" />
+              <div className="h-16 flex items-start">
+                <div className="flex items-center justify-between w-full">
+                  <CardTitle className="text-lg">{extraCallPack.name}</CardTitle>
+                  <Plus className="text-green-500 w-5 h-5" />
+                </div>
               </div>
               <CardDescription>{extraCallPack.description}</CardDescription>
             </CardHeader>
