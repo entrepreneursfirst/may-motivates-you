@@ -16,7 +16,6 @@ const plans = [
     features: [
       "Motivational voice agent",
       "Basic AI memory",
-      "3 calls only",
     ],
     popular: false,
     buttonText: "Try Now",
@@ -36,7 +35,7 @@ const plans = [
     callCount: 3,
     features: [
       "Motivational voice agent",
-      "Basic AI memory (short-term)",
+      "Basic AI memory",
     ],
     popular: false,
     buttonText: "Get Started",
@@ -57,8 +56,6 @@ const plans = [
     features: [
       "Everything in Acquaintance, and...",
       "Long-term memory",
-      "Add your own voice",
-      "Weekly progress tracking",
     ],
     popular: true,
     buttonText: "Most Popular",
@@ -78,8 +75,8 @@ const plans = [
     callCount: 8,
     features: [
       "Everything in Bestie, and...",
-      "Calendar integration",
       "Access to all current and future voices",
+      "Early and free access to future features!",
     ],
     popular: false,
     buttonText: "Go Premium",
