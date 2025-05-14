@@ -8,7 +8,8 @@ import { Badge } from "@/components/ui/badge";
 
 const plans = [
   {
-    name: "One-off",
+    name: "Cold Call",
+    emoji: "❄️",
     description: "Just dip your toes in",
     price: "$7.50",
     period: "one-time",
@@ -20,12 +21,16 @@ const plans = [
     ],
     popular: false,
     buttonText: "Try Now",
-    icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
+    icon: <Phone className="w-5 h-5 mr-2 text-white" />,
     headerText: "Try it out",
-    billingNote: "One-time payment"
+    billingNote: "One-time payment",
+    color: "bg-[#1EAEDB] hover:bg-[#1EAEDB]/90 text-white",
+    cardBorder: "border-[#1EAEDB]/30",
+    headerColor: "bg-[#1EAEDB] text-white"
   },
   {
     name: "Acquaintance",
+    emoji: "👋",
     description: "Perfect for getting started",
     price: "$3.75",
     period: "per week",
@@ -38,10 +43,14 @@ const plans = [
     buttonText: "Get Started",
     icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
     headerText: "For the curious",
-    billingNote: "Billed Monthly"
+    billingNote: "Billed Monthly",
+    color: "bg-commitify-blue hover:bg-commitify-blue/90 text-white",
+    cardBorder: "border-gray-100",
+    headerColor: "bg-commitify-blue text-white"
   },
   {
     name: "Bestie",
+    emoji: "🤝",
     description: "Our most popular choice",
     price: "$5.00",
     period: "per week",
@@ -56,10 +65,14 @@ const plans = [
     buttonText: "Most Popular",
     icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
     headerText: "Most Popular",
-    billingNote: "Billed Monthly"
+    billingNote: "Billed Monthly",
+    color: "bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text",
+    cardBorder: "border-commitify-yellow",
+    headerColor: "bg-commitify-yellow text-commitify-text"
   },
   {
     name: "Ride or Die",
+    emoji: "🔥",
     description: "Maximum accountability",
     price: "$6.50",
     period: "per week",
@@ -73,7 +86,10 @@ const plans = [
     buttonText: "Go Premium",
     icon: <Phone className="w-5 h-5 mr-2 text-commitify-blue" />,
     headerText: "For the committed",
-    billingNote: "Billed Monthly"
+    billingNote: "Billed Monthly",
+    color: "bg-commitify-blue hover:bg-commitify-blue/90 text-white",
+    cardBorder: "border-gray-100",
+    headerColor: "bg-commitify-blue text-white"
   }
 ];
 
@@ -111,16 +127,14 @@ const Pricing = () => {
                   ? 'border-4 border-commitify-blue' 
                   : plan.popular 
                   ? 'border-commitify-yellow' 
-                  : 'border-gray-100'
+                  : plan.cardBorder
               } bg-gradient-to-br from-violet-50 to-violet-100 h-full flex flex-col`}
             >
               {/* Fixed height container for header */}
               <div className="h-[40px] flex items-center justify-center">
                 {(plan.popular || plan.headerText) && (
                   <div className={`${
-                    plan.popular 
-                      ? 'bg-commitify-yellow text-commitify-text' 
-                      : 'bg-commitify-blue text-white'
+                    plan.headerColor
                     } text-center py-2 font-medium flex items-center justify-center w-full`}>
                     {plan.popular ? <Star className="w-4 h-4 mr-2" /> : null}
                     {plan.headerText}
@@ -130,7 +144,9 @@ const Pricing = () => {
               
               <CardHeader className="pb-0">
                 <div className="h-12 flex items-center">
-                  <CardTitle className="text-xl">{plan.name}</CardTitle>
+                  <CardTitle className="text-xl flex items-center gap-2">
+                    {plan.name} <span className="text-xl">{plan.emoji}</span>
+                  </CardTitle>
                 </div>
                 <CardDescription>{plan.description}</CardDescription>
               </CardHeader>
@@ -161,11 +177,9 @@ const Pricing = () => {
               <CardFooter className="pt-4 mt-auto">
                 <Button 
                   className={`w-full ${
-                    plan.popular 
-                      ? 'bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text' 
-                      : selectedPlan === plan.name
+                    selectedPlan === plan.name
                       ? 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'
-                      : 'bg-commitify-blue hover:bg-commitify-blue/90 text-white'
+                      : plan.color
                   } rounded-full`}
                   onClick={() => handleSelectPlan(plan.name)}
                 >
