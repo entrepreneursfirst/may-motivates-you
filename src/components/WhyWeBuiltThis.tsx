@@ -27,7 +27,7 @@ const WhyWeBuiltThis = () => {
             <div className="space-y-6">
               {isMobile ? (
                 <div className="relative">
-                  <div className={`relative overflow-hidden ${isOpen ? 'max-h-full' : 'max-h-[250px]'} transition-all duration-300`}>
+                  <div className={`relative overflow-hidden ${isOpen ? 'max-h-full' : 'max-h-[300px]'} transition-all duration-300`}>
                     <p className="text-lg">AI has proven itself to be <span className="font-bold">a powerful reflection partner</span>. It listens without judgment and can surface insights you might not reach on your own. However, we're still figuring out the best way to bring it into our lives in <span className="font-bold">a way that sticks</span>.</p>
                     
                     <div className="text-lg mt-6 space-y-6">
@@ -39,13 +39,13 @@ const WhyWeBuiltThis = () => {
                       </p>
                     </div>
                     
-                    {/* Updated gradient overlay with better color matching */}
+                    {/* Updated gradient overlay with #fff3cb as the base color */}
                     {!isOpen && (
-                      <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-commitify-yellow/20 to-transparent pointer-events-none"></div>
+                      <div className="absolute bottom-0 left-0 w-full h-60 bg-gradient-to-t from-[#fff3cb] to-transparent pointer-events-none"></div>
                     )}
                   </div>
                   
-                  {/* Read more button positioned at the end of visible text */}
+                  {/* Read more button positioned lower to show more content */}
                   {!isOpen && (
                     <div className="absolute bottom-0 left-0 w-full flex justify-center pb-2">
                       <button 
