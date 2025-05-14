@@ -6,8 +6,12 @@ import { Phone } from 'lucide-react';
 const FixedCTA = () => {
   const [visible, setVisible] = useState(false);
 
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Dispatch a custom event that the Hero component will listen for
+    setTimeout(() => {
+      window.dispatchEvent(new Event('activatePhoneInput'));
+    }, 800); // Add a slight delay to ensure the scroll completes first
   };
   
   useEffect(() => {
@@ -31,7 +35,7 @@ const FixedCTA = () => {
         </p>
         <Button 
           className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text rounded-full flex items-center gap-2"
-          onClick={() => scrollToSection('pricing')}
+          onClick={scrollToTop}
         >
           <Phone className="w-4 h-4" />
           <span className="hidden md:inline">Call Me Now</span>
