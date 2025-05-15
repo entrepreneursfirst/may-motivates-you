@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -24,6 +24,10 @@ export const TimeSelector = ({
   setStartTime,
   setEndTime
 }: TimeSelectorProps) => {
+  // Add a state to track which preset time is selected
+  const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
+  const [customTimeEntered, setCustomTimeEntered] = useState(false);
+
   // Common time preset options
   const timePresets = [
     { label: "Morning", time: "09:00" },
@@ -32,12 +36,17 @@ export const TimeSelector = ({
     { label: "Evening", time: "18:00" }
   ];
 
-  const handleExactTimeSelect = (time: string) => {
-    onTimeSelect(time, false);
+  // Handle preset selection without triggering onTimeSelect immediately
+  const handlePresetSelect = (time: string) => {
+    setSelectedPreset(time);
+    setCustomTimeEntered(false);
+    // We don't call onTimeSelect here anymore
   };
 
-  const handleTimeRangeSelect = () => {
-    onTimeSelect(null, true, startTime, endTime);
+  // Track custom time entry
+  const handleCustomTimeChange = () => {
+    setSelectedPreset(null);
+    setCustomTimeEntered(true);
   };
 
   return (
@@ -75,9 +84,7 @@ export const TimeSelector = ({
               />
             </div>
           </div>
-          <Button className="w-full" onClick={handleTimeRangeSelect}>
-            Schedule Random Time in Range
-          </Button>
+          {/* Removed the button here since scheduling happens from the parent */}
         </div>
       ) : (
         <div className="space-y-4">
@@ -85,8 +92,9 @@ export const TimeSelector = ({
             {timePresets.map((preset) => (
               <Button 
                 key={preset.label} 
-                variant="outline" 
-                onClick={() => handleExactTimeSelect(preset.time)}
+                variant={selectedPreset === preset.time ? "default" : "outline"} 
+                className={selectedPreset === preset.time ? "bg-accent text-accent-foreground" : ""}
+                onClick={() => handlePresetSelect(preset.time)}
               >
                 {preset.label} ({preset.time})
               </Button>
@@ -101,11 +109,13 @@ export const TimeSelector = ({
                 id="custom-time"
                 className="flex-1"
                 defaultValue="09:00"
+                onChange={handleCustomTimeChange}
               />
-              <Button onClick={() => {
-                const customTime = (document.getElementById('custom-time') as HTMLInputElement).value;
-                handleExactTimeSelect(customTime);
-              }}>
+              <Button 
+                className={customTimeEntered ? "bg-accent text-accent-foreground" : ""} 
+                variant={customTimeEntered ? "default" : "outline"}
+                onClick={handleCustomTimeChange}
+              >
                 Set
               </Button>
             </div>

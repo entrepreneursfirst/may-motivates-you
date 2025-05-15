@@ -108,7 +108,7 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
                   Select time for {selectedDate ? format(selectedDate, "MMMM d, yyyy") : "call"}
                 </h4>
                 <TimeSelector 
-                  onTimeSelect={handleTimeSelect} 
+                  onTimeSelect={() => {}} // Empty function since we're now handling scheduling with the button
                   rangeMode={timeRangeMode} 
                   setRangeMode={setTimeRangeMode} 
                   startTime={startTime} 
@@ -120,7 +120,7 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
 
               {/* Schedule Button */}
               <Button 
-                className="w-full" 
+                className="w-full bg-accent text-accent-foreground hover:bg-accent/90" 
                 onClick={handleScheduleCall}
               >
                 Schedule Call
