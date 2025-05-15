@@ -18,7 +18,7 @@ interface UserRow {
 }
 
 serve(async (req) => {
-  console.log("🕒 Appointment trigger fired at:", new Date().toISOString(), "🕒 Current time in Unix Timestamp (seconds):", Math.floor(Date.now() / 1000));
+  console.log("🕒 Appointment trigger fired at:", new Date().toISOString(), "🕒 Current time in Unix Timestamp (seconds):", Math.floor(Date.now()));
   
   // Set CORS headers
   const headers = new Headers({
@@ -75,7 +75,7 @@ serve(async (req) => {
           // Update appointment status to "ongoing"
           const { error: updateError } = await supabase
             .from('appointments_scheduling')
-            .update({ scheduling_status: 'ongoing' })
+            .update({ scheduling_status: 'ongoing_call' })
             .eq('id', appointment.id);
           
           if (updateError) {
