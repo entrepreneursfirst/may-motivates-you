@@ -18,7 +18,8 @@ import supabase from '@/utils/supabase';
 // Agent data
 const agents = [
   {
-    id: 1,
+    id:1,
+    agent_id: "agent_78f5fa0f170556473a976e7a91",
     name: "Life Coach",
     image: "/lovable-uploads/84ad56f5-4ca3-4201-b391-1f382fb0bf6b.png",
     emoji: "🧍‍♀️",
@@ -26,7 +27,8 @@ const agents = [
     quote: "Let's break this into steps — and nail the first one today."
   },
   {
-    id: 2,
+    id:2,
+    agent_id: "agent_6e73af06270b0032efc1fa18c3",
     name: "Zen Master",
     image: "/lovable-uploads/758609d4-c1fe-450e-926b-5afdf6650e3d.png",
     emoji: "🧘",
@@ -34,7 +36,8 @@ const agents = [
     quote: "The task exists. It waits for you. Are you ready?"
   },
   {
-    id: 3,
+    id:3,
+    agent_id: "agent_2afc28f645dc8343b84d7c483d",
     name: "Slay Bestie",
     image: "/lovable-uploads/735ccb5d-7d5c-4de9-b764-d99b6619a349.png",
     emoji: "💅",
@@ -42,7 +45,8 @@ const agents = [
     quote: "Slay the day or stay in delay — your call, babe."
   },
   {
-    id: 4,
+    id:4,
+    agent_id: "agent_41764d36679db7bd0bd6e8988f",
     name: "Hype Beast",
     image: "/lovable-uploads/7275608e-a6b4-4f6e-a671-287e022c6cd4.png",
     emoji: "🏋️",
@@ -50,7 +54,8 @@ const agents = [
     quote: "YOU GOT THIS! Time to level up your game!"
   },
   {
-    id: 5,
+    id:5,
+    agent_id: "agent_42c533c4bde861a6767e2c0ee1",
     name: "Drill Sergeant",
     image: "/lovable-uploads/4d5b4382-c347-4c68-b807-b3d21cfef20c.png",
     emoji: "🎖️",
@@ -58,7 +63,8 @@ const agents = [
     quote: "YOU SAID 10AM. IT'S 10:03. WHY AREN'T YOU MOVING?"
   },
   {
-    id: 6,
+    id:6,
+    agent_id: "agent_2fa0142fed45ec311743fcd50b",
     name: "CEO,000,000",
     image: "/lovable-uploads/5e0312df-3529-4495-ba95-2d12b3ce011e.png",
     emoji: "💼",
@@ -66,10 +72,17 @@ const agents = [
     quote: "This task has no ROI unless you execute."
   }
 ];
-
+const creditMap: Record<string, number> = {
+  "price_1ROh24GIxsF8bStBU1EBfS9Z": 7, // Ride or Die Plan - 7 weekly calls
+  "price_1ROh0nGIxsF8bStB1xJw1MrF": 5, // Bestie plan - 5 weekly calls
+  "price_1ROgvjGIxsF8bStBvltMVloL": 3, // Acquaintance plan - 3 weekly calls
+  "price_1ROr80GIxsF8bStBYpj48Ue0": 3, //  Single package of 3 calls 
+  "price_1ROiaZGIxsF8bStBTLbdv0eb": 1 // test_product
+};
 // Plan data
 const plans = [
   {
+    id:"",
     name: "Cold Call",
     emoji: "❄️",
     description: "Just dip your toes in",
@@ -79,6 +92,7 @@ const plans = [
     billingNote: "One-time payment"
   },
   {
+    id: "price_1ROgvjGIxsF8bStBvltMVloL",
     name: "Acquaintance",
     emoji: "👋",
     description: "Perfect for getting started",
@@ -88,6 +102,7 @@ const plans = [
     billingNote: "Billed Monthly"
   },
   {
+    id: "price_1ROh0nGIxsF8bStB1xJw1MrF",
     name: "Bestie",
     emoji: "🫶",
     description: "Our most popular choice",
@@ -97,6 +112,7 @@ const plans = [
     billingNote: "Billed Monthly"
   },
   {
+    id: "price_1ROh24GIxsF8bStBU1EBfS9Z",
     name: "Ride or Die",
     emoji: "💯",
     description: "Maximum accountability",
@@ -119,7 +135,8 @@ interface Call {
 
 const UserEnvironment = () => {
   // Toast notifications
-  const { user, signOut } = useAuth();
+  const { user, signOut, session } = useAuth();
+  
   const [calls, setCalls] = useState<Call[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -154,12 +171,86 @@ const UserEnvironment = () => {
 
   // State for user profile
   const [userProfile, setUserProfile] = useState({
-    name: "John Doe",
+    full_name: "John Doe",
     phone: "+1 (555) 123-4567",
     location: "New York, NY",
     gender: "Male",
-    birthdate: new Date(1990, 0, 1)
+    birth_date: new Date(1990, 0, 1),
+    balance:0
   });
+  // State for active plan
+  const [activePlan, setActivePlan] = useState("");
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (!user) return;
+  
+      const { data, error } = await supabase
+        .from('users')
+        .select('full_name, to_number, location, gender, birth_date, active_plan, balance')
+        .eq('id', user.id)
+        .single();
+  
+      if (error) {
+        console.error('Error fetching user profile:', error);
+        toast({
+          title: "Error",
+          description: "Unable to load your profile.",
+          variant: "destructive"
+        });
+        return;
+      }
+  
+      if (data) {
+        setUserProfile({
+          full_name: data.full_name ?? "",
+          phone: data.to_number ?? "",
+          location: data.location ?? "",
+          gender: data.gender ?? "",
+          birth_date: data.birth_date ? new Date(data.birth_date) : new Date(1990, 0, 1),
+          balance: data.balance
+        });
+      }
+      if (data?.active_plan) {
+        setActivePlan(data.active_plan)
+      }
+    };
+  
+    fetchUserProfile();
+  }, [user]);
+
+  const updateProfileData = async (userProfileData: {
+    full_name: string;
+    location: string;
+    gender: string;
+    birth_date: Date;
+    active_plan?: string;
+  }) => {
+    if (!user) return;
+  
+    const { error } = await supabase
+      .from('users')
+      .update({
+        full_name: userProfileData.full_name,
+        location: userProfileData.location,
+        gender: userProfileData.gender,
+        birth_date: userProfileData.birth_date.toISOString().split('T')[0], // store as YYYY-MM-DD
+      })
+      .eq('id', user.id);
+  
+    if (error) {
+      toast({
+        title: "Update Failed",
+        description: error.message,
+        variant: "destructive"
+      });
+    } else {
+      toast({
+        title: "Profile Saved",
+        description: "Your profile has been successfully updated."
+      });
+    }
+  };
 
   // State for active agent
   const [activeAgentId, setActiveAgentId] = useState(1);
@@ -167,8 +258,6 @@ const UserEnvironment = () => {
   // State for subscription dialog
   const [showPlanDialog, setShowPlanDialog] = useState(false);
 
-  // State for active plan
-  const [activePlan, setActivePlan] = useState("Bestie");
 
   // State for plan selection
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -195,7 +284,7 @@ const UserEnvironment = () => {
   const activeAgent = agents.find(agent => agent.id === activeAgentId) || agents[0];
 
   // Get active plan details
-  const activePlanDetails = plans.find(plan => plan.name === activePlan) || plans[0];
+  const activePlanDetails = plans.find(plan => plan.id === activePlan) || plans[0];
 
   // Handle date selection
   const handleDateSelect = (date: Date | undefined) => {
@@ -258,16 +347,43 @@ const UserEnvironment = () => {
   };
 
   // Handle plan confirmation
-  const handleConfirmPlan = () => {
-    if (selectedPlan) {
-      setActivePlan(selectedPlan);
-      setShowPlanDialog(false);
-      toast({
-        title: "Plan updated",
-        description: `Your subscription has been updated to ${selectedPlan}.`
-      });
+  const handleConfirmPlan = async () => {
+    if (!selectedPlan || !user || !session.access_token) return;
+
+  try {
+    const response = await fetch(
+      'https://pwmsnfpwipyejywyqbnv.supabase.co/functions/v1/create-subscription',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`, // ensure you include user's token
+        },
+        body: JSON.stringify({
+          userId: user.id,
+          priceId: selectedPlan,
+        }),
+      }
+    );
+
+    if (!response.ok) throw new Error('Failed to create subscription');
+
+    const { url } = await response.json();
+
+    if (url) {
+      window.location.href = url; // Redirect to Stripe Checkout
+    } else {
+      throw new Error('No redirect URL returned');
     }
-  };
+  } catch (err) {
+    console.error(err);
+    toast({
+      title: "Subscription Failed",
+      description: "There was an error creating your subscription.",
+      variant: "destructive",
+    });
+  }
+};
 
   // Handle cancel subscription
   const handleCancelSubscription = () => {
@@ -298,6 +414,7 @@ const UserEnvironment = () => {
               <ProfileCard 
                 userProfile={userProfile}
                 setUserProfile={setUserProfile}
+                updateProfileData={updateProfileData}
                 activePlan={activePlan}
                 activePlanDetails={activePlanDetails}
                 handleChangeSubscription={handleChangeSubscription}

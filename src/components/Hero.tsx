@@ -7,6 +7,12 @@ import PhoneAnimation from './PhoneAnimation';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useToast } from '@/components/ui/use-toast';
+import supabase from '@/utils/supabase';
+import { makeAICall } from '@/utils/retellai';
+import { useAuth } from '@/context/AuthContext';
+import AuthDialog from './auth/AuthDialog';
+
 
 // Country codes for the dropdown with added flag emoticons
 export const countryCodes = [{
@@ -56,7 +62,12 @@ const Hero = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [selectedCountryCode, setSelectedCountryCode] = useState(countryCodes[0]);
   const [showWaitlistDialog, setShowWaitlistDialog] = useState(false);
+  const { user, signOut, isLoading } = useAuth();
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
+  
   const isMobile = useIsMobile();
+  const { toast } = useToast();
+  
 
   // Add an event listener for the custom event
   useEffect(() => {
@@ -84,14 +95,46 @@ const Hero = () => {
     setPhoneNumber('');
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const fullPhoneNumber = `${selectedCountryCode.code}${phoneNumber}`.replace(/[\s()-]/g, '');
+
     if (selectedCountryCode.code !== "+1") {
       setShowWaitlistDialog(true);
+      return;
+    }
+    if (user) {
+      // Already logged in — make the AI call
+      try {
+        const callResponse = await makeAICall(
+          fullPhoneNumber,
+          "agent_f6f715fe18971f95067744e49d",
+          user.id
+        );
+  
+        if (callResponse.success) {
+          toast({
+            title: "Call on its way!",
+            description: `Your AI coach is calling ${fullPhoneNumber}`,
+          });
+          setIsPhoneInputActive(false);
+        } else {
+          throw new Error(callResponse.error || "Call failed.");
+        }
+      } catch (err: any) {
+        toast({
+          title: "Call Error",
+          description: err.message || "Unable to place call.",
+          variant: "destructive"
+        });
+      }
     } else {
-      console.log("Phone number submitted:", selectedCountryCode.code + phoneNumber);
-      setIsPhoneInputActive(false);
+      // Not logged in — trigger AuthDialog with OTP step
+      setShowAuthDialog(true);
     }
   };
+
+    
+      
 
   const handleSelectCountry = country => {
     setSelectedCountryCode(country);
@@ -277,6 +320,38 @@ const Hero = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <AuthDialog
+        open={showAuthDialog}
+        onOpenChange={setShowAuthDialog}
+        onAuthSuccess={async () => {
+          const fullPhoneNumber = `${selectedCountryCode.code}${phoneNumber}`.replace(/[\s()-]/g, '');
+          const { data: { session } } = await supabase.auth.getSession();
+
+          if (session?.user) {
+            const callResponse = await makeAICall(
+              fullPhoneNumber,
+              "agent_f6f715fe18971f95067744e49d",
+              session.user.id
+            );
+
+            if (callResponse.success) {
+              toast({
+                title: "Call on its way!",
+                description: `Your AI coach is calling ${fullPhoneNumber}`,
+              });
+              setIsPhoneInputActive(false);
+            } else {
+              toast({
+                title: "Call Failed",
+                description: callResponse.error || "Unable to place call.",
+                variant: "destructive",
+              });
+            }
+          }
+        }}
+        initialPhoneNumber={phoneNumber}
+        initialCountryCode={selectedCountryCode.code}
+      />
     </section>;
 };
 export default Hero;

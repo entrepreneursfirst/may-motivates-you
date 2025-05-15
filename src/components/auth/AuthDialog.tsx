@@ -1,5 +1,5 @@
 // AuthDialog
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -42,6 +42,8 @@ const AuthDialog: React.FC<AuthDialogProps> = ({
   const [countryCode, setCountryCode] = useState(initialCountryCode);
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [hasAutoSent, setHasAutoSent] = useState(false);
+
   
   // Get formatted phone number with country code
   const getFullPhoneNumber = () => {
@@ -49,8 +51,8 @@ const AuthDialog: React.FC<AuthDialogProps> = ({
   };
   
   // Step 1: Send OTP to phone number
-  const handleSendOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSendOtp = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     
     // Validate phone number
     if (!phoneNumber || phoneNumber.length < 7) {
@@ -148,6 +150,29 @@ const AuthDialog: React.FC<AuthDialogProps> = ({
     }
     onOpenChange(open);
   };
+
+
+  useEffect(() => {
+    if (open) {
+      setPhoneNumber(initialPhoneNumber || '');
+      setCountryCode(initialCountryCode || '+1');
+      setHasAutoSent(false); // Reset on open
+
+    }
+  }, [open, initialPhoneNumber, initialCountryCode]);
+
+    // Watch phoneNumber AFTER it's set, then trigger OTP
+  useEffect(() => {
+    if (
+      open &&
+      step === 'phone' &&
+      phoneNumber.length >= 7 &&
+      !hasAutoSent
+    ) {
+      handleSendOtp(); // no event passed
+      setHasAutoSent(true);
+    }
+  }, [open, step, phoneNumber, hasAutoSent]);
   
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>

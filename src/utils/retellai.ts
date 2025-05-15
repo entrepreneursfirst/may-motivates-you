@@ -36,8 +36,8 @@ interface CallScheduleRequest {
  */
 export const makeAICall = async (
   toNumber: string, 
-  agentId: string = "6a628486-8f0a-4206-98e8-42be9a7eea4d",
-  userId: string = "7010089f-bd91-4ecc-9a0c-3739e95e40d1", // Default user ID for now
+  agentId: string,
+  userId: string, // Default user ID for now
 ): Promise<CallResponse> => {
   try {
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';

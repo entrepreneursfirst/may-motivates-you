@@ -13,19 +13,26 @@ import CancelSubscriptionDialog from './CancelSubscriptionDialog';
 
 interface ProfileCardProps {
   userProfile: {
-    name: string;
+    full_name: string;
     phone: string;
     location: string;
     gender: string;
-    birthdate: Date;
+    birth_date: Date;
+    balance: number
   };
   setUserProfile: React.Dispatch<React.SetStateAction<{
-    name: string;
+    full_name: string;
     phone: string;
     location: string;
     gender: string;
-    birthdate: Date;
+    birth_date: Date;
   }>>;
+  updateProfileData: (profile: {
+    full_name: string;
+    location: string;
+    gender: string;
+    birth_date: Date;
+  }) => Promise<void>;
   activePlan: string;
   activePlanDetails: {
     name: string;
@@ -42,6 +49,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   userProfile,
   setUserProfile,
   activePlan,
+  updateProfileData,
   activePlanDetails,
   handleChangeSubscription,
   handleCancelSubscription,
@@ -81,20 +89,20 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         <div className="space-y-3">
           <div className="space-y-1">
             <Label>Name</Label>
-            {isEditingProfile ? <Input value={userProfile.name} onChange={e => setUserProfile({
+            {isEditingProfile ? <Input value={userProfile.full_name} onChange={e => setUserProfile({
             ...userProfile,
-            name: e.target.value
-          })} /> : <p className="text-base">{userProfile.name}</p>}
+            full_name: e.target.value
+          })} /> : <p className="text-base">{userProfile.full_name}</p>}
           </div>
           
           <div className="space-y-1">
             <Label>Phone</Label>
             {isEditingProfile ? <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-muted-foreground" />
-                <Input value={userProfile.phone} onChange={e => setUserProfile({
-              ...userProfile,
-              phone: e.target.value
-            })} />
+                <Phone className="w-4 h-4 text-muted-foreground" /> 
+                <Input value={userProfile.phone} disabled onChange={e => setUserProfile({
+                  ...userProfile,
+                  phone: e.target.value
+                })} />
               </div> : <p className="text-base flex items-center gap-2">
                 <Phone className="w-4 h-4 text-muted-foreground" />
                 {userProfile.phone}
@@ -126,24 +134,27 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             <Label>Birth Date</Label>
             {isEditingProfile ? <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !userProfile.birthdate && "text-muted-foreground")}>
+                  <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !userProfile.birth_date && "text-muted-foreground")}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {userProfile.birthdate ? format(userProfile.birthdate, "PPP") : <span>Pick a date</span>}
+                    {userProfile.birth_date ? format(userProfile.birth_date, "PPP") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                  <CalendarComponent mode="single" selected={userProfile.birthdate} onSelect={date => date && setUserProfile({
+                  <CalendarComponent mode="single" selected={userProfile.birth_date} onSelect={date => date && setUserProfile({
                 ...userProfile,
-                birthdate: date
+                birth_date: date
               })} initialFocus className={cn("p-3 pointer-events-auto")} />
                 </PopoverContent>
               </Popover> : <p className="text-base">
-                {userProfile.birthdate ? format(userProfile.birthdate, "PPP") : "Not provided"}
+                {userProfile.birth_date ? format(userProfile.birth_date, "PPP") : "Not provided"}
               </p>}
           </div>
         </div>
         
-        {isEditingProfile && <Button onClick={() => setIsEditingProfile(false)} className="w-full">
+        {isEditingProfile && <Button  onClick={async () => {
+                                await updateProfileData(userProfile);
+                                setIsEditingProfile(false);
+                              }} className="w-full">
             <Check className="mr-2 h-4 w-4" />
             Save Changes
           </Button>}
@@ -152,22 +163,46 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         <div className="space-y-4 border-t pt-4">
           <div>
             <h3 className="font-medium mb-2">Current Subscription</h3>
-            <div className={`p-3 rounded-lg ${activePlanDetails.color} flex items-center`}>
-              <span className="text-xl mr-2">{activePlanDetails.emoji}</span>
-              <div>
-                <p className="font-medium">{activePlanDetails.name}</p>
-                <p className="text-xs">{activePlanDetails.price} {activePlanDetails.period}</p>
-              </div>
-            </div>
-          </div>
+            <p className="font-medium mb-2">Balance: {userProfile.balance}</p>
+
+            {activePlan ? (
+      <div className={`p-3 rounded-lg ${activePlanDetails.color} flex items-center`}>
+        <span className="text-xl mr-2">{activePlanDetails.emoji}</span>
+        <div>
+          <p className="font-medium">{activePlanDetails.name}</p>
+          <p className="text-xs">{activePlanDetails.price} {activePlanDetails.period}</p>
+        </div>
+      </div>
+    ) : (
+      <div className="p-3 rounded-lg bg-muted text-muted-foreground flex items-center">
+        <span className="text-xl mr-2">📭</span>
+        <div>
+          <p className="font-medium">No Subscription</p>
+          <p className="text-xs">Select a plan to get started</p>
+        </div>
+      </div>
+    )}
+  </div>
           
           <div className="flex flex-col space-y-2">
-            <Button onClick={handleChangeSubscription} variant="outline" className="w-full">
-              Change Plan
-            </Button>
-            <Button onClick={() => setShowCancelDialog(true)} variant="ghost" className="w-full text-muted-foreground hover:text-destructive">
-              Cancel Subscription
-            </Button>
+            {activePlan ? (
+              <>
+                <Button onClick={handleChangeSubscription} variant="outline" className="w-full">
+                  Change Plan
+                </Button>
+                <Button
+                  onClick={() => setShowCancelDialog(true)}
+                  variant="ghost"
+                  className="w-full text-muted-foreground hover:text-destructive"
+                >
+                  Cancel Subscription
+                </Button>
+              </>
+            ) : (
+              <Button onClick={handleChangeSubscription} className="w-full">
+                Choose Plan
+              </Button>
+            )}
           </div>
         </div>
 

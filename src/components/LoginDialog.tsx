@@ -20,6 +20,7 @@ import supabase from '@/utils/supabase';
 // Common country codes with flags
 const countryCodes = [
   { code: "+1", flag: "🇺🇸", country: "US/CA" },
+  { code: "+31", flag: "🇳🇱", country: "NL" },
   { code: "+44", flag: "🇬🇧", country: "UK" },
   { code: "+33", flag: "🇫🇷", country: "FR" },
   { code: "+49", flag: "🇩🇪", country: "DE" },
@@ -51,7 +52,13 @@ const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
   
   // Get formatted phone number with country code
   const getFullPhoneNumber = () => {
-    return `${countryCode}${phoneNumber}`;
+    // Strip any non-digit characters from the phone number 
+    // (except keep the + if present at the beginning)
+    let cleanedNumber = phoneNumber.replace(/[^\d]/g, '');
+    
+    // Check if the country code already includes a + sign
+    const formattedCountryCode = countryCode.startsWith('+') ? countryCode : `+${countryCode}`;
+    return `${formattedCountryCode}${cleanedNumber}`;
   };
 
   // Step 1: Send OTP to phone number
@@ -71,10 +78,22 @@ const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
     setIsLoading(true);
     
     try {
-      console.log('Sending OTP to:', getFullPhoneNumber());
+      let formattedPhone = getFullPhoneNumber();
+      
+      // Remove any spaces, dashes, or parentheses
+      formattedPhone = formattedPhone.replace(/[\s()-]/g, '');
+
+      // Ensure it starts with + (required for E.164 format)
+      if (!formattedPhone.startsWith('+')) {
+        formattedPhone = '+' + formattedPhone;
+      }
+
+      console.log('Sending OTP to:', formattedPhone);
       const { data, error } = await supabase.auth.signInWithOtp({
-        phone: getFullPhoneNumber(),
+        phone: formattedPhone,
       });
+
+      
       
       if (error) {
         throw error;
@@ -89,9 +108,20 @@ const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
       setShowVerification(true);
     } catch (error: any) {
       console.error('Error sending OTP:', error);
+      
+      // Display a more helpful error message
+      let errorMessage = "Failed to send verification code. Please try again.";
+      
+      // Check for specific error types
+      if (error.message?.includes("phone number")) {
+        errorMessage = "Invalid phone format. Please check your country code and number.";
+      } else if (error.message?.includes("rate limit")) {
+        errorMessage = "Too many attempts. Please try again later.";
+      }
+      
       toast({
         title: "Error",
-        description: error.message || "Failed to send verification code. Please try again.",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
@@ -116,15 +146,36 @@ const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
     setIsLoading(true);
     
     try {
+      // Format phone number consistently (same as in handleSendCode)
+      let formattedPhone = getFullPhoneNumber();
+      formattedPhone = formattedPhone.replace(/[\s()-]/g, '');
+      if (!formattedPhone.startsWith('+')) {
+        formattedPhone = '+' + formattedPhone;
+      }
+      
       const { data, error } = await supabase.auth.verifyOtp({
-        phone: getFullPhoneNumber(),
+        phone: formattedPhone,
         token: verificationCode,
         type: 'sms',
       });
+
+      // Insert the user into the public.users table if they don't exist
+      if (data.user) {
+        await supabase.from('users').upsert(
+          {
+            id: data.user.id,
+            phone: data.user.phone
+          },
+          { onConflict: 'id' } // only insert if the user isn't there yet
+        );
+      }
       
       if (error) {
         throw error;
       }
+      
+      // User successfully authenticated!
+      console.log('User authenticated:', data.user);
       
       toast({
         title: "Login Successful",
@@ -136,11 +187,26 @@ const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
       navigate('/user-environment');
     } catch (error: any) {
       console.error('Error verifying OTP:', error);
+      
+      // Provide better error messages
+      let errorMessage = "Invalid verification code. Please try again.";
+      
+      if (error.message?.includes("expired")) {
+        errorMessage = "Verification code has expired. Please request a new code.";
+      } else if (error.message?.includes("invalid")) {
+        errorMessage = "Invalid verification code. Please check and try again.";
+      }
+      
       toast({
         title: "Verification Failed",
-        description: error.message || "Invalid verification code. Please try again.",
+        description: errorMessage,
         variant: "destructive"
       });
+      
+      // If the code is expired, go back to phone input step
+      if (error.message?.includes("expired")) {
+        handleReset();
+      }
     } finally {
       setIsLoading(false);
     }

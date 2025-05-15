@@ -100,7 +100,9 @@ serve(async (request) => {
     if (userId && credits > 0) {
       const { error } = await supabase
         .from("users")
-        .update({ balance: updatedUserBalance })
+        .update({ 
+          balance: updatedUserBalance, 
+          active_plan: packageId })
         .eq("id", userId);
 
       if (error) {
