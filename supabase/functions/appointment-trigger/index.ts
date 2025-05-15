@@ -13,7 +13,7 @@ interface AppointmentRow {
 
 interface UserRow {
   id: string;
-  phone?: string;
+  to_number?: string;
   balance: number;
 }
 
@@ -94,7 +94,7 @@ serve(async (req) => {
           // Get user's phone number
           const { data: userData, error: userError } = await supabase
             .from('users')
-            .select('phone, balance')
+            .select('to_number, balance')
             .eq('id', appointment.user_id)
             .single();
           
@@ -104,7 +104,7 @@ serve(async (req) => {
           
           const user = userData as UserRow;
           
-          if (!user.phone) {
+          if (!user.to_number) {
             throw new Error('User has no phone number');
           }
           
@@ -122,7 +122,7 @@ serve(async (req) => {
                 'Authorization': `Bearer ${supabaseKey}`
               },
               body: JSON.stringify({
-                toNumber: user.phone,
+                toNumber: user.to_number,
                 agentId: appointment.agent_id,
                 userId: appointment.user_id,
                 providedContext: appointment.provided_context
