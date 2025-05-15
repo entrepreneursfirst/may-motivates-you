@@ -66,18 +66,19 @@ serve(async (req: Request) => {
         }
       })
     }
-    // verify the retell_API_KEY -> Uncommit this when all is working
-    /*if (
-      !Retell.verify(
-        JSON.stringify(req.body),
-        Deno.env.get("X-RETELL-SIGNATURE"),
-        req.headers["x-retell-signature"] as string,
-      )
-    ) {
-      console.error("Invalid signature");
-      return;
-    }
-      */
+    // // verify the retell_API_KEY -> Uncommit this when all is working
+    // console.log(`XTELL SIGNATURE = ${Deno.env.get("X-RETELL-SIGNATURE")}`)
+    // if (
+    //   !Retell.verify(
+    //     JSON.stringify(req.body),
+    //     Deno.env.get("X-RETELL-SIGNATURE"),
+    //     req.headers["x-retell-signature"] as string,
+    //   )
+    // ) {
+    //   console.error("Invalid signature");
+    //   return;
+    // }
+      
     let userId = "";
     let userBalance = 0;
     const data = await req.json();
@@ -171,7 +172,14 @@ serve(async (req: Request) => {
 
       if (body.event==="call_analyzed") {
         // upsert updates an existing row or creates a new row if it doesn't exist
-        const newBalance = userBalance - 1;
+
+        let newBalance;
+        if (body.call.agent_id === "agent_f6f715fe18971f95067744e49d"){
+          newBalance = userBalance
+        } else{
+          newBalance = userBalance - 1;
+        }
+        
 
         const { balance_data, balance_error } = await supabase
           .from('users')
