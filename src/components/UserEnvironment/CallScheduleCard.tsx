@@ -15,8 +15,6 @@ interface CallScheduleCardProps {
   selectedDate: Date | undefined;
   handleDateSelect: (date: Date | undefined) => void;
   showTimeSelector: boolean;
-  timeRangeMode: boolean;
-  setTimeRangeMode: React.Dispatch<React.SetStateAction<boolean>>;
   startTime: string;
   endTime: string;
   setStartTime: React.Dispatch<React.SetStateAction<string>>;
@@ -29,35 +27,31 @@ interface CallScheduleCardProps {
       start: string;
       end: string;
     } | null;
+    talkingPoints?: string;
+    locked?: boolean;
   }>;
   handleDeleteCall: (index: number) => void;
+  handleLockInCall: (index: number) => void;
 }
 
 const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
   selectedDate,
   handleDateSelect,
   showTimeSelector,
-  timeRangeMode,
-  setTimeRangeMode,
   startTime,
   endTime,
   setStartTime,
   setEndTime,
   handleTimeSelect,
   scheduledCalls,
-  handleDeleteCall
+  handleDeleteCall,
+  handleLockInCall
 }) => {
   const [talkingPoints, setTalkingPoints] = useState("");
   
   const handleScheduleCall = () => {
-    // Use the existing handleTimeSelect logic but pass talking points if needed
-    if (timeRangeMode) {
-      handleTimeSelect(null, true, startTime, endTime);
-    } else {
-      const customTime = (document.getElementById('custom-time') as HTMLInputElement)?.value || "09:00";
-      handleTimeSelect(customTime, false);
-    }
-    // Reset talking points after scheduling
+    const customTime = (document.getElementById('custom-time') as HTMLInputElement)?.value || "09:00";
+    handleTimeSelect(customTime, false);
     setTalkingPoints("");
   };
 
@@ -109,8 +103,6 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
                 </h4>
                 <TimeSelector 
                   onTimeSelect={() => {}} // Empty function since we're now handling scheduling with the button
-                  rangeMode={timeRangeMode} 
-                  setRangeMode={setTimeRangeMode} 
                   startTime={startTime} 
                   endTime={endTime} 
                   setStartTime={setStartTime} 
@@ -139,6 +131,9 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
         {/* Scheduled calls list */}
         <div className="mt-6 border rounded-md p-4">
           <h4 className="font-medium mb-3">Scheduled calls</h4>
+          <p className="text-muted-foreground text-sm mb-4">
+            Lock in your calls to send them to your AI agent. Once locked, calls cannot be modified.
+          </p>
           {scheduledCalls.length === 0 ? (
             <p className="text-muted-foreground text-center py-4">
               No calls scheduled yet. Select a date above to schedule a call.
@@ -146,7 +141,12 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
           ) : (
             <div className="space-y-2">
               {scheduledCalls.map((call, index) => (
-                <ScheduledCall key={index} call={call} onDelete={() => handleDeleteCall(index)} />
+                <ScheduledCall
+                  key={index}
+                  call={call}
+                  onLockIn={() => handleLockInCall(index)}
+                  onDelete={!call.locked ? () => handleDeleteCall(index) : undefined}
+                />
               ))}
             </div>
           )}

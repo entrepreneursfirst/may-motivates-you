@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { format } from 'date-fns';
-import { Trash2, Info } from 'lucide-react';
+import { Lock, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
@@ -10,6 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { toast } from "@/hooks/use-toast";
 
 interface ScheduledCallProps {
   call: {
@@ -17,11 +18,21 @@ interface ScheduledCallProps {
     time: string | null;
     timeRange?: { start: string; end: string } | null;
     talkingPoints?: string;
+    locked?: boolean;
   };
-  onDelete: () => void;
+  onLockIn: () => void;
+  onDelete?: () => void;
 }
 
-export const ScheduledCall = ({ call, onDelete }: ScheduledCallProps) => {
+export const ScheduledCall = ({ call, onLockIn, onDelete }: ScheduledCallProps) => {
+  const handleLockIn = () => {
+    onLockIn();
+    toast({
+      title: "Call locked in",
+      description: "Your call has been sent to your AI agent."
+    });
+  };
+
   return (
     <div className="flex items-center justify-between p-3 rounded-md bg-muted/50">
       <div className="flex items-center space-x-3">
@@ -61,14 +72,21 @@ export const ScheduledCall = ({ call, onDelete }: ScheduledCallProps) => {
         </div>
       </div>
       
-      <Button 
-        size="icon" 
-        variant="ghost" 
-        className="text-muted-foreground hover:text-destructive"
-        onClick={onDelete}
-      >
-        <Trash2 className="h-5 w-5" />
-      </Button>
+      {call.locked ? (
+        <div className="text-muted-foreground flex items-center gap-1">
+          <Lock className="h-4 w-4" />
+          <span className="text-xs">Locked in</span>
+        </div>
+      ) : (
+        <Button 
+          size="sm" 
+          className="text-foreground"
+          onClick={handleLockIn}
+        >
+          <Lock className="h-4 w-4 mr-1" />
+          Lock in
+        </Button>
+      )}
     </div>
   );
 };

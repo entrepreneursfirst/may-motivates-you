@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -133,7 +132,6 @@ const UserEnvironment = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [showTimeSelector, setShowTimeSelector] = useState(false);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [timeRangeMode, setTimeRangeMode] = useState(false);
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("17:00");
 
@@ -146,6 +144,7 @@ const UserEnvironment = () => {
       end: string;
     } | null;
     talkingPoints?: string;
+    locked?: boolean;
   }>>([]);
 
   // Get active agent
@@ -182,7 +181,8 @@ const UserEnvironment = () => {
         date: selectedDate,
         time: time,
         talkingPoints: document.getElementById('talking-points') ? 
-          (document.getElementById('talking-points') as HTMLTextAreaElement).value : ""
+          (document.getElementById('talking-points') as HTMLTextAreaElement).value : "",
+        locked: false
       }]);
     }
 
@@ -205,6 +205,14 @@ const UserEnvironment = () => {
       title: "Call removed",
       description: "The call has been removed from your schedule."
     });
+  };
+
+  // Handle call lock-in
+  const handleLockInCall = (index: number) => {
+    const updatedCalls = [...scheduledCalls];
+    updatedCalls[index].locked = true;
+    setScheduledCalls(updatedCalls);
+    // Toast notification is handled in the ScheduledCall component
   };
 
   // Handle subscription changes
@@ -281,8 +289,6 @@ const UserEnvironment = () => {
                   selectedDate={selectedDate}
                   handleDateSelect={handleDateSelect}
                   showTimeSelector={showTimeSelector}
-                  timeRangeMode={timeRangeMode}
-                  setTimeRangeMode={setTimeRangeMode}
                   startTime={startTime}
                   endTime={endTime}
                   setStartTime={setStartTime}
@@ -290,6 +296,7 @@ const UserEnvironment = () => {
                   handleTimeSelect={handleTimeSelect}
                   scheduledCalls={scheduledCalls}
                   handleDeleteCall={handleDeleteCall}
+                  handleLockInCall={handleLockInCall}
                 />
               </div>
               

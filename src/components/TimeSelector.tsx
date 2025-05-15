@@ -3,12 +3,9 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
 
 interface TimeSelectorProps {
   onTimeSelect: (time: string | null, isRange: boolean, rangeStart?: string, rangeEnd?: string) => void;
-  rangeMode: boolean;
-  setRangeMode: (mode: boolean) => void;
   startTime: string;
   endTime: string;
   setStartTime: (time: string) => void;
@@ -17,8 +14,6 @@ interface TimeSelectorProps {
 
 export const TimeSelector = ({
   onTimeSelect,
-  rangeMode,
-  setRangeMode,
   startTime,
   endTime,
   setStartTime,
@@ -42,7 +37,6 @@ export const TimeSelector = ({
     setSelectedPreset(time);
     setCustomTimeEntered(false);
     setCustomTime(time);
-    // We don't call onTimeSelect here anymore
   };
 
   // Track custom time entry
@@ -56,77 +50,38 @@ export const TimeSelector = ({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center space-x-2">
-        <Switch
-          checked={rangeMode}
-          onCheckedChange={setRangeMode}
-          id="time-range-mode"
-        />
-        <Label htmlFor="time-range-mode">
-          Use time range (agent will call at a random time in range)
-        </Label>
+      <div className="grid grid-cols-2 gap-2">
+        {timePresets.map((preset) => (
+          <Button 
+            key={preset.label} 
+            variant={selectedPreset === preset.time ? "default" : "outline"} 
+            className={selectedPreset === preset.time ? "bg-commitify-purple text-white" : ""}
+            onClick={() => handlePresetSelect(preset.time)}
+          >
+            {preset.label} ({preset.time})
+          </Button>
+        ))}
       </div>
-
-      {rangeMode ? (
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="start-time">Start time</Label>
-              <Input 
-                type="time" 
-                id="start-time"
-                value={startTime} 
-                onChange={(e) => setStartTime(e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="end-time">End time</Label>
-              <Input 
-                type="time" 
-                id="end-time"
-                value={endTime} 
-                onChange={(e) => setEndTime(e.target.value)}
-              />
-            </div>
-          </div>
-          {/* Removed the button here since scheduling happens from the parent */}
+      
+      <div className="space-y-2">
+        <Label htmlFor="custom-time">Or select custom time</Label>
+        <div className="flex space-x-2">
+          <Input 
+            type="time" 
+            id="custom-time"
+            className="flex-1"
+            value={customTime}
+            onChange={(e) => handleCustomTimeChange(e)}
+          />
+          <Button 
+            className={customTimeEntered ? "bg-commitify-purple text-white" : ""} 
+            variant={customTimeEntered ? "default" : "outline"}
+            onClick={() => handleCustomTimeChange()}
+          >
+            Set
+          </Button>
         </div>
-      ) : (
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-2">
-            {timePresets.map((preset) => (
-              <Button 
-                key={preset.label} 
-                variant={selectedPreset === preset.time ? "default" : "outline"} 
-                className={selectedPreset === preset.time ? "bg-commitify-purple text-white" : ""}
-                onClick={() => handlePresetSelect(preset.time)}
-              >
-                {preset.label} ({preset.time})
-              </Button>
-            ))}
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="custom-time">Or select custom time</Label>
-            <div className="flex space-x-2">
-              <Input 
-                type="time" 
-                id="custom-time"
-                className="flex-1"
-                value={customTime}
-                onChange={(e) => handleCustomTimeChange(e)}
-              />
-              <Button 
-                className={customTimeEntered ? "bg-commitify-purple text-white" : ""} 
-                variant={customTimeEntered ? "default" : "outline"}
-                onClick={() => handleCustomTimeChange()}
-              >
-                Set
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 };
