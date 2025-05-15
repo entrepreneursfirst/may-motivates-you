@@ -1,8 +1,7 @@
 /**
  * RetellAI integration for making phone calls
  */
-import { toast } from '@/components/ui/use-toast';
-import Retell from 'retell-sdk';
+//import { toast } from '@/components/ui/use-toast';
 // This would use the actual Retell SDK in production
 // import Retell from 'retell-sdk';
 
@@ -91,7 +90,6 @@ export const scheduleCall = async (
   scheduled_timestamp: number): Promise<CallResponse> => {
   try {
     // In a real implementation, we would get the API key from environment variables
-    const apiKey = process.env.RETELL_API_KEY || 'placeholder-api-key';
     
     // For development purposes, log what we would be doing
     console.log(`Calling ${toNumber} with agent ${agentId}`);
