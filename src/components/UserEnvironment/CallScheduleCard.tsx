@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Clock } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,12 +74,7 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
               mode="single" 
               selected={selectedDate} 
               onSelect={handleDateSelect}
-              className={cn("mx-auto p-3 pointer-events-auto w-full")}
-              styles={{
-                month: { width: '100%' },
-                caption: { width: '100%' },
-                cell: { width: '14.28%' }
-              }}
+              className={cn("mx-auto p-3 pointer-events-auto")}
             />
           </div>
           
