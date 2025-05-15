@@ -10,7 +10,7 @@ import PlanSelectionDialog from '@/components/UserEnvironment/PlanSelectionDialo
 import Header from '@/components/UserEnvironment/Header';
 import BackgroundGradient from '@/components/UserEnvironment/BackgroundGradient';
 
-// Agent data
+// Agent data.
 const agents = [
   {
     id: 1,
