@@ -40,6 +40,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+        <Analytics/>
           <InitialRedirect />
           <Routes>
             <Route path="/" element={<Index />} />
@@ -49,7 +50,6 @@ const App = () => (
                 <UserEnvironment />
               </ProtectedRoute>} 
             />
-            <Analytics/>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
