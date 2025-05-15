@@ -57,6 +57,8 @@ serve(async (req) => {
       .lte('scheduled_at', currentTime)
       .gte('scheduled_at', tenMinutesAgo)
       .order('scheduled_at', { ascending: true });
+
+      console.log("data appointments = ", appointments)
     
     if (appointmentsError) {
       throw new Error(`Error fetching appointments: ${appointmentsError.message}`);
