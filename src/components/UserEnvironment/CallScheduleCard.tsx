@@ -10,6 +10,8 @@ import { TimeSelector } from "@/components/TimeSelector";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { useIsMobile } from '@/hooks/use-mobile';
+
 interface CallScheduleCardProps {
   selectedDate: Date | undefined;
   handleDateSelect: (date: Date | undefined) => void;
@@ -32,6 +34,7 @@ interface CallScheduleCardProps {
   handleDeleteCall: (index: number) => void;
   handleLockInCall: (index: number) => void;
 }
+
 const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
   selectedDate,
   handleDateSelect,
@@ -46,6 +49,7 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
   handleLockInCall
 }) => {
   const [talkingPoints, setTalkingPoints] = useState("");
+  const isMobile = useIsMobile();
   
   const handleScheduleCall = () => {
     // Get the custom time input and AM/PM selection
@@ -100,8 +104,14 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
                 <h4 className="font-medium mb-3">
                   Select time for {selectedDate ? format(selectedDate, "MMMM d, yyyy") : "call"}
                 </h4>
-                <TimeSelector onTimeSelect={() => {}} // Empty function since we're now handling scheduling with the button
-            startTime={startTime} endTime={endTime} setStartTime={setStartTime} setEndTime={setEndTime} />
+                <TimeSelector 
+                  onTimeSelect={() => {}} // Empty function since we're now handling scheduling with the button
+                  startTime={startTime} 
+                  endTime={endTime} 
+                  setStartTime={setStartTime} 
+                  setEndTime={setEndTime}
+                  className={isMobile ? "text-xs" : ""}
+                />
               </div>
 
               {/* Schedule Button */}
@@ -131,4 +141,5 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
       </CardContent>
     </Card>;
 };
+
 export default CallScheduleCard;
