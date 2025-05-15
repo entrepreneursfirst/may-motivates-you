@@ -142,11 +142,6 @@ const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
             </div>
           </form>
         )}
-        
-        <div className="mt-4 text-center text-sm text-muted-foreground">
-          Don't have an account?{" "}
-          <Button variant="link" className="p-0 h-auto">Sign up</Button>
-        </div>
       </DialogContent>
     </Dialog>
   );
