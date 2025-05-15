@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Clock } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,11 +46,27 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
   handleLockInCall
 }) => {
   const [talkingPoints, setTalkingPoints] = useState("");
+  
   const handleScheduleCall = () => {
-    const customTime = (document.getElementById('custom-time') as HTMLInputElement)?.value || "09:00 AM";
-    handleTimeSelect(customTime, false);
+    // Get the custom time input and AM/PM selection
+    const timeInput = (document.getElementById('custom-time') as HTMLInputElement)?.value || "09:00";
+    
+    // Get the AM/PM value from the select element
+    const amPmSelect = document.querySelector('[data-value]') as HTMLElement;
+    const amPm = amPmSelect?.getAttribute('data-value') || "AM";
+    
+    // Convert time input to hours and minutes
+    const [hours, minutes] = timeInput.split(':');
+    const hoursNum = parseInt(hours, 10);
+    
+    // Format to 12-hour time with AM/PM
+    const hours12 = hoursNum > 12 ? hoursNum - 12 : (hoursNum === 0 ? 12 : hoursNum);
+    const fullTimeString = `${hours12}:${minutes} ${amPm}`;
+    
+    handleTimeSelect(fullTimeString, false);
     setTalkingPoints("");
   };
+  
   return <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">

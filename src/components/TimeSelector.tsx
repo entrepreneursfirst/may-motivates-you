@@ -3,6 +3,13 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface TimeSelectorProps {
   onTimeSelect: (time: string | null, isRange: boolean, rangeStart?: string, rangeEnd?: string) => void;
@@ -22,7 +29,8 @@ export const TimeSelector = ({
   // Add a state to track which preset time is selected
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   const [customTimeEntered, setCustomTimeEntered] = useState(false);
-  const [customTime, setCustomTime] = useState("09:00 AM");
+  const [customTime, setCustomTime] = useState("09:00");
+  const [amPm, setAmPm] = useState<"AM" | "PM">("AM");
 
   // Format time to AM/PM format
   const formatTimeToAMPM = (time24: string): string => {
@@ -67,6 +75,22 @@ export const TimeSelector = ({
     setCustomTimeEntered(true);
   };
 
+  // Handle AM/PM selection change
+  const handleAmPmChange = (value: string) => {
+    setAmPm(value as "AM" | "PM");
+    setSelectedPreset(null);
+    setCustomTimeEntered(true);
+  };
+
+  // Get full time string with AM/PM for custom time
+  const getFullCustomTimeString = (): string => {
+    // Convert 24h format from the input to 12h format with AM/PM
+    const [hours, minutes] = customTime.split(':');
+    const hoursNum = parseInt(hours, 10);
+    const hours12 = hoursNum > 12 ? hoursNum - 12 : (hoursNum === 0 ? 12 : hoursNum);
+    return `${hours12}:${minutes} ${amPm}`;
+  };
+
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-2">
@@ -84,13 +108,24 @@ export const TimeSelector = ({
       
       <div className="space-y-2">
         <Label htmlFor="custom-time">Or select custom time</Label>
-        <Input 
-          type="time" 
-          id="custom-time"
-          className={`flex-1 ${customTimeEntered ? "border-commitify-purple ring-1 ring-commitify-purple" : ""}`}
-          value={customTime}
-          onChange={handleCustomTimeChange}
-        />
+        <div className="flex gap-2">
+          <Input 
+            type="time" 
+            id="custom-time"
+            className={`flex-1 ${customTimeEntered ? "border-commitify-purple ring-1 ring-commitify-purple" : ""}`}
+            value={customTime}
+            onChange={handleCustomTimeChange}
+          />
+          <Select value={amPm} onValueChange={handleAmPmChange}>
+            <SelectTrigger className="w-[80px]">
+              <SelectValue placeholder="AM/PM" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="AM">AM</SelectItem>
+              <SelectItem value="PM">PM</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   );
