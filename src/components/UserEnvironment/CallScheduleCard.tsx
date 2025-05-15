@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Clock } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from 'date-fns';
@@ -7,6 +7,9 @@ import { cn } from '@/lib/utils';
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { ScheduledCall } from "@/components/ScheduledCall";
 import { TimeSelector } from "@/components/TimeSelector";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 interface CallScheduleCardProps {
   selectedDate: Date | undefined;
@@ -44,6 +47,20 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
   scheduledCalls,
   handleDeleteCall
 }) => {
+  const [talkingPoints, setTalkingPoints] = useState("");
+  
+  const handleScheduleCall = () => {
+    // Use the existing handleTimeSelect logic but pass talking points if needed
+    if (timeRangeMode) {
+      handleTimeSelect(null, true, startTime, endTime);
+    } else {
+      const customTime = (document.getElementById('custom-time') as HTMLInputElement)?.value || "09:00";
+      handleTimeSelect(customTime, false);
+    }
+    // Reset talking points after scheduling
+    setTalkingPoints("");
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -56,7 +73,7 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className={`grid ${showTimeSelector ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-6`}>
           {/* Calendar for date selection */}
           <div className="border rounded-md p-4">
             <h4 className="font-medium mb-3">Select dates for calls</h4>
@@ -68,10 +85,25 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
             />
           </div>
           
-          {/* Time selection when date is selected */}
-          <div className="border rounded-md p-4">
-            {showTimeSelector ? (
-              <>
+          {/* Talking points and time selection when date is selected */}
+          {showTimeSelector && (
+            <div className="space-y-6">
+              {/* Talking Points Input */}
+              <div className="border rounded-md p-4">
+                <div className="space-y-3">
+                  <Label htmlFor="talking-points">Input talking points for this call</Label>
+                  <Textarea 
+                    id="talking-points" 
+                    placeholder="Enter topics you'd like to discuss during the call..."
+                    value={talkingPoints}
+                    onChange={(e) => setTalkingPoints(e.target.value)}
+                    className="min-h-[100px]"
+                  />
+                </div>
+              </div>
+
+              {/* Time Selection */}
+              <div className="border rounded-md p-4">
                 <h4 className="font-medium mb-3">
                   Select time for {selectedDate ? format(selectedDate, "MMMM d, yyyy") : "call"}
                 </h4>
@@ -84,16 +116,25 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
                   setStartTime={setStartTime} 
                   setEndTime={setEndTime} 
                 />
-              </>
-            ) : (
-              <div className="flex items-center justify-center h-full">
-                <p className="text-muted-foreground text-center">
-                  Select a date from the calendar to schedule a call
-                </p>
               </div>
-            )}
-          </div>
+
+              {/* Schedule Button */}
+              <Button 
+                className="w-full" 
+                onClick={handleScheduleCall}
+              >
+                Schedule Call
+              </Button>
+            </div>
+          )}
         </div>
+        
+        {/* If no date selected, show message */}
+        {!showTimeSelector && (
+          <div className="text-center p-4 text-muted-foreground">
+            Select a date from the calendar to schedule a call
+          </div>
+        )}
         
         {/* Scheduled calls list */}
         <div className="mt-6 border rounded-md p-4">

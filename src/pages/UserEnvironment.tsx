@@ -145,6 +145,7 @@ const UserEnvironment = () => {
       start: string;
       end: string;
     } | null;
+    talkingPoints?: string;
   }>>([]);
 
   // Get active agent
@@ -171,13 +172,17 @@ const UserEnvironment = () => {
           timeRange: {
             start: rangeStart,
             end: rangeEnd
-          }
+          },
+          talkingPoints: document.getElementById('talking-points') ? 
+            (document.getElementById('talking-points') as HTMLTextAreaElement).value : ""
         }]);
       }
     } else if (time && selectedDate) {
       setScheduledCalls([...scheduledCalls, {
         date: selectedDate,
-        time: time
+        time: time,
+        talkingPoints: document.getElementById('talking-points') ? 
+          (document.getElementById('talking-points') as HTMLTextAreaElement).value : ""
       }]);
     }
 
