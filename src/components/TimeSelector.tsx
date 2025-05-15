@@ -22,14 +22,35 @@ export const TimeSelector = ({
   // Add a state to track which preset time is selected
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   const [customTimeEntered, setCustomTimeEntered] = useState(false);
-  const [customTime, setCustomTime] = useState("09:00");
+  const [customTime, setCustomTime] = useState("09:00 AM");
 
-  // Common time preset options
+  // Format time to AM/PM format
+  const formatTimeToAMPM = (time24: string): string => {
+    const [hours, minutes] = time24.split(':');
+    const hoursNum = parseInt(hours, 10);
+    const period = hoursNum >= 12 ? 'PM' : 'AM';
+    const hours12 = hoursNum % 12 || 12;
+    return `${hours12}:${minutes} ${period}`;
+  };
+  
+  // Convert AM/PM time to 24h format for internal use
+  const convertTo24Hour = (time12h: string): string => {
+    const [timePart, period] = time12h.split(' ');
+    let [hours, minutes] = timePart.split(':');
+    let hoursNum = parseInt(hours, 10);
+    
+    if (period === 'PM' && hoursNum < 12) hoursNum += 12;
+    if (period === 'AM' && hoursNum === 12) hoursNum = 0;
+    
+    return `${hoursNum.toString().padStart(2, '0')}:${minutes}`;
+  };
+
+  // Common time preset options with AM/PM format
   const timePresets = [
-    { label: "Morning", time: "09:00" },
-    { label: "Noon", time: "12:00" },
-    { label: "Afternoon", time: "15:00" },
-    { label: "Evening", time: "18:00" }
+    { label: "Morning", time: "09:00 AM" },
+    { label: "Noon", time: "12:00 PM" },
+    { label: "Afternoon", time: "03:00 PM" },
+    { label: "Evening", time: "06:00 PM" }
   ];
 
   // Handle preset selection without triggering onTimeSelect immediately
@@ -40,10 +61,8 @@ export const TimeSelector = ({
   };
 
   // Track custom time entry
-  const handleCustomTimeChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
-    if (e) {
-      setCustomTime(e.target.value);
-    }
+  const handleCustomTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomTime(e.target.value);
     setSelectedPreset(null);
     setCustomTimeEntered(true);
   };
@@ -55,7 +74,7 @@ export const TimeSelector = ({
           <Button 
             key={preset.label} 
             variant={selectedPreset === preset.time ? "default" : "outline"} 
-            className={selectedPreset === preset.time ? "bg-commitify-purple text-white" : ""}
+            className={selectedPreset === preset.time ? "bg-commitify-purple text-white hover:bg-commitify-purple" : ""}
             onClick={() => handlePresetSelect(preset.time)}
           >
             {preset.label} ({preset.time})
@@ -65,22 +84,13 @@ export const TimeSelector = ({
       
       <div className="space-y-2">
         <Label htmlFor="custom-time">Or select custom time</Label>
-        <div className="flex space-x-2">
-          <Input 
-            type="time" 
-            id="custom-time"
-            className="flex-1"
-            value={customTime}
-            onChange={(e) => handleCustomTimeChange(e)}
-          />
-          <Button 
-            className={customTimeEntered ? "bg-commitify-purple text-white" : ""} 
-            variant={customTimeEntered ? "default" : "outline"}
-            onClick={() => handleCustomTimeChange()}
-          >
-            Set
-          </Button>
-        </div>
+        <Input 
+          type="time" 
+          id="custom-time"
+          className={`flex-1 ${customTimeEntered ? "border-commitify-purple ring-1 ring-commitify-purple" : ""}`}
+          value={customTime}
+          onChange={handleCustomTimeChange}
+        />
       </div>
     </div>
   );

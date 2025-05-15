@@ -178,10 +178,12 @@ const UserEnvironment = () => {
       }
     } else if (time && selectedDate) {
       const talkingPointsEl = document.getElementById('talking-points') as HTMLTextAreaElement;
+      const talkingPointsText = talkingPointsEl ? talkingPointsEl.value : "";
+      
       setScheduledCalls([...scheduledCalls, {
         date: selectedDate,
         time: time,
-        talkingPoints: talkingPointsEl ? talkingPointsEl.value : "",
+        talkingPoints: talkingPointsText,
         locked: false
       }]);
     }

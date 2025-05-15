@@ -10,14 +10,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-yellow-500 active:bg-commitify-purple",
+        default: "bg-primary text-primary-foreground hover:bg-yellow-500 active:bg-commitify-purple data-[state=active]:bg-commitify-purple data-[state=active]:hover:bg-commitify-purple",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-yellow-500 active:bg-commitify-purple",
+          "bg-destructive text-destructive-foreground hover:bg-yellow-500 active:bg-commitify-purple data-[state=active]:bg-commitify-purple data-[state=active]:hover:bg-commitify-purple",
         outline:
-          "border border-input bg-background hover:bg-yellow-500 hover:text-accent-foreground active:bg-commitify-purple",
+          "border border-input bg-background hover:bg-yellow-500 hover:text-accent-foreground active:bg-commitify-purple data-[state=active]:bg-commitify-purple data-[state=active]:hover:bg-commitify-purple",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-yellow-500 active:bg-commitify-purple",
-        ghost: "hover:bg-yellow-500 hover:text-accent-foreground active:bg-commitify-purple",
+          "bg-secondary text-secondary-foreground hover:bg-yellow-500 active:bg-commitify-purple data-[state=active]:bg-commitify-purple data-[state=active]:hover:bg-commitify-purple",
+        ghost: "hover:bg-yellow-500 hover:text-accent-foreground active:bg-commitify-purple data-[state=active]:bg-commitify-purple data-[state=active]:hover:bg-commitify-purple",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
