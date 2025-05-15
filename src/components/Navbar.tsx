@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Menu, Clock, Phone, LogIn, User } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import LoginDialog from './LoginDialog';
 import { useAuth } from '@/context/AuthContext';
 
@@ -50,14 +49,14 @@ const Navbar = () => {
       isScrolled ? "bg-commitify-background bg-opacity-95 shadow-md py-3" : "bg-transparent py-5"
     }`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <a href="#" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <span className="flex items-center gap-2 text-2xl font-bold">
             <span className="bg-commitify-yellow rounded-full p-1">
               <Clock className="w-5 h-5 text-commitify-text" />
             </span>
             <span>Commitify</span>
           </span>
-        </a>
+        </Link>
 
         {/* Mobile Menu Toggle */}
         <button 
