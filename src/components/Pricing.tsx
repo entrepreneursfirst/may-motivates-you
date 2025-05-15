@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Check, Phone, Star } from 'lucide-react';
+import { Check, Phone, Star, LogIn } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -199,11 +200,11 @@ const Pricing = () => {
         
         <div className="text-center mt-10">
           <Button 
-            onClick={scrollToTopAndActivatePhone} 
+            onClick={openLoginDialog} 
             className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text rounded-full px-8 py-6 text-lg font-medium flex items-center gap-2 mx-auto"
           >
-            <Phone className="w-6 h-6" />
-            Try your first call for $0
+            <LogIn className="w-6 h-6" />
+            Choose package and login
           </Button>
         </div>
       </div>
