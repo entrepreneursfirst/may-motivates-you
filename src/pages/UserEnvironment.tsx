@@ -6,7 +6,6 @@ import Footer from '@/components/Footer';
 import ProfileCard from '@/components/UserEnvironment/ProfileCard';
 import ActiveAgentCard from '@/components/UserEnvironment/ActiveAgentCard';
 import CallScheduleCard from '@/components/UserEnvironment/CallScheduleCard';
-import NaturalLanguageCard from '@/components/UserEnvironment/NaturalLanguageCard';
 import IntegrationsCard from '@/components/UserEnvironment/IntegrationsCard';
 import PlanSelectionDialog from '@/components/UserEnvironment/PlanSelectionDialog';
 import Header from '@/components/UserEnvironment/Header';
@@ -76,7 +75,7 @@ const creditMap: Record<string, number> = {
   "price_1ROh24GIxsF8bStBU1EBfS9Z": 7, // Ride or Die Plan - 7 weekly calls
   "price_1ROh0nGIxsF8bStB1xJw1MrF": 5, // Bestie plan - 5 weekly calls
   "price_1ROgvjGIxsF8bStBvltMVloL": 3, // Acquaintance plan - 3 weekly calls
-  "price_1ROr80GIxsF8bStBYpj48Ue0": 3, //  Single package of 3 calls 
+  "price_1ROr80GIxsF8bStBYpj48Ue0": 3, //  Single package of 3 calls
   "price_1ROiaZGIxsF8bStBTLbdv0eb": 1 // test_product
 };
 // Plan data
@@ -136,7 +135,7 @@ interface Call {
 const UserEnvironment = () => {
   // Toast notifications
   const { user, signOut, session } = useAuth();
-  
+
   const [calls, setCalls] = useState<Call[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -184,13 +183,13 @@ const UserEnvironment = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (!user) return;
-  
+
       const { data, error } = await supabase
         .from('users')
         .select('full_name, to_number, location, gender, birth_date, active_plan, balance')
         .eq('id', user.id)
         .single();
-  
+
       if (error) {
         console.error('Error fetching user profile:', error);
         toast({
@@ -200,7 +199,7 @@ const UserEnvironment = () => {
         });
         return;
       }
-  
+
       if (data) {
         setUserProfile({
           full_name: data.full_name ?? "",
@@ -215,7 +214,7 @@ const UserEnvironment = () => {
         setActivePlan(data.active_plan)
       }
     };
-  
+
     fetchUserProfile();
   }, [user]);
 
@@ -227,7 +226,7 @@ const UserEnvironment = () => {
     active_plan?: string;
   }) => {
     if (!user) return;
-  
+
     const { error } = await supabase
       .from('users')
       .update({
@@ -237,7 +236,7 @@ const UserEnvironment = () => {
         birth_date: userProfileData.birth_date.toISOString().split('T')[0], // store as YYYY-MM-DD
       })
       .eq('id', user.id);
-  
+
     if (error) {
       toast({
         title: "Update Failed",
@@ -266,7 +265,6 @@ const UserEnvironment = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [showTimeSelector, setShowTimeSelector] = useState(false);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [timeRangeMode, setTimeRangeMode] = useState(false);
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("17:00");
 
@@ -278,6 +276,8 @@ const UserEnvironment = () => {
       start: string;
       end: string;
     } | null;
+    talkingPoints?: string;
+    locked?: boolean;
   }>>([]);
 
   // Get active agent
@@ -304,13 +304,20 @@ const UserEnvironment = () => {
           timeRange: {
             start: rangeStart,
             end: rangeEnd
-          }
+          },
+          talkingPoints: document.getElementById('talking-points') ?
+            (document.getElementById('talking-points') as HTMLTextAreaElement).value : ""
         }]);
       }
     } else if (time && selectedDate) {
+      const talkingPointsEl = document.getElementById('talking-points') as HTMLTextAreaElement;
+      const talkingPointsText = talkingPointsEl ? talkingPointsEl.value : "";
+
       setScheduledCalls([...scheduledCalls, {
         date: selectedDate,
-        time: time
+        time: time,
+        talkingPoints: talkingPointsText,
+        locked: false
       }]);
     }
 
@@ -333,6 +340,14 @@ const UserEnvironment = () => {
       title: "Call removed",
       description: "The call has been removed from your schedule."
     });
+  };
+
+  // Handle call lock-in
+  const handleLockInCall = (index: number) => {
+    const updatedCalls = [...scheduledCalls];
+    updatedCalls[index].locked = true;
+    setScheduledCalls(updatedCalls);
+    // Toast notification is handled in the ScheduledCall component
   };
 
   // Handle subscription changes
@@ -441,8 +456,6 @@ const UserEnvironment = () => {
                   selectedDate={selectedDate}
                   handleDateSelect={handleDateSelect}
                   showTimeSelector={showTimeSelector}
-                  timeRangeMode={timeRangeMode}
-                  setTimeRangeMode={setTimeRangeMode}
                   startTime={startTime}
                   endTime={endTime}
                   setStartTime={setStartTime}
@@ -450,12 +463,8 @@ const UserEnvironment = () => {
                   handleTimeSelect={handleTimeSelect}
                   scheduledCalls={scheduledCalls}
                   handleDeleteCall={handleDeleteCall}
+                  handleLockInCall={handleLockInCall}
                 />
-              </div>
-              
-              {/* Natural Language Input */}
-              <div className="grid grid-cols-1 gap-6 mb-6">
-                <NaturalLanguageCard />
               </div>
               
               {/* Additional Integrations */}
