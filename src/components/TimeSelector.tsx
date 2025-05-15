@@ -17,6 +17,7 @@ interface TimeSelectorProps {
   endTime: string;
   setStartTime: (time: string) => void;
   setEndTime: (time: string) => void;
+  className?: string; // Added className as an optional prop
 }
 
 export const TimeSelector = ({
@@ -24,7 +25,8 @@ export const TimeSelector = ({
   startTime,
   endTime,
   setStartTime,
-  setEndTime
+  setEndTime,
+  className = "" // Default to empty string
 }: TimeSelectorProps) => {
   // Add a state to track which preset time is selected
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
@@ -92,7 +94,7 @@ export const TimeSelector = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div className={`space-y-4 ${className}`}>
       <div className="grid grid-cols-2 gap-2">
         {timePresets.map((preset) => (
           <Button 
