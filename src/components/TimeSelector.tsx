@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface TimeSelectorProps {
   onTimeSelect: (time: string | null, isRange: boolean, rangeStart?: string, rangeEnd?: string) => void;
@@ -29,9 +28,6 @@ export const TimeSelector = ({
   setEndTime,
   className = "" // Default to empty string
 }: TimeSelectorProps) => {
-  // Add isMobile hook to detect mobile screens
-  const isMobile = useIsMobile();
-  
   // Add a state to track which preset time is selected
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   const [customTimeEntered, setCustomTimeEntered] = useState(false);
@@ -104,7 +100,7 @@ export const TimeSelector = ({
           <Button 
             key={preset.label} 
             variant={selectedPreset === preset.time ? "default" : "outline"} 
-            className={`${selectedPreset === preset.time ? "bg-commitify-purple text-white hover:bg-commitify-purple" : ""} ${isMobile ? "text-xs" : ""}`}
+            className={selectedPreset === preset.time ? "bg-commitify-purple text-white hover:bg-commitify-purple" : ""}
             onClick={() => handlePresetSelect(preset.time)}
           >
             {preset.label} ({preset.time})
