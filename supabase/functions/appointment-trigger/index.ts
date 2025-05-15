@@ -44,12 +44,13 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
     
     // Get current time in unix timestamp (seconds)
-    const currentTime = Math.floor(Date.now() / 1000);
+    const currentTime = Math.floor(Date.now());
+    console.log("currentTime = ", currentTime)
     
     // Calculate time 10 minutes ago
-    const tenMinutesAgo = currentTime - 600;
+    const tenMinutesAgo = currentTime - 60000;
     
-    // Query for appointments that are due in the past 10 minutes and have status "initialized" or "error"
+    /*/ Query for appointments that are due in the past 10 minutes and have status "initialized" or "error"
     const { data: appointments, error: appointmentsError } = await supabase
       .from('appointments_scheduling')
       .select('*')
@@ -57,8 +58,17 @@ serve(async (req) => {
       .lte('scheduled_at', currentTime)
       .gte('scheduled_at', tenMinutesAgo)
       .order('scheduled_at', { ascending: true });
-
-      console.log("data appointments = ", appointments)
+    */
+    // Query for appointments that are due in the past 10 minutes and have status "initialized" or "error"
+    const { data: appointments, error: appointmentsError } = await supabase
+      .from('appointments_scheduling')
+      .select('*')
+      .in('scheduling_status', ['initialized', 'error'])
+      .lte('scheduled_at', currentTime)
+      .order('scheduled_at', { ascending: true });
+  
+      ;
+      console.log("data appointments = ", appointments)      
     
     if (appointmentsError) {
       throw new Error(`Error fetching appointments: ${appointmentsError.message}`);
