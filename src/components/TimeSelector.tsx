@@ -120,7 +120,16 @@ export const TimeSelector = ({
   const defaultTime = useMemo(() => getRoundedTime(), []);
 
   useEffect ( () => {
-    setCustomTime(defaultTime)
+    // defaultTime is expected in "HH:mm" (24-hour format)
+    const [hourStr, minute] = defaultTime.split(":");
+    const hour = parseInt(hourStr, 10);
+
+    const isPM = hour >= 12;
+    const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+    const timeFormatted = `${hour12.toString().padStart(2, "0")}:${minute}`;
+
+    setCustomTime(timeFormatted); // e.g. "03:30"
+    setAmPm(isPM ? "PM" : "AM");
   }, [])
 
   
