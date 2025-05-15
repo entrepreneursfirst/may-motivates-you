@@ -51,7 +51,7 @@ serve(async (req) => {
     
     // Query for appointments that are due in the past 10 minutes and have status "initialized" or "error"
     const { data: appointments, error: appointmentsError } = await supabase
-      .from('appointment_scheduling')
+      .from('appointments_scheduling')
       .select('*')
       .in('scheduling_status', ['initialized', 'error'])
       .lte('scheduled_at', currentTime)
@@ -72,7 +72,7 @@ serve(async (req) => {
           
           // Update appointment status to "ongoing"
           const { error: updateError } = await supabase
-            .from('appointment_scheduling')
+            .from('appointments_scheduling')
             .update({ scheduling_status: 'ongoing' })
             .eq('id', appointment.id);
           
@@ -127,7 +127,7 @@ serve(async (req) => {
           
           // Update appointment with call result
           const { error: finalUpdateError } = await supabase
-            .from('appointment_scheduling')
+            .from('appointments_scheduling')
             .update({
               scheduling_status: 'completed',
               response_body: JSON.stringify(callResult),
@@ -147,7 +147,7 @@ serve(async (req) => {
           
           // Update appointment status to "error"
           await supabase
-            .from('appointment_scheduling')
+            .from('appointments_scheduling')
             .update({
               scheduling_status: 'error',
               response_body: JSON.stringify({
