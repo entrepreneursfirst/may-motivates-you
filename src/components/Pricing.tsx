@@ -1,10 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Check, Phone, Star, LogIn } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import LoginDialog from "./LoginDialog";
 
 const plans = [
   {
@@ -93,6 +94,7 @@ const plans = [
 const Pricing = () => {
   const { toast } = useToast();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const handleSelectPlan = (planName: string) => {
     setSelectedPlan(planName);
@@ -102,10 +104,22 @@ const Pricing = () => {
     });
   };
   
+  // Open login dialog
   const openLoginDialog = () => {
-    // Dispatch custom event to open login dialog
-    window.dispatchEvent(new CustomEvent('openLoginDialog'));
+    setIsLoginOpen(true);
   };
+
+  // Listen for openLoginDialog events from other components
+  useEffect(() => {
+    const handleOpenLoginDialog = () => {
+      setIsLoginOpen(true);
+    };
+    
+    window.addEventListener('openLoginDialog', handleOpenLoginDialog);
+    return () => {
+      window.removeEventListener('openLoginDialog', handleOpenLoginDialog);
+    };
+  }, []);
   
   return (
     <section id="pricing" className="py-20">
@@ -205,6 +219,9 @@ const Pricing = () => {
           </Button>
         </div>
       </div>
+      
+      {/* Include the LoginDialog component here */}
+      <LoginDialog isOpen={isLoginOpen} setIsOpen={setIsLoginOpen} />
     </section>
   );
 };
