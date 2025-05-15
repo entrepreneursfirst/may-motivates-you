@@ -1,5 +1,5 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.6'
 
 interface AppointmentRow {
   id: string;
@@ -8,7 +8,7 @@ interface AppointmentRow {
   title: string;
   agent_id: string;
   provided_context: string;
-  scheduling_status: 'initialized' | 'ongoing' | 'completed' | 'error';
+  scheduling_status: 'initialized' | 'ongoing_call' | 'completed' | 'error';
 }
 
 interface UserRow {
@@ -18,7 +18,7 @@ interface UserRow {
 }
 
 serve(async (req) => {
-  console.log("🕒 Appointment trigger fired at:", new Date().toISOString());
+  console.log("🕒 Appointment trigger fired at:", new Date().toISOString(), "🕒 Current time in Unix Timestamp (seconds):", Math.floor(Date.now()));
   
   // Set CORS headers
   const headers = new Headers({
@@ -67,7 +67,6 @@ serve(async (req) => {
       .lte('scheduled_at', currentTime)
       .order('scheduled_at', { ascending: true });
   
-      ;
       console.log("data appointments = ", appointments)      
     
     if (appointmentsError) {
@@ -85,7 +84,7 @@ serve(async (req) => {
           // Update appointment status to "ongoing"
           const { error: updateError } = await supabase
             .from('appointments_scheduling')
-            .update({ scheduling_status: 'ongoing' })
+            .update({ scheduling_status: 'ongoing_call' })
             .eq('id', appointment.id);
           
           if (updateError) {
