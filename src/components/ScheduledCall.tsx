@@ -1,4 +1,4 @@
-
+//schedulelCall
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { Lock, Info, Trash2 } from 'lucide-react';
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/tooltip";
 import { toast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+
 
 interface ScheduledCallProps {
   call: {
@@ -31,10 +32,10 @@ export const ScheduledCall = ({ call, onLockIn, onDelete }: ScheduledCallProps) 
 
   const handleLockIn = () => {
     onLockIn();
-    toast({
-      title: "Call locked in",
-      description: "Your call has been sent to your AI agent."
-    });
+    // toast({
+    //   title: "Call locked in",
+    //   description: "Your call has been sent to your AI agent."
+    // });
   };
 
   const handleDelete = () => {

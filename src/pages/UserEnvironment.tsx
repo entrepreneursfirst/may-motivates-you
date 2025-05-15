@@ -1,4 +1,4 @@
-
+//UserEnvironment.tsx
 import React, { useEffect, useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,8 @@ import Header from '@/components/UserEnvironment/Header';
 import BackgroundGradient from '@/components/UserEnvironment/BackgroundGradient';
 import { useAuth } from '@/context/AuthContext';
 import supabase from '@/utils/supabase';
-
+import { scheduleCall } from '@/utils/retellai';
+import { convertToTimestamp } from '@/utils/dateConverter'
 
 // Agent data
 const agents = [
@@ -132,9 +133,20 @@ interface Call {
   duration_seconds: number;
 }
 
+export interface ScheduledCall {
+  date: Date;
+  time: string | null;
+  timeRange?: {
+    start: string;
+    end: string;
+  } | null;
+  talkingPoints?: string;
+  locked?: boolean;
+}
+
 const UserEnvironment = () => {
   // Toast notifications
-  const { user, signOut, session } = useAuth();
+  const { user, signOut, session, isLoading } = useAuth();
 
   const [calls, setCalls] = useState<Call[]>([]);
   const [loading, setLoading] = useState(true);
@@ -268,17 +280,9 @@ const UserEnvironment = () => {
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("17:00");
 
+
   // Scheduled calls
-  const [scheduledCalls, setScheduledCalls] = useState<Array<{
-    date: Date;
-    time: string | null;
-    timeRange?: {
-      start: string;
-      end: string;
-    } | null;
-    talkingPoints?: string;
-    locked?: boolean;
-  }>>([]);
+  const [scheduledCalls, setScheduledCalls] = useState<ScheduledCall[]>([]);
 
   // Get active agent
   const activeAgent = agents.find(agent => agent.id === activeAgentId) || agents[0];
@@ -342,12 +346,63 @@ const UserEnvironment = () => {
     });
   };
 
+  const scheduleAppointmentAICall = async (call: ScheduledCall) => {
+
+    console.log(`user phone number = ${user.phone}`)
+    console.log("call = ")
+    console.log(JSON.stringify(call))
+    console.log("users phone", user.phone)
+    console.log(`activeAgent = ${activeAgent}`)
+    const [time, ampm] = call.time.split(" "); // time = "1:00", period = "AM"
+    const [hours, minutes] = time.split(":")
+
+    const [hourStr, minuteStr] = time.split(":");
+    const hour = parseInt(hourStr, 10);
+    const minute = parseInt(minuteStr, 10);
+
+    const datetime_stamp = convertToTimestamp(
+      call.date.getDate(),
+      call.date.getMonth() + 1,
+      call.date.getFullYear(),
+      hour,
+      minute,
+      ampm
+    );
+    console.log(call.date)
+    console.log(`call.date.getDay(), call.date.getMonth(), call.date.getFullYear(), hours, minutes, ampm`)
+    console.log(call.date.getDate(), call.date.getMonth()+1, call.date.getFullYear(), hours, minutes, ampm)
+    console.log(`datetime_stamp = ${datetime_stamp}`)
+    if (session?.user) {
+      const callResponse = await scheduleCall(
+        `+${user.phone}`,
+        activeAgent.agent_id,
+        session.user.id,
+        datetime_stamp,
+        call.talkingPoints
+      );
+
+      if (callResponse.success) {
+        toast({
+          title: "Call on its way!",
+          description: `Your AI coach is calling +${user.phone}`,
+        });
+      } else {
+        toast({
+          title: "Call Failed",
+          description: callResponse.error || "Unable to place call.",
+          variant: "destructive",
+        });
+      }
+    
+    }
+  }
   // Handle call lock-in
   const handleLockInCall = (index: number) => {
     const updatedCalls = [...scheduledCalls];
     updatedCalls[index].locked = true;
     setScheduledCalls(updatedCalls);
     // Toast notification is handled in the ScheduledCall component
+    scheduleAppointmentAICall(updatedCalls[index])
   };
 
   // Handle subscription changes
@@ -492,4 +547,4 @@ const UserEnvironment = () => {
   );
 };
 
-export default UserEnvironment;
+export default UserEnvironment

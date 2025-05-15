@@ -1,10 +1,11 @@
-
+//timeSelector
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useMemo } from "react";
+import { useEffect } from 'react';
 
 import {
   Select,
@@ -82,7 +83,9 @@ export const TimeSelector = ({
 
   // Handle AM/PM selection change
   const handleAmPmChange = (value: string) => {
+    console.log("value = ", value)
     setAmPm(value as "AM" | "PM");
+    console.log(value as "AM" | "PM")
     setSelectedPreset(null);
     setCustomTimeEntered(true);
   };
@@ -116,6 +119,11 @@ export const TimeSelector = ({
 
   const defaultTime = useMemo(() => getRoundedTime(), []);
 
+  useEffect ( () => {
+    setCustomTime(defaultTime)
+  }, [])
+
+  
   return (
     <div className={`space-y-4 ${className}`}>
       <div className="grid grid-cols-2 gap-2">
@@ -123,7 +131,10 @@ export const TimeSelector = ({
           <Button
             key={preset.label}
             variant={selectedPreset === preset.time ? "default" : "outline"}
-            className={selectedPreset === preset.time ? "bg-commitify-purple text-white hover:bg-commitify-purple" : ""}
+            className={`
+              ${selectedPreset === preset.time ? "bg-commitify-purple text-white hover:bg-commitify-purple" : ""}
+              text-[12px] sm:text-sm truncate
+            `}
             onClick={() => handlePresetSelect(preset.time)}
           >
             {preset.label} ({preset.time})
@@ -143,7 +154,7 @@ export const TimeSelector = ({
           />
           <Select value={amPm} onValueChange={handleAmPmChange}>
             <SelectTrigger className="w-[80px]">
-              <SelectValue placeholder="AM/PM" />
+              <SelectValue placeholder="AM/PM" data-value={amPm}/>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="AM">AM</SelectItem>

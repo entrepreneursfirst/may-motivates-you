@@ -8,7 +8,7 @@
  * @param {string} ampm - "AM" or "PM"
  * @returns {number} Unix timestamp in milliseconds
  */
-function convertToTimestamp(day, month, year, hour, minute, ampm) {
+export function convertToTimestamp(day, month, year, hour, minute, ampm) {
   // Validate inputs
   if (
     day == null ||
@@ -39,7 +39,7 @@ function convertToTimestamp(day, month, year, hour, minute, ampm) {
   return date.getTime();
 }
 
-// Example usage:
-const timestamp = convertToTimestamp(14, 5, 2025, 1, 6, "AM");
-console.log(`Timestamp UNIX: ${timestamp}`);
-console.log(new Date(timestamp).toISOString())
+
+const timestamp_ = convertToTimestamp(15, 5, 2025, 8, 15, "PM");
+console.log(`Timestamp UNIX: ${timestamp_}`);
+console.log(new Date(timestamp_).toISOString())

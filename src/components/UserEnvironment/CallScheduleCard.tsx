@@ -1,4 +1,4 @@
-
+//callScheduleCard.tsx
 import React, { useState } from 'react';
 import { Clock } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { convertToTimestamp } from "@/utils/dateConverter"
+
 
 interface CallScheduleCardProps {
   selectedDate: Date | undefined;

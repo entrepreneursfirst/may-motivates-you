@@ -24,7 +24,8 @@ interface CallScheduleRequest {
   toNumber: string;
   agentId: string;
   userId?: string;
-  scheduled_timestamp: number
+  scheduled_timestamp: number;
+  provided_context: string;
 }
 /**
  * Makes an AI phone call using RetellAI via Supabase Edge Function
@@ -87,7 +88,8 @@ export const scheduleCall = async (
   toNumber: string, 
   agentId: string = "6a628486-8f0a-4206-98e8-42be9a7eea4d",
   userId: string = "7010089f-bd91-4ecc-9a0c-3739e95e40d1", // Default user ID for now
-  scheduled_timestamp: number): Promise<CallResponse> => {
+  scheduled_timestamp: number,
+  provided_context: string = ""): Promise<CallResponse> => {
   try {
     // In a real implementation, we would get the API key from environment variables
     
@@ -103,10 +105,11 @@ export const scheduleCall = async (
       toNumber,
       agentId,
       userId,
-      scheduled_timestamp
+      scheduled_timestamp,
+      provided_context
     };
 
-    const response = await fetch(`${supabaseUrl}/functions/v1/make-call`, {
+    const response = await fetch(`${supabaseUrl}/functions/v1/schedule-call`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

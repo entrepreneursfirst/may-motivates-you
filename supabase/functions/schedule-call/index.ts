@@ -6,7 +6,8 @@ interface CallScheduleRequest {
   toNumber: string;
   agentId: string;
   userId?: string;
-  scheduled_timestamp: number
+  scheduled_timestamp: number;
+  provided_context?: string;
 
 }
 
@@ -35,7 +36,7 @@ serve(async (req: Request) => {
     // Get data from request (toNumber, agentId, userId)
     const body: CallScheduleRequest = await req.json();
     console.log('📋 Request body:', JSON.stringify(body, null, 2));
-    const { toNumber, agentId, userId, scheduled_timestamp } = body;
+    const { toNumber, agentId, userId, scheduled_timestamp, provided_context } = body;
     
     if (!toNumber || !agentId || !scheduled_timestamp) {
       console.error('❌ Missing required parameters:', { toNumber, agentId, scheduled_timestamp});
@@ -108,12 +109,31 @@ serve(async (req: Request) => {
       );
     }
     
+    const previous_transcripts = await supabase
+    .from('calls')
+    .select('transcript')
+    .eq('user_id', userId)
+
+    console.log(`previous transcripts user_id ${userId }: `, JSON.stringify(previous_transcripts.data))
+
+    let transcript_list_text: string = ""
+
+    for (var i = 0; i< previous_transcripts.data.length; i++) {
+      transcript_list_text = `${transcript_list_text} \n\n transcript ${i}: \n ${JSON.stringify(previous_transcripts.data[i].transcript)}`
+    }
+    console.log(`# Transcipts \n ${transcript_list_text}`)
+
     // Make the call
     console.log('📱 Making call from +13153258101 ', 'to', toNumber);
 
     const retellResponse = await retellClient.batchCall.createBatchCall({
       from_number: "+13153258101",
-      tasks: [{ to_number: toNumber, retell_llm_dynamic_variables: { customer_name: 'bar' } }],
+      tasks: [{ 
+        to_number: toNumber,
+        retell_llm_dynamic_variables: {
+           provided_context: provided_context,
+           previous_transcript_text: transcript_list_text
+           } }],
       name: 'First batch call',
       trigger_timestamp: scheduled_timestamp,
     });
