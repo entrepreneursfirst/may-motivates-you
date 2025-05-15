@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Check, Phone, Star } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -101,6 +102,14 @@ const Pricing = () => {
     });
   };
   
+  const scrollToTopAndActivatePhone = () => {
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Dispatch custom event to activate phone input
+    window.dispatchEvent(new CustomEvent('activatePhoneInput'));
+  };
+  
   return (
     <section id="pricing" className="py-20">
       <div className="container mx-auto px-4">
@@ -112,6 +121,13 @@ const Pricing = () => {
           <p className="text-commitify-secondary text-lg mt-4 max-w-2xl mx-auto">
             Choose the perfect plan for your needs
           </p>
+          <Button 
+            onClick={scrollToTopAndActivatePhone} 
+            className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text mt-6 rounded-full px-6 py-2 flex items-center gap-2 mx-auto"
+          >
+            <Phone className="w-5 h-5" />
+            Try it for $0
+          </Button>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
@@ -189,6 +205,16 @@ const Pricing = () => {
         <p className="text-center text-commitify-secondary mt-8">
           Cancel anytime. First call demo free. All plans include VAT.
         </p>
+        
+        <div className="text-center mt-10">
+          <Button 
+            onClick={scrollToTopAndActivatePhone} 
+            className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text rounded-full px-8 py-6 text-lg font-medium flex items-center gap-2 mx-auto"
+          >
+            <Phone className="w-6 h-6" />
+            Try your first call for $0
+          </Button>
+        </div>
       </div>
     </section>
   );
