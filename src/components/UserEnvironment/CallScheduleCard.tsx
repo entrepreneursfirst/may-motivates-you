@@ -91,7 +91,7 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
               {/* Talking Points Input */}
               <div className="border rounded-md p-4">
                 <div className="space-y-3">
-                  <Label htmlFor="talking-points">Input talking points for this call</Label>
+                  <Label htmlFor="talking-points">Enter topics you'd like to discuss during the call.</Label>
                   <Textarea 
                     id="talking-points" 
                     placeholder="Enter topics you'd like to discuss during the call..."
