@@ -102,12 +102,9 @@ const Pricing = () => {
     });
   };
   
-  const scrollToTopAndActivatePhone = () => {
-    // Scroll to the top of the page
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    // Dispatch custom event to activate phone input
-    window.dispatchEvent(new CustomEvent('activatePhoneInput'));
+  const openLoginDialog = () => {
+    // Dispatch custom event to open login dialog
+    window.dispatchEvent(new CustomEvent('openLoginDialog'));
   };
   
   return (
