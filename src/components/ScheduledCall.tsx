@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { format } from 'date-fns';
-import { Lock, Info } from 'lucide-react';
+import { Lock, Info, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
@@ -31,6 +31,16 @@ export const ScheduledCall = ({ call, onLockIn, onDelete }: ScheduledCallProps) 
       title: "Call locked in",
       description: "Your call has been sent to your AI agent."
     });
+  };
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete();
+      toast({
+        title: "Call deleted",
+        description: "The scheduled call has been removed."
+      });
+    }
   };
 
   return (
@@ -72,21 +82,35 @@ export const ScheduledCall = ({ call, onLockIn, onDelete }: ScheduledCallProps) 
         </div>
       </div>
       
-      {call.locked ? (
-        <div className="text-muted-foreground flex items-center gap-1">
-          <Lock className="h-4 w-4" />
-          <span className="text-xs">Locked in</span>
-        </div>
-      ) : (
-        <Button 
-          size="sm" 
-          className="text-foreground"
-          onClick={handleLockIn}
-        >
-          <Lock className="h-4 w-4 mr-1" />
-          Lock in
-        </Button>
-      )}
+      <div className="flex items-center gap-2">
+        {call.locked ? (
+          <div className="text-muted-foreground flex items-center gap-1">
+            <Lock className="h-4 w-4" />
+            <span className="text-xs">Locked in</span>
+          </div>
+        ) : (
+          <>
+            {onDelete && (
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                onClick={handleDelete}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            )}
+            <Button 
+              size="sm" 
+              className="text-foreground"
+              onClick={handleLockIn}
+            >
+              <Lock className="h-4 w-4 mr-1" />
+              Lock in
+            </Button>
+          </>
+        )}
+      </div>
     </div>
   );
 };

@@ -177,11 +177,11 @@ const UserEnvironment = () => {
         }]);
       }
     } else if (time && selectedDate) {
+      const talkingPointsEl = document.getElementById('talking-points') as HTMLTextAreaElement;
       setScheduledCalls([...scheduledCalls, {
         date: selectedDate,
         time: time,
-        talkingPoints: document.getElementById('talking-points') ? 
-          (document.getElementById('talking-points') as HTMLTextAreaElement).value : "",
+        talkingPoints: talkingPointsEl ? talkingPointsEl.value : "",
         locked: false
       }]);
     }
