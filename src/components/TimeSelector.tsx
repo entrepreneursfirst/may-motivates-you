@@ -27,6 +27,7 @@ export const TimeSelector = ({
   // Add a state to track which preset time is selected
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   const [customTimeEntered, setCustomTimeEntered] = useState(false);
+  const [customTime, setCustomTime] = useState("09:00");
 
   // Common time preset options
   const timePresets = [
@@ -40,11 +41,15 @@ export const TimeSelector = ({
   const handlePresetSelect = (time: string) => {
     setSelectedPreset(time);
     setCustomTimeEntered(false);
+    setCustomTime(time);
     // We don't call onTimeSelect here anymore
   };
 
   // Track custom time entry
-  const handleCustomTimeChange = () => {
+  const handleCustomTimeChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    if (e) {
+      setCustomTime(e.target.value);
+    }
     setSelectedPreset(null);
     setCustomTimeEntered(true);
   };
@@ -108,13 +113,13 @@ export const TimeSelector = ({
                 type="time" 
                 id="custom-time"
                 className="flex-1"
-                defaultValue="09:00"
-                onChange={handleCustomTimeChange}
+                value={customTime}
+                onChange={(e) => handleCustomTimeChange(e)}
               />
               <Button 
                 className={customTimeEntered ? "bg-commitify-purple text-white" : ""} 
                 variant={customTimeEntered ? "default" : "outline"}
-                onClick={handleCustomTimeChange}
+                onClick={() => handleCustomTimeChange()}
               >
                 Set
               </Button>

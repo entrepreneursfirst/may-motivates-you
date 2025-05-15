@@ -1,15 +1,22 @@
 
 import React from 'react';
 import { format } from 'date-fns';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface ScheduledCallProps {
   call: {
     date: Date;
     time: string | null;
     timeRange?: { start: string; end: string } | null;
+    talkingPoints?: string;
   };
   onDelete: () => void;
 }
@@ -30,6 +37,27 @@ export const ScheduledCall = ({ call, onDelete }: ScheduledCallProps) => {
               Random time between {call.timeRange.start} and {call.timeRange.end}
             </p>
           ) : null}
+          
+          {call.talkingPoints && (
+            <div className="flex items-center mt-1">
+              <span className="text-xs text-muted-foreground mr-1">Text input</span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-5 w-5 p-0">
+                      <Info className="h-3.5 w-3.5" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <div className="max-w-xs">
+                      <p className="font-medium mb-1">Talking points:</p>
+                      <p className="text-sm">{call.talkingPoints}</p>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          )}
         </div>
       </div>
       
