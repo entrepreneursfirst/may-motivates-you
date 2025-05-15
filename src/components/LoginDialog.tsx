@@ -81,9 +81,7 @@ const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
         <DialogHeader>
           <DialogTitle>Login to Commitify</DialogTitle>
           <DialogDescription>
-            {!showVerification 
-              ? "Enter your phone number to receive a verification code."
-              : "Enter the 6-digit verification code sent to your phone."}
+            Create a new account or log in to your existing account by providing your phone number and verification code.
           </DialogDescription>
         </DialogHeader>
         
