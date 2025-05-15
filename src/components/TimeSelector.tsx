@@ -93,7 +93,7 @@ export const TimeSelector = ({
               <Button 
                 key={preset.label} 
                 variant={selectedPreset === preset.time ? "default" : "outline"} 
-                className={selectedPreset === preset.time ? "bg-accent text-accent-foreground" : ""}
+                className={selectedPreset === preset.time ? "bg-commitify-purple text-white" : ""}
                 onClick={() => handlePresetSelect(preset.time)}
               >
                 {preset.label} ({preset.time})
@@ -112,7 +112,7 @@ export const TimeSelector = ({
                 onChange={handleCustomTimeChange}
               />
               <Button 
-                className={customTimeEntered ? "bg-accent text-accent-foreground" : ""} 
+                className={customTimeEntered ? "bg-commitify-purple text-white" : ""} 
                 variant={customTimeEntered ? "default" : "outline"}
                 onClick={handleCustomTimeChange}
               >

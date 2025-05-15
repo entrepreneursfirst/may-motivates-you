@@ -120,7 +120,7 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
 
               {/* Schedule Button */}
               <Button 
-                className="w-full bg-accent text-accent-foreground hover:bg-accent/90" 
+                className="w-full bg-primary hover:bg-commitify-yellow active:bg-commitify-purple" 
                 onClick={handleScheduleCall}
               >
                 Schedule Call
