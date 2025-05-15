@@ -125,7 +125,7 @@ serve(async (req) => {
                 toNumber: user.to_number,
                 agentId: appointment.agent_id,
                 userId: appointment.user_id,
-                providedContext: appointment.provided_context
+                provided_context: appointment.provided_context
               })
             }
           );

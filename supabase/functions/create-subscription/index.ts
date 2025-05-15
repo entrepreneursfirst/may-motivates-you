@@ -7,7 +7,10 @@ const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, {
 
 const allowedOrigins = [
   "http://localhost:8080",
-  "https://commitify.me"
+  "https://commitify.me",
+  "commitify.me",
+  "https://www.commitify.me",
+  "https://www.commitify.me/"
 ];
 
 serve(async (req) => {
