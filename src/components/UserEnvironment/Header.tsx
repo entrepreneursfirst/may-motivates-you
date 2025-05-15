@@ -3,12 +3,18 @@ import React from 'react';
 import { ArrowLeft, Clock, LogOut } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
+
+
 import { toast } from "@/components/ui/use-toast";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { user, signOut, isLoading } = useAuth();
+
   
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOut();
     navigate('/');
     toast({
       title: "Success",

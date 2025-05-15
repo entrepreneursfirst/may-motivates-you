@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Country codes for the dropdown with added flag emoticons
-const countryCodes = [{
+export const countryCodes = [{
   code: "+1",
   country: "US",
   name: "United States",

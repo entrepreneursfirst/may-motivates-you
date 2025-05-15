@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import Footer from '@/components/Footer';
@@ -11,6 +11,9 @@ import IntegrationsCard from '@/components/UserEnvironment/IntegrationsCard';
 import PlanSelectionDialog from '@/components/UserEnvironment/PlanSelectionDialog';
 import Header from '@/components/UserEnvironment/Header';
 import BackgroundGradient from '@/components/UserEnvironment/BackgroundGradient';
+import { useAuth } from '@/context/AuthContext';
+import supabase from '@/utils/supabase';
+
 
 // Agent data
 const agents = [
@@ -104,9 +107,50 @@ const plans = [
   }
 ];
 
+interface Call {
+  id: string;
+  agent_id: string;
+  title: string;
+  scheduled_at: string;
+  started_at: string;
+  status: string;
+  duration_seconds: number;
+}
+
 const UserEnvironment = () => {
   // Toast notifications
+  const { user, signOut } = useAuth();
+  const [calls, setCalls] = useState<Call[]>([]);
+  const [loading, setLoading] = useState(true);
+
+
   const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchCalls = async () => {
+      try {
+        if (!user) return;
+
+        const { data, error } = await supabase
+          .from('appointments')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('scheduled_at', { ascending: false });
+
+        if (error) {
+          throw error;
+        }
+
+        setCalls(data || []);
+      } catch (error) {
+        console.error('Error fetching calls:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCalls();
+  }, [user]);
 
   // State for user profile
   const [userProfile, setUserProfile] = useState({
@@ -232,6 +276,10 @@ const UserEnvironment = () => {
       title: "Subscription canceled",
       description: "Your subscription has been canceled successfully."
     });
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
   };
 
   return (

@@ -1,14 +1,18 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, Clock, Phone, LogIn } from 'lucide-react';
+import { Menu, Clock, Phone, LogIn, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import LoginDialog from './LoginDialog';
+import { useAuth } from '@/context/AuthContext';
+
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const { user, signOut, isLoading } = useAuth();
+
   const navigate = useNavigate();
   
   const toggleMenu = () => {
@@ -88,7 +92,17 @@ const Navbar = () => {
             <Phone className="w-4 h-4" />
             Get a Call
           </Button>
-          <Button 
+          {user ? (
+            <Button 
+            onClick={() => navigate('/user-environment')}
+            className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full px-6 flex items-center gap-2"
+            aria-label="Login"
+          >
+            <User className="w-4 h-4" />
+            Account
+          </Button>
+          ): (
+            <Button 
             onClick={openLoginDialog}
             className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full px-6 flex items-center gap-2"
             aria-label="Login"
@@ -96,6 +110,8 @@ const Navbar = () => {
             <LogIn className="w-4 h-4" />
             Log In
           </Button>
+          )}
+          
         </div>
 
         {/* Mobile Menu */}
@@ -124,6 +140,16 @@ const Navbar = () => {
                 <Phone className="w-4 h-4" />
                 Get a Call
               </Button>
+
+              {user ? (
+                <Button 
+                onClick={() => navigate('/user-environment')}
+                className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full w-full flex items-center justify-center gap-2"
+              >
+                <User className="w-4 h-4" />
+                Account
+              </Button>
+              ):
               <Button 
                 onClick={openLoginDialog}
                 className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full w-full flex items-center justify-center gap-2"
@@ -131,6 +157,7 @@ const Navbar = () => {
                 <LogIn className="w-4 h-4" />
                 Log In
               </Button>
+              }
             </div>
           </div>
         )}
