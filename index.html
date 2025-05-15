@@ -22,12 +22,13 @@
     
     <!-- Script for handling direct route access -->
     <script type="text/javascript">
-      // This script checks if we need to redirect based on a special pattern in the URL
+      // Check for redirect path from 404.html
       (function() {
-        var redirect = sessionStorage.redirect;
-        delete sessionStorage.redirect;
-        if (redirect && redirect != location.href) {
-          history.replaceState(null, null, redirect);
+        var redirectPath = sessionStorage.getItem('redirectPath');
+        if (redirectPath && redirectPath !== '/') {
+          sessionStorage.removeItem('redirectPath');
+          // Use React Router programmatic navigation after app loads
+          window.initialRedirectPath = redirectPath;
         }
       })();
     </script>

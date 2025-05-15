@@ -1,9 +1,9 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import UserEnvironment from "./pages/UserEnvironment";
@@ -12,6 +12,27 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
+// Create a component to handle the initial redirect
+const InitialRedirect = () => {
+  const [redirectPath, setRedirectPath] = useState<string | null>(null);
+  
+  useEffect(() => {
+    // Access the initialRedirectPath set in index.html
+    const path = (window as any).initialRedirectPath;
+    if (path) {
+      setRedirectPath(path);
+      // Clear it to prevent future redirects
+      (window as any).initialRedirectPath = undefined;
+    }
+  }, []);
+  
+  if (redirectPath) {
+    return <Navigate to={redirectPath} replace />;
+  }
+  
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -19,6 +40,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <InitialRedirect />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/user-environment" 
