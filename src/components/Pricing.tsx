@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { Check, Phone, Star } from 'lucide-react';
+
+import React, { useState, useEffect } from 'react';
+import { Check, Phone, Star, LogIn } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import LoginDialog from "./LoginDialog";
 
 const plans = [
   {
@@ -92,6 +94,7 @@ const plans = [
 const Pricing = () => {
   const { toast } = useToast();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const handleSelectPlan = (planName: string) => {
     setSelectedPlan(planName);
@@ -101,16 +104,32 @@ const Pricing = () => {
     });
   };
   
+  // Open login dialog
+  const openLoginDialog = () => {
+    setIsLoginOpen(true);
+  };
+
+  // Listen for openLoginDialog events from other components
+  useEffect(() => {
+    const handleOpenLoginDialog = () => {
+      setIsLoginOpen(true);
+    };
+    
+    window.addEventListener('openLoginDialog', handleOpenLoginDialog);
+    return () => {
+      window.removeEventListener('openLoginDialog', handleOpenLoginDialog);
+    };
+  }, []);
+  
   return (
     <section id="pricing" className="py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Pricing</span>
-        </h2>
         <div className="text-center mb-16">
-          <h3 className="text-3xl md:text-4xl font-bold">Try your first call for $0</h3>
-          <p className="text-commitify-secondary text-lg mt-4 max-w-2xl mx-auto">
-            Choose the perfect plan for your needs
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Pricing</span>
+          </h2>
+          <p className="text-commitify-secondary text-xl mt-2 max-w-2xl mx-auto">
+            Pick the plan that fits your vibe
           </p>
         </div>
         
@@ -189,7 +208,20 @@ const Pricing = () => {
         <p className="text-center text-commitify-secondary mt-8">
           Cancel anytime. First call demo free. All plans include VAT.
         </p>
+        
+        <div className="text-center mt-10">
+          <Button 
+            onClick={openLoginDialog} 
+            className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text rounded-full px-8 py-6 text-lg font-medium flex items-center gap-2 mx-auto"
+          >
+            <LogIn className="w-6 h-6" />
+            Choose package and login
+          </Button>
+        </div>
       </div>
+      
+      {/* Include the LoginDialog component here */}
+      <LoginDialog isOpen={isLoginOpen} setIsOpen={setIsLoginOpen} />
     </section>
   );
 };
