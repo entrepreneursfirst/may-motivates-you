@@ -63,9 +63,7 @@ serve(async (req) => {
     }
     
     console.log(`📅 Found ${appointments?.length || 0} appointments to process`);
-    
-    const results = [];
-    
+        
     // Process each due appointment
     if (appointments && appointments.length > 0) {
       for (const appointment of appointments as AppointmentRow[]) {
@@ -132,7 +130,8 @@ serve(async (req) => {
             .from('appointment_scheduling')
             .update({
               scheduling_status: 'completed',
-              response_body: JSON.stringify(callResult)
+              response_body: JSON.stringify(callResult),
+              call_id: callResult.callId
             })
             .eq('id', appointment.id);
           
@@ -140,11 +139,7 @@ serve(async (req) => {
             throw new Error(`Error updating appointment with result: ${finalUpdateError.message}`);
           }
           
-          results.push({
-            appointment_id: appointment.id,
-            status: 'success',
-            call_id: callResult.callId
-          });
+         
           
           console.log(`✅ Successfully processed appointment: ${appointment.id}`);
         } catch (appointmentError) {
@@ -161,11 +156,7 @@ serve(async (req) => {
             })
             .eq('id', appointment.id);
           
-          results.push({
-            appointment_id: appointment.id,
-            status: 'error',
-            error: appointmentError instanceof Error ? appointmentError.message : String(appointmentError)
-          });
+        
         }
       }
     }
@@ -174,7 +165,6 @@ serve(async (req) => {
       JSON.stringify({
         processed: appointments?.length || 0,
         time: new Date().toISOString(),
-        results
       }),
       {
         headers: {
