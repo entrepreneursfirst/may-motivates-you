@@ -8,7 +8,7 @@ interface AppointmentRow {
   title: string;
   agent_id: string;
   provided_context: string;
-  scheduling_status: 'initialized' | 'ongoing' | 'completed' | 'error';
+  scheduling_status: 'initialized' | 'ongoing_call' | 'completed' | 'error';
 }
 
 interface UserRow {
