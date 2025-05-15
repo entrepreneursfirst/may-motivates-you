@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Check, Phone, Star } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -113,21 +112,13 @@ const Pricing = () => {
   return (
     <section id="pricing" className="py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-4">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Pricing</span>
-        </h2>
         <div className="text-center mb-16">
-          <h3 className="text-3xl md:text-4xl font-bold">Try your first call for $0</h3>
-          <p className="text-commitify-secondary text-lg mt-4 max-w-2xl mx-auto">
-            Choose the perfect plan for your needs
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF914D] via-[#E57040] to-[#EFAF26]">Pricing</span>
+          </h2>
+          <p className="text-commitify-secondary text-xl mt-2 max-w-2xl mx-auto">
+            Pick the plan that fits your vibe
           </p>
-          <Button 
-            onClick={scrollToTopAndActivatePhone} 
-            className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text mt-6 rounded-full px-6 py-2 flex items-center gap-2 mx-auto"
-          >
-            <Phone className="w-5 h-5" />
-            Try it for $0
-          </Button>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
