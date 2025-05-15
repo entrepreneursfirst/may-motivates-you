@@ -5,7 +5,6 @@ import Footer from '@/components/Footer';
 import ProfileCard from '@/components/UserEnvironment/ProfileCard';
 import ActiveAgentCard from '@/components/UserEnvironment/ActiveAgentCard';
 import CallScheduleCard from '@/components/UserEnvironment/CallScheduleCard';
-import NaturalLanguageCard from '@/components/UserEnvironment/NaturalLanguageCard';
 import IntegrationsCard from '@/components/UserEnvironment/IntegrationsCard';
 import PlanSelectionDialog from '@/components/UserEnvironment/PlanSelectionDialog';
 import Header from '@/components/UserEnvironment/Header';
@@ -300,11 +299,6 @@ const UserEnvironment = () => {
                   handleDeleteCall={handleDeleteCall}
                   handleLockInCall={handleLockInCall}
                 />
-              </div>
-              
-              {/* Natural Language Input */}
-              <div className="grid grid-cols-1 gap-6 mb-6">
-                <NaturalLanguageCard />
               </div>
               
               {/* Additional Integrations */}
