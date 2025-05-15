@@ -109,7 +109,7 @@ export const scheduleCall = async (
       provided_context
     };
 
-    const response = await fetch(`${supabaseUrl}/functions/v1/schedule-call`, {
+    const response = await fetch(`${supabaseUrl}/functions/v1/appointment-schedule`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

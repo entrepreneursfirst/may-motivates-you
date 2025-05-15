@@ -1,3 +1,4 @@
+// schedule-call
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import Retell from 'https://esm.sh/retell-sdk'
@@ -8,7 +9,6 @@ interface CallScheduleRequest {
   userId?: string;
   scheduled_timestamp: number;
   provided_context?: string;
-
 }
 
 interface CallResponse {

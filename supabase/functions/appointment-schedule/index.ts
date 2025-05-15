@@ -1,13 +1,13 @@
-// make-call
+// appointment-schedule
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-import Retell from 'https://esm.sh/retell-sdk'
 
-interface CallRequest {
+interface CallScheduleRequest {
   toNumber: string;
   agentId: string;
   userId?: string;
-  provided_context?: string
+  scheduled_timestamp: number;
+  provided_context?: string;
 }
 
 interface CallResponse {
@@ -33,19 +33,18 @@ serve(async (req: Request) => {
     }
     
     // Get data from request (toNumber, agentId, userId)
-    const body: CallRequest = await req.json();
+    const body: CallScheduleRequest = await req.json();
     console.log('📋 Request body:', JSON.stringify(body, null, 2));
-    const { toNumber, agentId, userId, provided_context } = body;
+    const { toNumber, agentId, userId, scheduled_timestamp, provided_context } = body;
     
-    if (!toNumber || !agentId) {
-      console.error('❌ Missing required parameters:', { toNumber, agentId });
+    if (!toNumber || !agentId || !scheduled_timestamp) {
+      console.error('❌ Missing required parameters:', { toNumber, agentId, scheduled_timestamp});
       return new Response(
         JSON.stringify({ success: false, error: 'Missing required parameters' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    // get previous transcripts by user
     // Initialize Supabase client (to record the call in the database)
     console.log('🔄 Initializing Supabase client');
     const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
@@ -57,7 +56,7 @@ serve(async (req: Request) => {
         hasKey: !!supabaseKey 
       });
     }
-
+    
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { data, error } = await supabase
@@ -73,7 +72,7 @@ serve(async (req: Request) => {
           success: false, 
           error: "not enough balance",
         }),
-        { 
+        {
           status: 402, 
           headers: { 
             'Content-Type': 'application/json',
@@ -83,93 +82,29 @@ serve(async (req: Request) => {
       );
     }
     console.log(`User balance is ${userBalance} so it is higher than 0 ${userBalance >0}`)
-
     
-    // Initialize Retell client
-    console.log('🔑 Initializing Retell client');
-    const apiKey = Deno.env.get('RETELL_API_KEY') || '';
-    if (!apiKey) {
-      console.error('❌ Missing RETELL_API_KEY environment variable');
+    interface CreateAppointmentSchedule {
+      user_id: string;
+      agent_id: string;
+      title: string;
+      scheduled_at: number;
+      provided_context: string | undefined;
+      scheduling_status: 'initialized' | 'ongoing' | 'completed' | 'error';
     }
     
-    const retellClient = new Retell({
-      apiKey: apiKey,
-    });
-
-
-    
-    if (!agentId) {
-      console.error(`❌ No from_number found for agent ID: ${agentId}`);
-      return new Response(
-        JSON.stringify({ success: false, error: `Invalid agent ID: ${agentId}` }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // // get previous transcripts by user
-    // // Initialize Supabase client (to record the call in the database)
-    // console.log('🔄 Initializing Supabase client');
-    // const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
-    // const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
-    
-    // if (!supabaseUrl || !supabaseKey) {
-    //   console.error('❌ Missing Supabase environment variables:', { 
-    //     hasUrl: !!supabaseUrl, 
-    //     hasKey: !!supabaseKey 
-    //   });
-    // }
-    
-    //const supabase = createClient(supabaseUrl, supabaseKey);
-
-    const previous_transcripts = await supabase
-    .from('calls')
-    .select('transcript')
-    .eq('user_id', userId)
-
-    console.log(`previous transcripts user_id ${userId }: `, JSON.stringify(previous_transcripts.data))
-
-    let transcript_list_text: string = ""
-
-    for (var i = 0; i< previous_transcripts.data.length; i++) {
-      transcript_list_text = `${transcript_list_text} \n\n transcript ${i}: \n ${JSON.stringify(previous_transcripts.data[i].transcript)}`
-    }
-    console.log(`# Transcipts \n ${transcript_list_text}`)
-
-    console.log(`calling agent_id ${agentId}`)
-    // Make the call
-    console.log('📱 Making call from', '+13153258101', 'to', toNumber);
-    
-    const retellResponse = await retellClient.call.createPhoneCall({
-      from_number: '+13153258101',
-      to_number: toNumber,
-      override_agent_id: agentId,
-      retell_llm_dynamic_variables: { previous_transcript_text: transcript_list_text, provided_context: provided_context},
-    });
-
-    console.log(`agent response_id = ${retellResponse.agent_id}`)
-    console.log('✅ Call created successfully:', retellResponse.call_id);
-    console.log('📊 Call details:', JSON.stringify(retellResponse, null, 2));
-    
-    
-    
-    // Record the call in the database
     if (userId) {
-      console.log('💾 Recording call in database for user:', userId);
-      const callData = {
-        id: retellResponse.call_id,
+      console.log('💾 Recording call in appointment_scheduling in database for user:', userId);
+      const callData: CreateAppointmentSchedule = {
         user_id: userId,
-        agent_id: retellResponse.agent_id,
-        started_at: new Date().toISOString(),
-        to_number: toNumber,
-        status: 'completed',
-        duration_seconds: retellResponse.call_cost.total_duration_seconds,
-        response_body: JSON.stringify(retellResponse),
+        agent_id: agentId,
+        title: "My scheduled call",
+        scheduled_at: scheduled_timestamp,
+        provided_context: provided_context,
+        scheduling_status: 'initialized',
       };
       console.log('📝 Call data to insert:', JSON.stringify(callData, null, 2));
       
-      const { data, error } = await supabase
-      .from('calls')
-      .insert(callData);
+      const { data, error } = await supabase.from('appointments_scheduling').insert(callData);
       
       if (error) {
         console.error('❌ Error inserting call record:', error);
@@ -179,12 +114,14 @@ serve(async (req: Request) => {
     } else {
       console.log('⚠️ No userId provided, skipping database record');
     }
+
+    console.log(`data_id = ${data.id}`)
     
     console.log('🏁 Returning successful response');
     return new Response(
       JSON.stringify({ 
         success: true, 
-        callId: retellResponse.call_id,
+        scheduling_id: data.id,
       }),
       { 
         status: 200, 
@@ -195,9 +132,7 @@ serve(async (req: Request) => {
       }
     );
   } catch (error) {
-    console.error('❌ Error making RetellAI call:', error);
-    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace available');
-    
+
     // Log additional context
     console.error('Request method:', req.method);
     console.error('Request URL:', req.url);
