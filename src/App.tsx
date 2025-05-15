@@ -9,7 +9,7 @@ import NotFound from "./pages/NotFound";
 import UserEnvironment from "./pages/UserEnvironment";
 import { AuthProvider } from "@/context/AuthContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-
+import { Analytics } from "@vercel/analytics/next"
 const queryClient = new QueryClient();
 
 // Create a component to handle the initial redirect
@@ -49,6 +49,7 @@ const App = () => (
                 <UserEnvironment />
               </ProtectedRoute>} 
             />
+            <Analytics/>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
