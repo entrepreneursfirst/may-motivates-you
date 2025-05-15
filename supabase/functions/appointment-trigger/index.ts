@@ -18,7 +18,7 @@ interface UserRow {
 }
 
 serve(async (req) => {
-  console.log("🕒 Appointment trigger fired at:", new Date().toISOString());
+  console.log("🕒 Appointment trigger fired at:", new Date().toISOString(), "🕒 Current time in Unix Timestamp (seconds):", Math.floor(Date.now() / 1000));
   
   // Set CORS headers
   const headers = new Headers({
@@ -44,7 +44,7 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
     
     // Get current time in unix timestamp (seconds)
-    const currentTime = Math.floor(Date.now() / 1000);
+    const currentTime = Math.floor(Date.now());
     
     // Calculate time 10 minutes ago
     const tenMinutesAgo = currentTime - 600;
