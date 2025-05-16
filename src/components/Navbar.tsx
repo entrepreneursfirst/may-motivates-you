@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, Clock, Phone, LogIn, User } from 'lucide-react';
+import { Menu, Clock, Phone, LogIn, User, UserPlus } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import LoginDialog from './LoginDialog';
+import SignupDialog from './SignupDialog';
+import LoginHandler from './LoginHandler';
 import { useAuth } from '@/context/AuthContext';
 
 
@@ -10,6 +12,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [isAttemptingLogin, setIsAttemptingLogin] = useState(false);
   const { user, signOut, isLoading } = useAuth();
 
   const navigate = useNavigate();
@@ -23,15 +27,36 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
   
-  // Function to activate phone input in hero section
+  // Function to activate phone input in hero section - Now redirects to signup
   const activatePhoneInput = () => {
-    scrollToSection('hero');
-    // Dispatch custom event to activate phone input
-    window.dispatchEvent(new CustomEvent('activatePhoneInput'));
+    if (user) {
+      // If user is logged in, take them to their account
+      navigate('/user-environment');
+    } else {
+      // Otherwise open the signup dialog
+      setIsSignupOpen(true);
+    }
   };
   
-  // Function to open login dialog
-  const openLoginDialog = () => {
+  // Function to handle login attempt
+  const handleLogin = () => {
+    setIsAttemptingLogin(true);
+  };
+  
+  // Function to open signup dialog
+  const handleSignup = () => {
+    setIsSignupOpen(true);
+  };
+  
+  // Handle successful login
+  const handleLoginSuccess = () => {
+    setIsAttemptingLogin(false);
+    setIsLoginOpen(false);
+  };
+  
+  // Handle failed login
+  const handleLoginFailure = () => {
+    setIsAttemptingLogin(false);
     setIsLoginOpen(true);
   };
   
@@ -89,28 +114,38 @@ const Navbar = () => {
             className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-semibold rounded-full px-6 flex items-center gap-2"
           >
             <Phone className="w-4 h-4" />
-            Get a Call
+            Get Started
           </Button>
+          
           {user ? (
             <Button 
-            onClick={() => navigate('/user-environment')}
-            className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full px-6 flex items-center gap-2"
-            aria-label="Login"
-          >
-            <User className="w-4 h-4" />
-            Account
-          </Button>
-          ): (
-            <Button 
-            onClick={openLoginDialog}
-            className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full px-6 flex items-center gap-2"
-            aria-label="Login"
-          >
-            <LogIn className="w-4 h-4" />
-            Log In
-          </Button>
+              onClick={() => navigate('/user-environment')}
+              className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full px-6 flex items-center gap-2"
+              aria-label="Account"
+            >
+              <User className="w-4 h-4" />
+              Account
+            </Button>
+          ) : (
+            <div className="flex items-center space-x-3">
+              <Button 
+                onClick={handleLogin}
+                className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full px-6 flex items-center gap-2"
+                aria-label="Login"
+              >
+                <LogIn className="w-4 h-4" />
+                Log In
+              </Button>
+              <Button 
+                onClick={handleSignup}
+                className="bg-commitify-blue hover:bg-commitify-blue/90 text-white rounded-full px-6 flex items-center gap-2"
+                aria-label="Signup"
+              >
+                <UserPlus className="w-4 h-4" />
+                Sign Up
+              </Button>
+            </div>
           )}
-          
         </div>
 
         {/* Mobile Menu */}
@@ -137,32 +172,52 @@ const Navbar = () => {
                 className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-semibold rounded-full w-full flex items-center justify-center gap-2"
               >
                 <Phone className="w-4 h-4" />
-                Get a Call
+                Get Started
               </Button>
 
               {user ? (
                 <Button 
-                onClick={() => navigate('/user-environment')}
-                className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full w-full flex items-center justify-center gap-2"
-              >
-                <User className="w-4 h-4" />
-                Account
-              </Button>
-              ):
-              <Button 
-                onClick={openLoginDialog}
-                className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full w-full flex items-center justify-center gap-2"
-              >
-                <LogIn className="w-4 h-4" />
-                Log In
-              </Button>
-              }
+                  onClick={() => navigate('/user-environment')}
+                  className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full w-full flex items-center justify-center gap-2"
+                >
+                  <User className="w-4 h-4" />
+                  Account
+                </Button>
+              ) : (
+                <>
+                  <Button 
+                    onClick={handleLogin}
+                    className="bg-commitify-background hover:bg-commitify-background/90 text-commitify-text border border-commitify-text rounded-full w-full flex items-center justify-center gap-2"
+                  >
+                    <LogIn className="w-4 h-4" />
+                    Log In
+                  </Button>
+                  <Button 
+                    onClick={handleSignup}
+                    className="bg-commitify-blue hover:bg-commitify-blue/90 text-white rounded-full w-full flex items-center justify-center gap-2"
+                  >
+                    <UserPlus className="w-4 h-4" />
+                    Sign Up
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}
         
         {/* Login Dialog */}
         <LoginDialog isOpen={isLoginOpen} setIsOpen={setIsLoginOpen} />
+        
+        {/* Signup Dialog */}
+        <SignupDialog isOpen={isSignupOpen} setIsOpen={setIsSignupOpen} />
+        
+        {/* Login Handler (invisible component) */}
+        {isAttemptingLogin && (
+          <LoginHandler 
+            onLoginSuccess={handleLoginSuccess}
+            onLoginFailure={handleLoginFailure}
+          />
+        )}
       </div>
     </nav>
   );

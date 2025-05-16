@@ -1,7 +1,7 @@
 //schedulelCall
 import React, { useState } from 'react';
 import { format } from 'date-fns';
-import { Lock, Info, Trash2 } from 'lucide-react';
+import { Lock, Info, Trash2, Calendar, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
@@ -22,21 +22,12 @@ interface ScheduledCallProps {
     talkingPoints?: string;
     locked?: boolean;
   };
-  onLockIn: () => void;
   onDelete?: () => void;
 }
 
-export const ScheduledCall = ({ call, onLockIn, onDelete }: ScheduledCallProps) => {
+export const ScheduledCall = ({ call, onDelete }: ScheduledCallProps) => {
   const isMobile = useIsMobile();
   const [showTooltip, setShowTooltip] = useState(false);
-
-  const handleLockIn = () => {
-    onLockIn();
-    // toast({
-    //   title: "Call locked in",
-    //   description: "Your call has been sent to your AI agent."
-    // });
-  };
 
   const handleDelete = () => {
     if (onDelete) {
@@ -89,32 +80,20 @@ export const ScheduledCall = ({ call, onLockIn, onDelete }: ScheduledCallProps) 
       </div>
       
       <div className={`flex ${isMobile ? 'mt-3 justify-end' : ''} items-center gap-2`}>
-        {call.locked ? (
-          <div className="text-muted-foreground flex items-center gap-1">
-            <Lock className="h-4 w-4" />
-            <span className="text-xs">Locked in</span>
-          </div>
-        ) : (
-          <>
-            {onDelete && (
-              <Button 
-                variant="ghost" 
-                size="icon"
-                className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                onClick={handleDelete}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            )}
-            <Button 
-              size="sm" 
-              className="text-foreground"
-              onClick={handleLockIn}
-            >
-              <Lock className="h-4 w-4 mr-1" />
-              Lock in
-            </Button>
-          </>
+        <div className="text-green-600 flex items-center gap-1">
+          <CheckCircle className="h-4 w-4" />
+          <span className="text-xs">Scheduled</span>
+        </div>
+        
+        {onDelete && (
+          <Button 
+            variant="ghost" 
+            size="icon"
+            className="h-8 w-8 text-muted-foreground hover:text-destructive ml-2"
+            onClick={handleDelete}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
         )}
       </div>
     </div>

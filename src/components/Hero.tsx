@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +11,7 @@ import supabase from '@/utils/supabase';
 import { makeAICall } from '@/utils/retellai';
 import { useAuth } from '@/context/AuthContext';
 import AuthDialog from './auth/AuthDialog';
+import SignupDialog from './SignupDialog';
 
 
 // Country codes for the dropdown with added flag emoticons
@@ -64,6 +64,7 @@ const Hero = () => {
   const [showWaitlistDialog, setShowWaitlistDialog] = useState(false);
   const { user, signOut, isLoading } = useAuth();
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [showSignupDialog, setShowSignupDialog] = useState(false);
   
   const isMobile = useIsMobile();
   const { toast } = useToast();
@@ -75,8 +76,21 @@ const Hero = () => {
       setIsPhoneInputActive(true);
     };
     window.addEventListener('activatePhoneInput', handleActivatePhoneInput);
+    
+    const handleOpenAuthDialog = () => {
+      setShowAuthDialog(true);
+    };
+    window.addEventListener('openAuthDialog', handleOpenAuthDialog);
+    
+    const handleOpenSignupDialog = () => {
+      setShowSignupDialog(true);
+    };
+    window.addEventListener('openSignupDialog', handleOpenSignupDialog);
+    
     return () => {
       window.removeEventListener('activatePhoneInput', handleActivatePhoneInput);
+      window.removeEventListener('openAuthDialog', handleOpenAuthDialog);
+      window.removeEventListener('openSignupDialog', handleOpenSignupDialog);
     };
   }, []);
 
@@ -87,7 +101,11 @@ const Hero = () => {
   };
 
   const handlePhoneInput = () => {
-    setIsPhoneInputActive(true);
+    // Instead of showing the auth dialog, directly show the signup dialog
+    setShowSignupDialog(true);
+    
+    // Dispatch a custom event to notify other components
+    window.dispatchEvent(new CustomEvent('openSignupDialog'));
   };
 
   const handleCancel = () => {
@@ -246,7 +264,7 @@ const Hero = () => {
                           className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all w-full" 
                           onClick={handlePhoneInput}
                         >
-                          Try it for $0
+                          Get Started
                         </Button>
                         {/* Hidden space placeholder - renders the same dimensions but invisible */}
                         <div className="invisible h-0 absolute">
@@ -275,7 +293,7 @@ const Hero = () => {
                         className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all w-[168px]" 
                         onClick={handlePhoneInput}
                       >
-                        Try it for $0
+                        Get Started
                       </Button>
                     )}
                   </div>
@@ -351,6 +369,12 @@ const Hero = () => {
         }}
         initialPhoneNumber={phoneNumber}
         initialCountryCode={selectedCountryCode.code}
+      />
+      
+      {/* Add Signup Dialog */}
+      <SignupDialog
+        isOpen={showSignupDialog}
+        setIsOpen={setShowSignupDialog}
       />
     </section>;
 };

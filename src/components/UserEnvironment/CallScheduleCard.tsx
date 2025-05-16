@@ -132,12 +132,12 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
         <div className="mt-6 border rounded-md p-4">
           <h4 className="font-medium mb-3">Scheduled calls</h4>
           <p className="text-muted-foreground text-sm mb-4">
-            Lock in your calls to send them to your AI agent. Once locked, calls cannot be modified.
+            All scheduled calls are automatically sent to your AI agent.
           </p>
           {scheduledCalls.length === 0 ? <p className="text-muted-foreground text-center py-4">
               No calls scheduled yet. Select a date above to schedule a call.
             </p> : <div className="space-y-2">
-              {scheduledCalls.map((call, index) => <ScheduledCall key={index} call={call} onLockIn={() => handleLockInCall(index)} onDelete={!call.locked ? () => handleDeleteCall(index) : undefined} />)}
+              {scheduledCalls.map((call, index) => <ScheduledCall key={index} call={call} onDelete={() => handleDeleteCall(index)} />)}
             </div>}
         </div>
       </CardContent>

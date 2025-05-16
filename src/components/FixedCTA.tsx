@@ -12,9 +12,10 @@ const FixedCTA = () => {
       top: 0,
       behavior: 'smooth'
     });
-    // Dispatch a custom event that the Hero component will listen for
+    // Dispatch a custom event that will trigger the signup dialog instead of auth dialog
     setTimeout(() => {
-      window.dispatchEvent(new Event('activatePhoneInput'));
+      // Use the custom event to directly open the signup dialog
+      window.dispatchEvent(new CustomEvent('openSignupDialog'));
     }, 800); // Add a slight delay to ensure the scroll completes first
   };
   
@@ -52,7 +53,7 @@ const FixedCTA = () => {
           onClick={scrollToTop}
         >
           <Phone className="w-4 h-4" />
-          <span>Get a Call (FREE)</span>
+          <span>Get Started</span>
         </Button>
       </div>
     </div>

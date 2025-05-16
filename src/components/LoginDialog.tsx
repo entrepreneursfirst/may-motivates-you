@@ -12,25 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from 'react-router-dom';
-import { Phone, KeyRound } from 'lucide-react';
+import { Mail, Lock } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import supabase from '@/utils/supabase';
-
-// Common country codes with flags
-const countryCodes = [
-  { code: "+1", flag: "🇺🇸", country: "US/CA" },
-  { code: "+31", flag: "🇳🇱", country: "NL" },
-  { code: "+44", flag: "🇬🇧", country: "UK" },
-  { code: "+33", flag: "🇫🇷", country: "FR" },
-  { code: "+49", flag: "🇩🇪", country: "DE" },
-  { code: "+61", flag: "🇦🇺", country: "AU" },
-  { code: "+86", flag: "🇨🇳", country: "CN" },
-  { code: "+91", flag: "🇮🇳", country: "IN" },
-  { code: "+81", flag: "🇯🇵", country: "JP" },
-  { code: "+52", flag: "🇲🇽", country: "MX" },
-  { code: "+55", flag: "🇧🇷", country: "BR" },
-];
 
 interface LoginDialogProps {
   isOpen: boolean;
@@ -41,35 +25,17 @@ const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  // State for phone number entry
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [countryCode, setCountryCode] = useState('+1');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
-  // State for OTP verification
-  const [showVerification, setShowVerification] = useState(false);
-  const [verificationCode, setVerificationCode] = useState('');
-  
-  // Get formatted phone number with country code
-  const getFullPhoneNumber = () => {
-    // Strip any non-digit characters from the phone number 
-    // (except keep the + if present at the beginning)
-    let cleanedNumber = phoneNumber.replace(/[^\d]/g, '');
-    
-    // Check if the country code already includes a + sign
-    const formattedCountryCode = countryCode.startsWith('+') ? countryCode : `+${countryCode}`;
-    return `${formattedCountryCode}${cleanedNumber}`;
-  };
-
-  // Step 1: Send OTP to phone number
-  const handleSendCode = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate phone number
-    if (!phoneNumber || phoneNumber.length < 7) {
+    if (!email || !password) {
       toast({
-        title: "Invalid Phone Number",
-        description: "Please enter a valid phone number",
+        title: "Missing Information",
+        description: "Please enter both email and password",
         variant: "destructive"
       });
       return;
@@ -78,104 +44,14 @@ const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
     setIsLoading(true);
     
     try {
-      let formattedPhone = getFullPhoneNumber();
-      
-      // Remove any spaces, dashes, or parentheses
-      formattedPhone = formattedPhone.replace(/[\s()-]/g, '');
-
-      // Ensure it starts with + (required for E.164 format)
-      if (!formattedPhone.startsWith('+')) {
-        formattedPhone = '+' + formattedPhone;
-      }
-
-      console.log('Sending OTP to:', formattedPhone);
-      const { data, error } = await supabase.auth.signInWithOtp({
-        phone: formattedPhone,
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
       });
-
-      
       
       if (error) {
         throw error;
       }
-      
-      toast({
-        title: "Verification Code Sent",
-        description: "Please enter the 6-digit code sent to your phone",
-      });
-      
-      // Move to OTP verification step
-      setShowVerification(true);
-    } catch (error: any) {
-      console.error('Error sending OTP:', error);
-      
-      // Display a more helpful error message
-      let errorMessage = "Failed to send verification code. Please try again.";
-      
-      // Check for specific error types
-      if (error.message?.includes("phone number")) {
-        errorMessage = "Invalid phone format. Please check your country code and number.";
-      } else if (error.message?.includes("rate limit")) {
-        errorMessage = "Too many attempts. Please try again later.";
-      }
-      
-      toast({
-        title: "Error",
-        description: errorMessage,
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Step 2: Verify OTP
-  const handleVerifyCode = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Validate OTP
-    if (!verificationCode || verificationCode.length !== 6 || !/^\d+$/.test(verificationCode)) {
-      toast({
-        title: "Invalid Code",
-        description: "Please enter a valid 6-digit verification code",
-        variant: "destructive"
-      });
-      return;
-    }
-    
-    setIsLoading(true);
-    
-    try {
-      // Format phone number consistently (same as in handleSendCode)
-      let formattedPhone = getFullPhoneNumber();
-      formattedPhone = formattedPhone.replace(/[\s()-]/g, '');
-      if (!formattedPhone.startsWith('+')) {
-        formattedPhone = '+' + formattedPhone;
-      }
-      
-      const { data, error } = await supabase.auth.verifyOtp({
-        phone: formattedPhone,
-        token: verificationCode,
-        type: 'sms',
-      });
-
-      // Insert the user into the public.users table if they don't exist
-      if (data.user) {
-        await supabase.from('users').upsert(
-          {
-            id: data.user.id,
-            phone: data.user.phone
-          },
-          { onConflict: 'id' } // only insert if the user isn't there yet
-        );
-      }
-      
-      if (error) {
-        throw error;
-      }
-      
-      // User successfully authenticated!
-      console.log('User authenticated:', data.user);
       
       toast({
         title: "Login Successful",
@@ -185,130 +61,78 @@ const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
       // Close dialog and navigate to user environment
       setIsOpen(false);
       navigate('/user-environment');
+      
     } catch (error: any) {
-      console.error('Error verifying OTP:', error);
+      // Silently handle error without logging to console
+      let errorMessage = "Login failed. Please check your credentials.";
       
-      // Provide better error messages
-      let errorMessage = "Invalid verification code. Please try again.";
-      
-      if (error.message?.includes("expired")) {
-        errorMessage = "Verification code has expired. Please request a new code.";
-      } else if (error.message?.includes("invalid")) {
-        errorMessage = "Invalid verification code. Please check and try again.";
+      if (error.message?.includes("Invalid login")) {
+        errorMessage = "Invalid email or password. Please try again.";
       }
       
       toast({
-        title: "Verification Failed",
+        title: "Login Failed",
         description: errorMessage,
         variant: "destructive"
       });
-      
-      // If the code is expired, go back to phone input step
-      if (error.message?.includes("expired")) {
-        handleReset();
-      }
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleReset = () => {
-    setShowVerification(false);
-    setVerificationCode('');
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Login to Commitify</DialogTitle>
+          <DialogTitle>Log in to Commitify</DialogTitle>
           <DialogDescription>
-            Create a new account or log in to your existing account by providing your phone number and verification code.
+            Enter your email and password to access your account.
           </DialogDescription>
         </DialogHeader>
         
-        {!showVerification ? (
-          // Phone number form
-          <form onSubmit={handleSendCode} className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <div className="flex items-center gap-2">
-                <Select value={countryCode} onValueChange={setCountryCode}>
-                  <SelectTrigger className="w-32 rounded-l-md rounded-r-none border-r-0">
-                    <SelectValue placeholder={`${countryCode}`} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {countryCodes.map((country) => (
-                      <SelectItem key={country.code} value={country.code}>
-                        {country.code} {country.flag} {country.country}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Input 
-                  id="phone" 
-                  type="tel" 
-                  placeholder="Enter your phone number" 
-                  className="rounded-l-none"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
-            
-            <DialogFooter className="pt-4">
-              <Button 
-                type="submit" 
-                className="w-full"
-                disabled={isLoading}
-              >
-                {isLoading ? "Sending..." : "Send Verification Code"}
-              </Button>
-            </DialogFooter>
-          </form>
-        ) : (
-          // Verification code form
-          <form onSubmit={handleVerifyCode} className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="verificationCode" className="flex items-center gap-2">
-                <KeyRound className="w-4 h-4" />
-                <span>Verification Code</span>
-              </Label>
-              <p className="text-sm text-gray-500">
-                Enter the 6-digit code sent to {getFullPhoneNumber()}
-              </p>
-              <Input 
-                id="verificationCode"
-                type="text" 
-                placeholder="Enter 6-digit code" 
-                value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value)}
-                maxLength={6}
-                disabled={isLoading}
-              />
-            </div>
-            
-            <div className="flex gap-2 pt-4">
-              <Button 
-                type="button" 
-                variant="outline" 
-                onClick={handleReset} 
-                className="flex-1"
-                disabled={isLoading}
-              >
-                Back
-              </Button>
-              <Button 
-                type="submit" 
-                className="flex-1"
-                disabled={isLoading}
-              >
-                {isLoading ? "Verifying..." : "Verify & Login"}
-              </Button>
-            </div>
-          </form>
-        )}
+        <form onSubmit={handleLogin} className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="email" className="flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              <span>Email</span>
+            </Label>
+            <Input 
+              id="email" 
+              type="email" 
+              placeholder="Enter your email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isLoading}
+              required
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="password" className="flex items-center gap-2">
+              <Lock className="w-4 h-4" />
+              <span>Password</span>
+            </Label>
+            <Input 
+              id="password" 
+              type="password" 
+              placeholder="Enter your password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={isLoading}
+              required
+            />
+          </div>
+          
+          <DialogFooter className="pt-4">
+            <Button 
+              type="submit" 
+              className="w-full bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text"
+              disabled={isLoading}
+            >
+              {isLoading ? "Logging in..." : "Log In"}
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { CalendarIcon, Edit, Phone, UserRound, X, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CalendarIcon, Edit, Phone, UserRound, X, Check, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { useToast } from "@/hooks/use-toast";
 import CancelSubscriptionDialog from './CancelSubscriptionDialog';
+import { motion } from 'framer-motion';
 
 interface ProfileCardProps {
   userProfile: {
@@ -56,7 +57,22 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 }) => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
+  const [highlightAgentCall, setHighlightAgentCall] = useState(false);
   const { toast } = useToast();
+  
+  // Agent contact information
+  const agentPhoneNumber = "+1 (315) 325-8101";
+  const agentPhoneNumberRaw = "+13153258101";
+
+  // Check if user was redirected here from onboarding for verification call
+  useEffect(() => {
+    const needsVerificationCall = new URLSearchParams(window.location.search).get('verify');
+    if (needsVerificationCall === 'true') {
+      setHighlightAgentCall(true);
+      // Remove the highlight after 10 seconds
+      setTimeout(() => setHighlightAgentCall(false), 10000);
+    }
+  }, []);
 
   const handleConfirmCancel = (feedback?: string) => {
     setShowCancelDialog(false);
@@ -69,6 +85,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         description: "We appreciate you taking the time to share your thoughts."
       });
     }
+  };
+  
+  const handleCallAgent = () => {
+    toast({
+      title: "Calling Agent",
+      description: "Connecting you to your personal agent."
+    });
+    // The actual call will be initiated by the browser through the href link
   };
 
   return (
@@ -158,6 +182,64 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             <Check className="mr-2 h-4 w-4" />
             Save Changes
           </Button>}
+        
+        {/* Contact Agent Section */}
+        <div className="space-y-3 border-t pt-4">
+          <div>
+            <h3 className="font-medium mb-2">Contact Your Agent</h3>
+            <p className="text-sm text-gray-500 mb-3">
+              Need assistance with setup or have questions about your account? Call your personal agent directly.
+            </p>
+            
+            <div className="flex flex-col space-y-3">
+              <div className="p-3 rounded-lg bg-commitify-blue/10 flex items-center">
+                <Phone className="w-5 h-5 mr-3 text-commitify-blue" />
+                <div>
+                  <p className="font-medium">{agentPhoneNumber}</p>
+                  <p className="text-xs text-gray-500">Your Onboarding Agent, 24/7 available</p>
+                </div>
+              </div>
+              
+              {highlightAgentCall ? (
+                <motion.div
+                  initial={{ scale: 0.95, opacity: 0.9 }}
+                  animate={{ 
+                    scale: [1, 1.05, 1],
+                    boxShadow: [
+                      "0 0 0 0 rgba(255, 203, 70, 0.7)",
+                      "0 0 0 10px rgba(255, 203, 70, 0)",
+                      "0 0 0 0 rgba(255, 203, 70, 0)"
+                    ]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "loop"
+                  }}
+                >
+                  <a 
+                    href={`tel:${agentPhoneNumberRaw}`}
+                    onClick={handleCallAgent}
+                    className="inline-flex items-center justify-center gap-2 w-full bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text px-4 py-3 rounded-md font-medium transition-colors"
+                  >
+                    <Phone className="w-5 h-5" />
+                    Call Agent Now
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </a>
+                </motion.div>
+              ) : (
+                <a 
+                  href={`tel:${agentPhoneNumberRaw}`}
+                  onClick={handleCallAgent}
+                  className="inline-flex items-center justify-center gap-2 w-full bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text px-4 py-2 rounded-md font-medium transition-colors"
+                >
+                  <Phone className="w-4 h-4" />
+                  Call Agent Now
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
         
         {/* Subscription Plan Section */}
         <div className="space-y-4 border-t pt-4">

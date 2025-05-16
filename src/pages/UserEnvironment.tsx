@@ -10,6 +10,8 @@ import IntegrationsCard from '@/components/UserEnvironment/IntegrationsCard';
 import PlanSelectionDialog from '@/components/UserEnvironment/PlanSelectionDialog';
 import Header from '@/components/UserEnvironment/Header';
 import BackgroundGradient from '@/components/UserEnvironment/BackgroundGradient';
+import OnboardingCallDialog from '@/components/OnboardingCallDialog';
+import OnboardingFlow from '@/components/UserEnvironment/OnboardingFlow';
 import { useAuth } from '@/context/AuthContext';
 import supabase from '@/utils/supabase';
 import { scheduleCall } from '@/utils/retellai';
@@ -150,35 +152,127 @@ const UserEnvironment = () => {
 
   const [calls, setCalls] = useState<Call[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [showOnboardingDialog, setShowOnboardingDialog] = useState(false);
+  const [isFirstTimeUser, setIsFirstTimeUser] = useState(false);
 
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchCalls = async () => {
-      try {
-        if (!user) return;
+  // Function to fetch calls from database
+  const fetchCalls = async () => {
+    try {
+      if (!user) return;
 
-        const { data, error } = await supabase
-          .from('appointments')
-          .select('*')
-          .eq('user_id', user.id)
-          .order('scheduled_at', { ascending: false });
+      const { data, error } = await supabase
+        .from('appointments_scheduling')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('scheduled_at', { ascending: false });
 
-        if (error) {
-          throw error;
-        }
-
-        setCalls(data || []);
-      } catch (error) {
-        console.error('Error fetching calls:', error);
-      } finally {
-        setLoading(false);
+      if (error) {
+        throw error;
       }
-    };
 
+      // Transform the data to match the Call interface
+      const formattedCalls = data?.map(appointment => ({
+        id: appointment.id,
+        agent_id: appointment.agent_id,
+        title: appointment.title || 'Scheduled Call',
+        scheduled_at: new Date(appointment.scheduled_at).toISOString(), // Convert timestamp to ISO
+        started_at: appointment.started_at ? new Date(appointment.started_at).toISOString() : '',
+        status: appointment.scheduling_status,
+        duration_seconds: appointment.duration_seconds || 0,
+        provided_context: appointment.provided_context
+      })) || [];
+
+      setCalls(formattedCalls);
+      
+      // Convert the formatted calls to ScheduledCall format for UI display
+      const scheduledCallsFromDB = formattedCalls.map(call => {
+        const callDate = new Date(call.scheduled_at);
+        
+        // Format time from the timestamp (HH:MM AM/PM)
+        const hours = callDate.getHours();
+        const minutes = callDate.getMinutes().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const hours12 = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+        const timeString = `${hours12}:${minutes} ${ampm}`;
+        
+        return {
+          date: callDate,
+          time: timeString,
+          talkingPoints: call.provided_context || '',
+          locked: true // All calls from DB are considered locked
+        };
+      });
+      
+      // Set the scheduledCalls state with the converted data
+      setScheduledCalls(scheduledCallsFromDB);
+      
+    } catch (error) {
+      console.error('Error fetching calls:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load your scheduled calls.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchCalls();
   }, [user]);
+
+  // Check if user needs onboarding
+  useEffect(() => {
+    if (user && !loading) {
+      // For testing purposes - uncomment this line to force onboarding flow
+      // localStorage.removeItem('onboardingComplete');
+      console.log("Checking if user needs onboarding, user=", user.id);
+      
+      // Check if user has completed the onboarding flow
+      const onboardingComplete = localStorage.getItem('onboardingComplete');
+      console.log("onboardingComplete from localStorage:", onboardingComplete);
+      
+      // If localStorage doesn't have the flag, check the database
+      if (!onboardingComplete) {
+        const checkUserOnboardingStatus = async () => {
+          try {
+            // Check if user has any appointments (indication they completed onboarding)
+            const { data, error } = await supabase
+              .from('appointments_scheduling')
+              .select('id')
+              .eq('user_id', user.id)
+              .limit(1);
+              
+            if (error) throw error;
+            console.log("Appointment check results:", data);
+            
+            // If user has no appointments and no localStorage flag, they need onboarding
+            if (!data || data.length === 0) {
+              console.log("First time user detected - showing onboarding flow");
+              setIsFirstTimeUser(true);
+            } else {
+              // User has appointments but no localStorage flag - set the flag
+              localStorage.setItem('onboardingComplete', 'true');
+              console.log("User has appointments - not showing onboarding flow");
+              setIsFirstTimeUser(false);
+            }
+          } catch (error) {
+            console.error("Error checking user onboarding status:", error);
+            // Default to showing onboarding if we can't determine status
+            setIsFirstTimeUser(true);
+          }
+        };
+        
+        checkUserOnboardingStatus();
+      } else {
+        console.log("User has completed onboarding according to localStorage");
+        setIsFirstTimeUser(false);
+      }
+    }
+  }, [user, loading]);
 
   // State for user profile
   const [userProfile, setUserProfile] = useState({
@@ -302,7 +396,7 @@ const UserEnvironment = () => {
   const handleTimeSelect = (time: string | null, isRange: boolean, rangeStart?: string, rangeEnd?: string) => {
     if (isRange && rangeStart && rangeEnd) {
       if (selectedDate) {
-        setScheduledCalls([...scheduledCalls, {
+        const newCall = {
           date: selectedDate,
           time: null,
           timeRange: {
@@ -310,19 +404,32 @@ const UserEnvironment = () => {
             end: rangeEnd
           },
           talkingPoints: document.getElementById('talking-points') ?
-            (document.getElementById('talking-points') as HTMLTextAreaElement).value : ""
-        }]);
+            (document.getElementById('talking-points') as HTMLTextAreaElement).value : "",
+          locked: true // Auto-lock the appointment
+        };
+        
+        const updatedCalls = [...scheduledCalls, newCall];
+        setScheduledCalls(updatedCalls);
+        
+        // Schedule the call immediately
+        scheduleAppointmentAICall(newCall);
       }
     } else if (time && selectedDate) {
       const talkingPointsEl = document.getElementById('talking-points') as HTMLTextAreaElement;
       const talkingPointsText = talkingPointsEl ? talkingPointsEl.value : "";
 
-      setScheduledCalls([...scheduledCalls, {
+      const newCall = {
         date: selectedDate,
         time: time,
         talkingPoints: talkingPointsText,
-        locked: false
-      }]);
+        locked: true // Auto-lock the appointment
+      };
+      
+      const updatedCalls = [...scheduledCalls, newCall];
+      setScheduledCalls(updatedCalls);
+      
+      // Schedule the call immediately
+      scheduleAppointmentAICall(newCall);
     }
 
     // Reset selection states
@@ -330,28 +437,72 @@ const UserEnvironment = () => {
     setShowTimeSelector(false);
     setSelectedTime(null);
     toast({
-      title: "Call scheduled",
-      description: "Your call has been added to the schedule."
+      title: "Call Scheduled!",
+      description: "Your call has been scheduled and is locked in."
     });
   };
 
   // Handle call deletion
-  const handleDeleteCall = (index: number) => {
-    const updatedCalls = [...scheduledCalls];
-    updatedCalls.splice(index, 1);
-    setScheduledCalls(updatedCalls);
-    toast({
-      title: "Call removed",
-      description: "The call has been removed from your schedule."
-    });
+  const handleDeleteCall = async (index: number) => {
+    try {
+      const callToDelete = scheduledCalls[index];
+      const updatedCalls = [...scheduledCalls];
+      updatedCalls.splice(index, 1);
+      
+      // First update the UI state for immediate feedback
+      setScheduledCalls(updatedCalls);
+      
+      // Get the corresponding call ID from the calls array
+      const callData = calls.find(call => {
+        const callDate = new Date(call.scheduled_at);
+        const localCallDate = new Date(callToDelete.date);
+        
+        // Compare dates (ignoring timezone differences for simplicity)
+        return callDate.getFullYear() === localCallDate.getFullYear() &&
+               callDate.getMonth() === localCallDate.getMonth() &&
+               callDate.getDate() === localCallDate.getDate() &&
+               callDate.getHours() === localCallDate.getHours() &&
+               callDate.getMinutes() === localCallDate.getMinutes();
+      });
+      
+      if (callData?.id) {
+        // Delete the call from the database
+        const { error } = await supabase
+          .from('appointments_scheduling')
+          .delete()
+          .eq('id', callData.id);
+          
+        if (error) {
+          throw error;
+        }
+        
+        // Also update the calls array
+        setCalls(calls.filter(call => call.id !== callData.id));
+      }
+      
+      toast({
+        title: "Call removed",
+        description: "The call has been removed from your schedule."
+      });
+    } catch (error) {
+      console.error('Error deleting call:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete the call. Please try again.",
+        variant: "destructive"
+      });
+      
+      // Refresh the data to ensure UI is in sync with database
+      fetchCalls();
+    }
   };
 
   const scheduleAppointmentAICall = async (call: ScheduledCall) => {
 
-    console.log(`user phone number = ${user.phone}`)
+    console.log(`user phone number = ${userProfile.phone}`)
     console.log("call = ")
     console.log(JSON.stringify(call))
-    console.log("users phone", user.phone)
+    console.log("users phone", userProfile.phone)
     console.log(`activeAgent = ${activeAgent}`)
     const [time, ampm] = call.time.split(" "); // time = "1:00", period = "AM"
     const [hours, minutes] = time.split(":")
@@ -374,7 +525,7 @@ const UserEnvironment = () => {
     console.log(`datetime_stamp = ${datetime_stamp}`)
     if (session?.user) {
       const callResponse = await scheduleCall(
-        `+${user.phone}`,
+        userProfile.phone, // Already includes the + sign from to_number field
         activeAgent.agent_id,
         session.user.id,
         datetime_stamp,
@@ -384,7 +535,7 @@ const UserEnvironment = () => {
       if (callResponse.success) {
         toast({
           title: "Call on its way!",
-          description: `Your AI coach is calling +${user.phone}`,
+          description: `Your AI coach is calling ${userProfile.phone}`,
         });
       } else {
         toast({
@@ -468,6 +619,16 @@ const UserEnvironment = () => {
     await signOut();
   };
 
+  // Handle onboarding completion
+  const handleOnboardingComplete = () => {
+    setIsFirstTimeUser(false);
+    localStorage.setItem('onboardingComplete', 'true');
+    toast({
+      title: "Setup Complete",
+      description: "Welcome to Commitify! Your dashboard is ready."
+    });
+  };
+
   return (
     <div className="min-h-screen relative overflow-hidden bg-commitify-background">
       {/* Warm radial gradient background */}
@@ -476,60 +637,79 @@ const UserEnvironment = () => {
       {/* Header with logo */}
       <Header />
       
-      <div className="container mx-auto px-4 pt-24 pb-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Left Sidebar: Profile Card - Now fixed position on desktop */}
-          <div className="md:col-span-1 relative">
-            <div className="md:sticky md:top-24">
-              <ProfileCard 
-                userProfile={userProfile}
-                setUserProfile={setUserProfile}
-                updateProfileData={updateProfileData}
-                activePlan={activePlan}
-                activePlanDetails={activePlanDetails}
-                handleChangeSubscription={handleChangeSubscription}
-                handleCancelSubscription={handleCancelSubscription}
-              />
-            </div>
-          </div>
+      {/* Conditional rendering based on first-time status */}
+      {isFirstTimeUser ? (
+        // Render the onboarding flow for first-time users
+        <OnboardingFlow 
+          user={user}
+          session={session}
+          agents={agents}
+          onComplete={handleOnboardingComplete}
+        />
+      ) : (
+        <>
+          {/* Onboarding Call Dialog - only shown for returning users who haven't completed it */}
+          <OnboardingCallDialog 
+            isOpen={showOnboardingDialog} 
+            setIsOpen={setShowOnboardingDialog} 
+          />
           
-          {/* Main Content Area */}
-          <div className="md:col-span-3 space-y-8">
-            {/* Active Agent Section */}
-            <ActiveAgentCard 
-              activeAgent={activeAgent}
-              activeAgentId={activeAgentId}
-              setActiveAgentId={setActiveAgentId}
-              agents={agents}
-            />
-            
-            {/* Call Schedule and other cards */}
-            <div className="space-y-8">
-              {/* Call Schedule */}
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
-                <CallScheduleCard 
-                  selectedDate={selectedDate}
-                  handleDateSelect={handleDateSelect}
-                  showTimeSelector={showTimeSelector}
-                  startTime={startTime}
-                  endTime={endTime}
-                  setStartTime={setStartTime}
-                  setEndTime={setEndTime}
-                  handleTimeSelect={handleTimeSelect}
-                  scheduledCalls={scheduledCalls}
-                  handleDeleteCall={handleDeleteCall}
-                  handleLockInCall={handleLockInCall}
-                />
+          <div className="container mx-auto px-4 pt-24 pb-8 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {/* Left Sidebar: Profile Card - Now fixed position on desktop */}
+              <div className="md:col-span-1 relative">
+                <div className="md:sticky md:top-24">
+                  <ProfileCard 
+                    userProfile={userProfile}
+                    setUserProfile={setUserProfile}
+                    updateProfileData={updateProfileData}
+                    activePlan={activePlan}
+                    activePlanDetails={activePlanDetails}
+                    handleChangeSubscription={handleChangeSubscription}
+                    handleCancelSubscription={handleCancelSubscription}
+                  />
+                </div>
               </div>
               
-              {/* Additional Integrations */}
-              <div className="grid grid-cols-1 gap-6">
-                <IntegrationsCard />
+              {/* Main Content Area */}
+              <div className="md:col-span-3 space-y-8">
+                {/* Active Agent Section */}
+                <ActiveAgentCard 
+                  activeAgent={activeAgent}
+                  activeAgentId={activeAgentId}
+                  setActiveAgentId={setActiveAgentId}
+                  agents={agents}
+                />
+                
+                {/* Call Schedule and other cards */}
+                <div className="space-y-8">
+                  {/* Call Schedule */}
+                  <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
+                    <CallScheduleCard 
+                      selectedDate={selectedDate}
+                      handleDateSelect={handleDateSelect}
+                      showTimeSelector={showTimeSelector}
+                      startTime={startTime}
+                      endTime={endTime}
+                      setStartTime={setStartTime}
+                      setEndTime={setEndTime}
+                      handleTimeSelect={handleTimeSelect}
+                      scheduledCalls={scheduledCalls}
+                      handleDeleteCall={handleDeleteCall}
+                      handleLockInCall={handleLockInCall}
+                    />
+                  </div>
+                  
+                  {/* Additional Integrations */}
+                  <div className="grid grid-cols-1 gap-6">
+                    <IntegrationsCard />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
       
       {/* Footer */}
       <Footer />
