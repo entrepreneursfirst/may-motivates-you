@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'; // Import the Analytics component
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,7 +10,6 @@ import NotFound from "./pages/NotFound";
 import UserEnvironment from "./pages/UserEnvironment";
 import { AuthProvider } from "@/context/AuthContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import { Analytics } from "@vercel/analytics/next"
 const queryClient = new QueryClient();
 
 // Create a component to handle the initial redirect
@@ -34,14 +34,17 @@ const InitialRedirect = () => {
 };
 
 const App = () => (
+  <>
+  <Analytics/>
+=
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
-        <Analytics/>
           <InitialRedirect />
+
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/user-environment" 
@@ -53,10 +56,12 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
+  </>
 );
 
 export default App;
