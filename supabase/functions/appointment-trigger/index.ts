@@ -104,9 +104,9 @@ serve(async (req) => {
           
           const user = userData as UserRow;
           
-          if (!user.to_number) {
-            throw new Error('User has no phone number');
-          }
+          // if (!user.to_number) {
+          //   throw new Error('User has no phone number');
+          // }
           
           if (user.balance <= 0) {
             throw new Error('User has insufficient balance');
