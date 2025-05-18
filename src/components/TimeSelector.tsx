@@ -70,12 +70,15 @@ export const TimeSelector = ({
   // Handle preset selection without triggering onTimeSelect immediately
   const handlePresetSelect = (time: string) => {
     setSelectedPreset(time);
-    setCustomTimeEntered(false);
-    setCustomTime(time);
+    const [hour_minute, ampmText] = time.split(" ")
+    setCustomTime(hour_minute);
+    handleAmPmChange(ampmText)
+
   };
 
   // Track custom time entry
   const handleCustomTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(`e.target.value = ${e.target.value}`)
     setCustomTime(e.target.value);
     setSelectedPreset(null);
     setCustomTimeEntered(true);
