@@ -222,7 +222,7 @@ const UserEnvironment = () => {
 
   useEffect(() => {
     fetchCalls();
-  }, [user]);
+  }, [user, calls]);
 
   // Check if user needs onboarding
   useEffect(() => {
