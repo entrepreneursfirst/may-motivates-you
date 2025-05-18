@@ -72,7 +72,7 @@ export const TimeSelector = ({
     setSelectedPreset(time);
     const [hour_minute, ampmText] = time.split(" ")
     setCustomTime(hour_minute);
-    handleAmPmChange(ampmText)
+    setAmPm(ampmText as "AM" | "PM");
 
   };
 
