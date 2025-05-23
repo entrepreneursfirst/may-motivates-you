@@ -197,6 +197,7 @@ export const countryCodes: CountryType[] = [{
 }];
 
 export default function CountryCodeSelector({
+  
   onSelect,
 }: {
   onSelect: (country:  CountryType) => void;
@@ -209,7 +210,10 @@ export default function CountryCodeSelector({
     const init = async () => {
       const code = await initializeCountryCode(user?.id, countryCodes);
       const found = countryCodes.find((c) => c.code === code);
-      if (found) setSelectedCountry(found);
+      if (found) {
+        setSelectedCountry(found);
+        onSelect(found)
+      }
     };
     init();
   }, [user?.id]);

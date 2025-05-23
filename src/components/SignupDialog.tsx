@@ -99,7 +99,7 @@ const SignupDialog = ({ isOpen, setIsOpen }: SignupDialogProps) => {
         const { error: profileError } = await supabase.from('users').upsert({
           id: data.user.id,
           to_number: formattedPhone,
-          country_code: selectedCountryCode,
+          country_code: selectedCountryCode.code,
           email: data.user.email
         });
         
