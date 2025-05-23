@@ -97,7 +97,7 @@ serve(async (req: Request) => {
     });
 
 
-    
+    // here we would need to poll the country_from_number database instead. this is now nonsense code as agentid is already checked
     if (!agentId) {
       console.error(`❌ No from_number found for agent ID: ${agentId}`);
       return new Response(

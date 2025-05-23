@@ -122,12 +122,13 @@ serve(async (req: Request) => {
       console.log(`userBalance = ${userBalance}`)
       
       if (!data) {
-        console.error('❌ Error inserting call record:', error);
+        console.error('❌ Error Getting user record:', error);
       } else {
-        console.log('✅ Call record inserted successfully');
+        console.log('✅ User record correctly found');
       }
     } else {
-      console.log('⚠️ No userId provided, skipping database record');
+      // this makes no sense, we need to alert something if the phone number isn't there  
+      console.log('⚠️ No phone number provided, having a problem finding the user');
     }
     console.log(`userId = ${userId}`)
     console.log(`body data to insert before callDataBaseENtry = ${JSON.stringify(body)}`)
@@ -165,7 +166,7 @@ serve(async (req: Request) => {
       .eq('id', callId)
       
       if (error) {
-        console.error('❌ Error inserting call record:', error);
+        console.error('❌ Error upserting call record:', error);
       } else {
         console.log('✅ Call record inserted successfully');
       }
@@ -190,7 +191,13 @@ serve(async (req: Request) => {
         console.log(`error of balance_error = ${balance_error}`)
         console.log(`I got the return value of data which is the user id in ${userId}`)
         console.log(`userBalance = ${userBalance} new balance = ${newBalance}`)
+
+        // a check should happen if there is a balance error
+        if (balance_error){
+          console.log("❌ There was an error with decreasing the balance: ", balance_error)
+        }
       }
+
 
     if (!data) {
       console.error('❌ Error inserting call record:', error);
