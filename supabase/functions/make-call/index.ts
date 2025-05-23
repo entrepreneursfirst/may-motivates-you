@@ -66,6 +66,7 @@ serve(async (req: Request) => {
       .eq('id', userId)
     
     const userBalance = data[0]?.balance
+    const userCountryCode = data[0]?.country_code
     if (userBalance <= 0){
       console.log("user balance is unsufficient")
       return new Response(
@@ -84,6 +85,47 @@ serve(async (req: Request) => {
     }
     console.log(`User balance is ${userBalance} so it is higher than 0 ${userBalance >0}`)
 
+    if (!userCountryCode) {
+      console.log("user doesn't have its country code logged for userId:", userId)
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: "country code not defined",
+        }),
+        { 
+          status: 402, 
+          headers: { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          } 
+        }
+      );
+    }
+
+    const { data: countryData, error: countryError } = await supabase
+    .from("country_calling_number")
+    .select("*")
+    .eq("country_code", userCountryCode)
+    .single()
+
+    if (!countryData || !countryData.calling_phone_number){
+      console.log(`userId: ${userId} with country code ${userCountryCode} isn't a supported country code that we have`)
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: "country not supported - contact support with error: ", countryError,
+        }),
+        { 
+          status: 402, 
+          headers: { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          } 
+        }
+      );
+    }
+
+    const callingPhoneNumber = countryData.calling_phone_number
     
     // Initialize Retell client
     console.log('🔑 Initializing Retell client');
@@ -137,10 +179,10 @@ serve(async (req: Request) => {
 
     console.log(`calling agent_id ${agentId}`)
     // Make the call
-    console.log('📱 Making call from', '+13153258101', 'to', toNumber);
+    console.log('📱 Making call from', callingPhoneNumber, 'to', toNumber);
     
     const retellResponse = await retellClient.call.createPhoneCall({
-      from_number: '+13153258101',
+      from_number: callingPhoneNumber,
       to_number: toNumber,
       override_agent_id: agentId,
       retell_llm_dynamic_variables: { previous_transcript_text: transcript_list_text, provided_context: provided_context},
@@ -161,6 +203,7 @@ serve(async (req: Request) => {
         agent_id: retellResponse.agent_id,
         started_at: new Date().toISOString(),
         to_number: toNumber,
+        calling_phone_number: callingPhoneNumber,
         status: 'completed',
         duration_seconds: retellResponse.call_cost.total_duration_seconds,
         response_body: JSON.stringify(retellResponse),

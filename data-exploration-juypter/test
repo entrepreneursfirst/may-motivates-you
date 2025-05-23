@@ -1,0 +1,4 @@
+❌ Error processing appointment 5195262c-2808-4278-8630-810d4e0bd771: Error: Call failed: supabase.from(...).select(...).equal is not a function
+    at Server.<anonymous> (file:///Users/mehdigreefhorst/Desktop/may-motivates-you-full/supabase/functions/appointment-trigger/index.ts:90:19)
+    at eventLoopTick (ext:core/01_core.js:168:7)
+    at async #respond (https://deno.land/std@0.177.0/http/server.ts:220:18)

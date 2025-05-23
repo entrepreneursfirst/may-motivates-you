@@ -234,36 +234,28 @@ export default function CountryCodeSelector({
       </PopoverTrigger>
       <PopoverContent className="w-[250px] p-0 bg-white border shadow-lg">
         <div 
-                    className="max-h-[300px] overflow-y-auto overscroll-contain"
-                    style={{ WebkitOverflowScrolling: 'touch' }}
-                    onWheel={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-        <div className="max-h-[300px] overflow-y-auto">
-          <div 
-            key={selectedCountry.code} 
-            className={`"flex items-center p-3  rounded-t-md cursor-pointer border-b border-gray-100 last:border-b-0" ${selectedCountry.code === selectedCountry.code ? "hover:bg-blue-800 bg-blue-700": "hover:bg-gray-50" } `}
-            onClick={() => handleSelect(selectedCountry)}
-          >
-            <span className="mr-3 text-lg">{selectedCountry.flag}</span>
-            <span className="font-medium text-sm text-white">{selectedCountry.code}</span>
-            <span className="ml-3 text-sm  truncate text-white">{`${selectedCountry.name}`}</span>
+          className="max-h-[300px] overflow-y-auto overscroll-contain"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+          onWheel={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <div className="max-h-[300px] overflow-y-auto">
+            
+            {countryCodes.map((country) => (
+              <div
+                key={country.code}
+                onClick={() => handleSelect(country)}
+                className={`flex items-center p-3 cursor-pointer border-b border-gray-100 last:border-b-0 ${
+                  country.code === selectedCountry.code ? 'bg-blue-700 text-white hover:bg-blue-800' : 'hover:bg-gray-50'
+                }`}
+              >
+                <span className="mr-3 text-lg">{country.flag}</span>
+                <span className="font-medium text-sm">{country.code}</span>
+                <span className="ml-3 text-sm truncate">{country.name}</span>
+              </div>
+            ))}
           </div>
-          {countryCodes.map((country) => (
-            <div
-              key={country.code}
-              onClick={() => handleSelect(country)}
-              className={`flex items-center p-3 cursor-pointer border-b border-gray-100 last:border-b-0 ${
-                country.code === selectedCountry.code ? 'bg-blue-700 text-white hover:bg-blue-800' : 'hover:bg-gray-50'
-              }`}
-            >
-              <span className="mr-3 text-lg">{country.flag}</span>
-              <span className="font-medium text-sm">{country.code}</span>
-              <span className="ml-3 text-sm truncate">{country.name}</span>
-            </div>
-          ))}
-        </div>
         </div>
       </PopoverContent>
     </Popover>

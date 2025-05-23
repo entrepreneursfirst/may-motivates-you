@@ -63,10 +63,10 @@ const Hero = () => {
 
   const handlePhoneInput = () => {
     // Instead of showing the auth dialog, directly show the signup dialog
-    //setShowSignupDialog(true);
-    setIsPhoneInputActive(true)
+    setShowSignupDialog(true);
+    //setIsPhoneInputActive(true)
     // Dispatch a custom event to notify other components
-    //window.dispatchEvent(new CustomEvent('openSignupDialog'));
+    window.dispatchEvent(new CustomEvent('openSignupDialog'));
   };
 
   const handleCancel = () => {
@@ -77,10 +77,10 @@ const Hero = () => {
   const handleSubmit = async () => {
     const fullPhoneNumber = `${selectedCountryCode.code}${phoneNumber}`.replace(/[\s()-]/g, '');
 
-    if (selectedCountryCode.code !== "+1") {
-      setShowWaitlistDialog(true);
-      return;
-    }
+    // if (selectedCountryCode.code !== "+1") {
+    //   setShowWaitlistDialog(true);
+    //   return;
+    // }
     if (user) {
       // Already logged in — make the AI call
       try {
