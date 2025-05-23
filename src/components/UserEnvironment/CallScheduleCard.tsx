@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { ScheduledCall } from "@/components/ScheduledCall";
-import { TimeSelector } from "@/components/TimeSelector";
+import { TimeSelector } from "@/components/selectors/TimeSelector";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";

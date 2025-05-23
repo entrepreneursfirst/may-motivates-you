@@ -13,7 +13,7 @@ import BackgroundGradient from '@/components/UserEnvironment/BackgroundGradient'
 import OnboardingCallDialog from '@/components/OnboardingCallDialog';
 import OnboardingFlow from '@/components/UserEnvironment/OnboardingFlow';
 import { useAuth } from '@/context/AuthContext';
-import supabase from '@/utils/supabase';
+import supabase from '@/utils/db/supabase';
 import { scheduleCall } from '@/utils/retellai';
 import { convertToTimestamp } from '@/utils/dateConverter'
 

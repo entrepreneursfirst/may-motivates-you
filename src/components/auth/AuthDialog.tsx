@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import supabase from '@/utils/supabase';
+import supabase from '@/utils/db/supabase';
 
 // Common country codes with flags
 const countryCodes = [

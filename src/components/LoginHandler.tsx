@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
-import supabase from '@/utils/supabase';
+import supabase from '@/utils/db/supabase';
 
 interface LoginHandlerProps {
   onLoginSuccess: () => void;

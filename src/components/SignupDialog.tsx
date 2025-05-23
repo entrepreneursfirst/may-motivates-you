@@ -1,5 +1,5 @@
 // SignupDialog.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Dialog, 
   DialogContent, 
@@ -14,7 +14,9 @@ import { Label } from "@/components/ui/label";
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, Phone } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import supabase from '@/utils/supabase';
+import CountryCodeSelector, { countryCodes, CountryType } from "@/components/selectors/countrySelector"
+
+import supabase from '@/utils/db/supabase';
 
 interface SignupDialogProps {
   isOpen: boolean;
@@ -24,12 +26,13 @@ interface SignupDialogProps {
 const SignupDialog = ({ isOpen, setIsOpen }: SignupDialogProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [selectedCountryCode, setSelectedCountryCode] = useState(countryCodes[0]);
   
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -42,10 +45,13 @@ const SignupDialog = ({ isOpen, setIsOpen }: SignupDialogProps) => {
       });
       return;
     }
-    
+
+    const country_with_phone_number = selectedCountryCode.code + phone
+    console.log(country_with_phone_number)
+
     // Phone number validation (simple)
     const phonePattern = /^\+?[0-9]{10,15}$/;
-    if (!phonePattern.test(phone.replace(/\s|-|\(|\)/g, ''))) {
+    if (!phonePattern.test(country_with_phone_number.replace(/\s|-|\(|\)/g, ''))) {
       toast({
         title: "Invalid Phone Number",
         description: "Please enter a valid phone number",
@@ -58,10 +64,13 @@ const SignupDialog = ({ isOpen, setIsOpen }: SignupDialogProps) => {
     
     try {
       // Format phone number for E.164 compliance (required by Supabase)
-      let formattedPhone = phone.replace(/\s|-|\(|\)/g, '');
+      let formattedPhone = country_with_phone_number.replace(/\s|-|\(|\)/g, '');
       if (!formattedPhone.startsWith('+')) {
         formattedPhone = '+' + formattedPhone;
       }
+
+      console.log(formattedPhone)
+
       
       // Sign up user with email and password
       const { data, error } = await supabase.auth.signUp({
@@ -90,6 +99,7 @@ const SignupDialog = ({ isOpen, setIsOpen }: SignupDialogProps) => {
         const { error: profileError } = await supabase.from('users').upsert({
           id: data.user.id,
           to_number: formattedPhone,
+          country_code: selectedCountryCode,
           email: data.user.email
         });
         
@@ -127,6 +137,8 @@ const SignupDialog = ({ isOpen, setIsOpen }: SignupDialogProps) => {
     }
   };
 
+  
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-[425px]">
@@ -159,15 +171,30 @@ const SignupDialog = ({ isOpen, setIsOpen }: SignupDialogProps) => {
               <Phone className="w-4 h-4" />
               <span>Phone Number</span>
             </Label>
-            <Input 
-              id="phone" 
-              type="tel" 
-              placeholder="Enter your phone number" 
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              disabled={isLoading}
-              required
-            />
+            
+            <div className="flex border-black h-10">
+              {/* Country Code Dropdown */}
+              <CountryCodeSelector onSelect={setSelectedCountryCode}/>
+
+              {/* Phone Input */}
+              <Input 
+                id="phone" 
+                type="text" 
+                inputMode="numeric"
+                pattern="[0-9]*"
+                placeholder="Enter your phone number" 
+                value={phone}
+                onChange={(e) => {
+                  // Only allow numbers
+                  const value = e.target.value.replace(/[^0-9]/g, '');
+                  setPhone(value);
+                }}
+                disabled={isLoading}
+                required
+                className="rounded-l-none flex-1"
+              />
+            </div>
+            
             <p className="text-xs text-gray-500">Format: +1 (123) 456-7890</p>
           </div>
           

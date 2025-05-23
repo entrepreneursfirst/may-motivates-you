@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import supabase from '@/utils/supabase';
+import supabase from '@/utils/db/supabase';
 
 interface LoginDialogProps {
   isOpen: boolean;

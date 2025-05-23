@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
+data-exploration-juypter/global_convbb_25f7237036.csv
+data-exploration-juypter/rates_us_sorted.csv
+data-exploration-juypter/rates_to_nl_sorted.csv
+data-exploration-juypter/test.csv

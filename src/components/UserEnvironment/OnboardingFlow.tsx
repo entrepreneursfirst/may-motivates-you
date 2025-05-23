@@ -11,7 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { scheduleCall } from '@/utils/retellai';
-import supabase from '@/utils/supabase';
+import supabase from '@/utils/db/supabase';
 import { convertToTimestamp } from '@/utils/dateConverter';
 
 // Animation variants
