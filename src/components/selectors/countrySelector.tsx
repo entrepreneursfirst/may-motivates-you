@@ -20,6 +20,11 @@ export const countryCodes: CountryType[] = [{
   name: "United States",
   flag: "🇺🇸"
 }, {
+  code: "+31",
+  country: "NL",
+  name: "Netherlands",
+  flag: "🇳🇱"
+}, {
   code: "+44",
   country: "GB",
   name: "United Kingdom",
@@ -59,11 +64,6 @@ export const countryCodes: CountryType[] = [{
   country: "GR",
   name: "Greece",
   flag: "🇬🇷"
-}, {
-  code: "+31",
-  country: "NL",
-  name: "Netherlands",
-  flag: "🇳🇱"
 }, {
   code: "+32",
   country: "BE",
