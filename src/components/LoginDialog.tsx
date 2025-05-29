@@ -1,4 +1,4 @@
-
+// LoginDialog.tsx
 import React, { useState } from 'react';
 import { 
   Dialog, 
@@ -12,9 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from 'react-router-dom';
-import { Phone, KeyRound } from 'lucide-react';
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { toast } from "@/hooks/use-toast";
+import { Mail, Lock } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
+import supabase from '@/utils/db/supabase';
 
 interface LoginDialogProps {
   isOpen: boolean;
@@ -23,123 +23,116 @@ interface LoginDialogProps {
 
 const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
   const navigate = useNavigate();
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [showVerification, setShowVerification] = useState(false);
-  const [verificationCode, setVerificationCode] = useState('');
-
-  const handleSendCode = (e: React.FormEvent) => {
+  const { toast } = useToast();
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!phoneNumber || phoneNumber.length < 10) {
+    if (!email || !password) {
       toast({
-        title: "Invalid phone number",
-        description: "Please enter a valid phone number",
-        variant: "destructive",
+        title: "Missing Information",
+        description: "Please enter both email and password",
+        variant: "destructive"
       });
       return;
     }
     
-    // In a real app, here you would send the verification code to the phone number
-    toast({
-      title: "Verification code sent",
-      description: "A verification code has been sent to your phone number.",
-    });
+    setIsLoading(true);
     
-    setShowVerification(true);
-  };
-
-  const handleVerifyCode = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!verificationCode || verificationCode.length !== 6) {
-      toast({
-        title: "Invalid verification code",
-        description: "Please enter the 6-digit verification code",
-        variant: "destructive",
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
       });
-      return;
+      
+      if (error) {
+        throw error;
+      }
+      
+      toast({
+        title: "Login Successful",
+        description: "Welcome to Commitify!",
+      });
+      
+      // Close dialog and navigate to user environment
+      setIsOpen(false);
+      navigate('/user-environment');
+      
+    } catch (error: any) {
+      // Silently handle error without logging to console
+      let errorMessage = "Login failed. Please check your credentials.";
+      
+      if (error.message?.includes("Invalid login")) {
+        errorMessage = "Invalid email or password. Please try again.";
+      }
+      
+      toast({
+        title: "Login Failed",
+        description: errorMessage,
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
     }
-    
-    // In a real app, here you would verify the code
-    setIsOpen(false);
-    navigate('/user-environment');
-    
-    toast({
-      title: "Login successful",
-      description: "Welcome to Commitify!",
-    });
-  };
-
-  const handleReset = () => {
-    setShowVerification(false);
-    setVerificationCode('');
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Login to Commitify</DialogTitle>
+          <DialogTitle>Log in to Commitify</DialogTitle>
           <DialogDescription>
-            Create a new account or log in to your existing account by providing your phone number and verification code.
+            Enter your email and password to access your account.
           </DialogDescription>
         </DialogHeader>
         
-        {!showVerification ? (
-          // Phone number form
-          <form onSubmit={handleSendCode} className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <div className="flex items-center gap-2">
-                <Phone className="w-5 h-5 text-muted-foreground" />
-                <Input 
-                  id="phone" 
-                  type="tel" 
-                  placeholder="+1 (555) 123-4567" 
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
-              </div>
-            </div>
-            
-            <DialogFooter className="pt-4">
-              <Button type="submit" className="w-full">Send Verification Code</Button>
-            </DialogFooter>
-          </form>
-        ) : (
-          // Verification code form
-          <form onSubmit={handleVerifyCode} className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="otp" className="flex items-center gap-2">
-                <KeyRound className="w-4 h-4" />
-                <span>Verification Code</span>
-              </Label>
-              <div className="flex justify-center py-2">
-                <InputOTP 
-                  maxLength={6} 
-                  value={verificationCode} 
-                  onChange={setVerificationCode}
-                >
-                  <InputOTPGroup>
-                    <InputOTPSlot index={0} />
-                    <InputOTPSlot index={1} />
-                    <InputOTPSlot index={2} />
-                    <InputOTPSlot index={3} />
-                    <InputOTPSlot index={4} />
-                    <InputOTPSlot index={5} />
-                  </InputOTPGroup>
-                </InputOTP>
-              </div>
-            </div>
-            
-            <div className="flex gap-2 pt-4">
-              <Button type="button" variant="outline" onClick={handleReset} className="flex-1">
-                Back
-              </Button>
-              <Button type="submit" className="flex-1">Verify & Login</Button>
-            </div>
-          </form>
-        )}
+        <form onSubmit={handleLogin} className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="email" className="flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              <span>Email</span>
+            </Label>
+            <Input 
+              id="email" 
+              type="email" 
+              placeholder="Enter your email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isLoading}
+              required
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="password" className="flex items-center gap-2">
+              <Lock className="w-4 h-4" />
+              <span>Password</span>
+            </Label>
+            <Input 
+              id="password" 
+              type="password" 
+              placeholder="Enter your password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={isLoading}
+              required
+            />
+          </div>
+          
+          <DialogFooter className="pt-4">
+            <Button 
+              type="submit" 
+              className="w-full bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text"
+              disabled={isLoading}
+            >
+              {isLoading ? "Logging in..." : "Log In"}
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

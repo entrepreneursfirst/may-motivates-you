@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { CalendarIcon, Edit, Phone, UserRound, X, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CalendarIcon, Edit, Phone, UserRound, X, Check, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,22 +10,30 @@ import { cn } from '@/lib/utils';
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { useToast } from "@/hooks/use-toast";
 import CancelSubscriptionDialog from './CancelSubscriptionDialog';
+import { motion } from 'framer-motion';
 
 interface ProfileCardProps {
   userProfile: {
-    name: string;
+    full_name: string;
     phone: string;
     location: string;
     gender: string;
-    birthdate: Date;
+    birth_date: Date;
+    balance: number
   };
   setUserProfile: React.Dispatch<React.SetStateAction<{
-    name: string;
+    full_name: string;
     phone: string;
     location: string;
     gender: string;
-    birthdate: Date;
+    birth_date: Date;
   }>>;
+  updateProfileData: (profile: {
+    full_name: string;
+    location: string;
+    gender: string;
+    birth_date: Date;
+  }) => Promise<void>;
   activePlan: string;
   activePlanDetails: {
     name: string;
@@ -42,13 +50,29 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   userProfile,
   setUserProfile,
   activePlan,
+  updateProfileData,
   activePlanDetails,
   handleChangeSubscription,
   handleCancelSubscription,
 }) => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
+  const [highlightAgentCall, setHighlightAgentCall] = useState(false);
   const { toast } = useToast();
+  
+  // Agent contact information
+  const agentPhoneNumber = "+1 (315) 325-8101";
+  const agentPhoneNumberRaw = "+13153258101";
+
+  // Check if user was redirected here from onboarding for verification call
+  useEffect(() => {
+    const needsVerificationCall = new URLSearchParams(window.location.search).get('verify');
+    if (needsVerificationCall === 'true') {
+      setHighlightAgentCall(true);
+      // Remove the highlight after 10 seconds
+      setTimeout(() => setHighlightAgentCall(false), 10000);
+    }
+  }, []);
 
   const handleConfirmCancel = (feedback?: string) => {
     setShowCancelDialog(false);
@@ -61,6 +85,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         description: "We appreciate you taking the time to share your thoughts."
       });
     }
+  };
+  
+  const handleCallAgent = () => {
+    toast({
+      title: "Calling Agent",
+      description: "Connecting you to your personal agent."
+    });
+    // The actual call will be initiated by the browser through the href link
   };
 
   return (
@@ -81,20 +113,20 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         <div className="space-y-3">
           <div className="space-y-1">
             <Label>Name</Label>
-            {isEditingProfile ? <Input value={userProfile.name} onChange={e => setUserProfile({
+            {isEditingProfile ? <Input value={userProfile.full_name} onChange={e => setUserProfile({
             ...userProfile,
-            name: e.target.value
-          })} /> : <p className="text-base">{userProfile.name}</p>}
+            full_name: e.target.value
+          })} /> : <p className="text-base">{userProfile.full_name}</p>}
           </div>
           
           <div className="space-y-1">
             <Label>Phone</Label>
             {isEditingProfile ? <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-muted-foreground" />
-                <Input value={userProfile.phone} onChange={e => setUserProfile({
-              ...userProfile,
-              phone: e.target.value
-            })} />
+                <Phone className="w-4 h-4 text-muted-foreground" /> 
+                <Input value={userProfile.phone} disabled onChange={e => setUserProfile({
+                  ...userProfile,
+                  phone: e.target.value
+                })} />
               </div> : <p className="text-base flex items-center gap-2">
                 <Phone className="w-4 h-4 text-muted-foreground" />
                 {userProfile.phone}
@@ -126,48 +158,133 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             <Label>Birth Date</Label>
             {isEditingProfile ? <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !userProfile.birthdate && "text-muted-foreground")}>
+                  <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !userProfile.birth_date && "text-muted-foreground")}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {userProfile.birthdate ? format(userProfile.birthdate, "PPP") : <span>Pick a date</span>}
+                    {userProfile.birth_date ? format(userProfile.birth_date, "PPP") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                  <CalendarComponent mode="single" selected={userProfile.birthdate} onSelect={date => date && setUserProfile({
+                  <CalendarComponent mode="single" selected={userProfile.birth_date} onSelect={date => date && setUserProfile({
                 ...userProfile,
-                birthdate: date
+                birth_date: date
               })} initialFocus className={cn("p-3 pointer-events-auto")} />
                 </PopoverContent>
               </Popover> : <p className="text-base">
-                {userProfile.birthdate ? format(userProfile.birthdate, "PPP") : "Not provided"}
+                {userProfile.birth_date ? format(userProfile.birth_date, "PPP") : "Not provided"}
               </p>}
           </div>
         </div>
         
-        {isEditingProfile && <Button onClick={() => setIsEditingProfile(false)} className="w-full">
+        {isEditingProfile && <Button  onClick={async () => {
+                                await updateProfileData(userProfile);
+                                setIsEditingProfile(false);
+                              }} className="w-full">
             <Check className="mr-2 h-4 w-4" />
             Save Changes
           </Button>}
+        
+        {/* Contact Agent Section */}
+        <div className="space-y-3 border-t pt-4">
+          <div>
+            <h3 className="font-medium mb-2">Contact Your Agent</h3>
+            <p className="text-sm text-gray-500 mb-3">
+              Need assistance with setup or have questions about your account? Call your personal agent directly.
+            </p>
+            
+            <div className="flex flex-col space-y-3">
+              <div className="p-3 rounded-lg bg-commitify-blue/10 flex items-center">
+                <Phone className="w-5 h-5 mr-3 text-commitify-blue" />
+                <div>
+                  <p className="font-medium">{agentPhoneNumber}</p>
+                  <p className="text-xs text-gray-500">Your Onboarding Agent, 24/7 available</p>
+                </div>
+              </div>
+              
+              {highlightAgentCall ? (
+                <motion.div
+                  initial={{ scale: 0.95, opacity: 0.9 }}
+                  animate={{ 
+                    scale: [1, 1.05, 1],
+                    boxShadow: [
+                      "0 0 0 0 rgba(255, 203, 70, 0.7)",
+                      "0 0 0 10px rgba(255, 203, 70, 0)",
+                      "0 0 0 0 rgba(255, 203, 70, 0)"
+                    ]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "loop"
+                  }}
+                >
+                  <a 
+                    href={`tel:${agentPhoneNumberRaw}`}
+                    onClick={handleCallAgent}
+                    className="inline-flex items-center justify-center gap-2 w-full bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text px-4 py-3 rounded-md font-medium transition-colors"
+                  >
+                    <Phone className="w-5 h-5" />
+                    Call Agent Now
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </a>
+                </motion.div>
+              ) : (
+                <a 
+                  href={`tel:${agentPhoneNumberRaw}`}
+                  onClick={handleCallAgent}
+                  className="inline-flex items-center justify-center gap-2 w-full bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text px-4 py-2 rounded-md font-medium transition-colors"
+                >
+                  <Phone className="w-4 h-4" />
+                  Call Agent Now
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
         
         {/* Subscription Plan Section */}
         <div className="space-y-4 border-t pt-4">
           <div>
             <h3 className="font-medium mb-2">Current Subscription</h3>
-            <div className={`p-3 rounded-lg ${activePlanDetails.color} flex items-center`}>
-              <span className="text-xl mr-2">{activePlanDetails.emoji}</span>
-              <div>
-                <p className="font-medium">{activePlanDetails.name}</p>
-                <p className="text-xs">{activePlanDetails.price} {activePlanDetails.period}</p>
-              </div>
-            </div>
-          </div>
+            <p className="font-medium mb-2">Balance: {userProfile.balance}</p>
+
+            {activePlan ? (
+      <div className={`p-3 rounded-lg ${activePlanDetails.color} flex items-center`}>
+        <span className="text-xl mr-2">{activePlanDetails.emoji}</span>
+        <div>
+          <p className="font-medium">{activePlanDetails.name}</p>
+          <p className="text-xs">{activePlanDetails.price} {activePlanDetails.period}</p>
+        </div>
+      </div>
+    ) : (
+      <div className="p-3 rounded-lg bg-muted text-muted-foreground flex items-center">
+        <span className="text-xl mr-2">📭</span>
+        <div>
+          <p className="font-medium">No Subscription</p>
+          <p className="text-xs">Select a plan to get started</p>
+        </div>
+      </div>
+    )}
+  </div>
           
           <div className="flex flex-col space-y-2">
-            <Button onClick={handleChangeSubscription} variant="outline" className="w-full">
-              Change Plan
-            </Button>
-            <Button onClick={() => setShowCancelDialog(true)} variant="ghost" className="w-full text-muted-foreground hover:text-destructive">
-              Cancel Subscription
-            </Button>
+            {activePlan ? (
+              <>
+                <Button onClick={handleChangeSubscription} variant="outline" className="w-full">
+                  Change Plan
+                </Button>
+                <Button
+                  onClick={() => setShowCancelDialog(true)}
+                  variant="ghost"
+                  className="w-full text-muted-foreground hover:text-destructive"
+                >
+                  Cancel Subscription
+                </Button>
+              </>
+            ) : (
+              <Button onClick={handleChangeSubscription} className="w-full">
+                Choose Plan
+              </Button>
+            )}
           </div>
         </div>
 
