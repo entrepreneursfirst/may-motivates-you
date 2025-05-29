@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,56 +6,30 @@ import PhoneAnimation from './PhoneAnimation';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useToast } from '@/components/ui/use-toast';
+import supabase from '@/utils/db/supabase';
+import { makeAICall } from '@/utils/retellai';
+import { useAuth } from '@/context/AuthContext';
+import AuthDialog from './auth/AuthDialog';
+import SignupDialog from './SignupDialog';
+import CountryCodeSelector, { countryCodes, CountryType } from "@/components/selectors/countrySelector"
 
-// Country codes for the dropdown with added flag emoticons
-const countryCodes = [{
-  code: "+1",
-  country: "US",
-  name: "United States",
-  flag: "🇺🇸"
-}, {
-  code: "+44",
-  country: "GB",
-  name: "United Kingdom",
-  flag: "🇬🇧"
-}, {
-  code: "+33",
-  country: "FR",
-  name: "France",
-  flag: "🇫🇷"
-}, {
-  code: "+49",
-  country: "DE",
-  name: "Germany",
-  flag: "🇩🇪"
-}, {
-  code: "+61",
-  country: "AU",
-  name: "Australia",
-  flag: "🇦🇺"
-}, {
-  code: "+91",
-  country: "IN",
-  name: "India",
-  flag: "🇮🇳"
-}, {
-  code: "+81",
-  country: "JP",
-  name: "Japan",
-  flag: "🇯🇵"
-}, {
-  code: "+86",
-  country: "CN",
-  name: "China",
-  flag: "🇨🇳"
-}];
+
+
+
 
 const Hero = () => {
   const [isPhoneInputActive, setIsPhoneInputActive] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [selectedCountryCode, setSelectedCountryCode] = useState(countryCodes[0]);
   const [showWaitlistDialog, setShowWaitlistDialog] = useState(false);
+  const { user, signOut, isLoading } = useAuth();
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [showSignupDialog, setShowSignupDialog] = useState(false);
+  
   const isMobile = useIsMobile();
+  const { toast } = useToast();
+  
 
   // Add an event listener for the custom event
   useEffect(() => {
@@ -64,8 +37,21 @@ const Hero = () => {
       setIsPhoneInputActive(true);
     };
     window.addEventListener('activatePhoneInput', handleActivatePhoneInput);
+    
+    const handleOpenAuthDialog = () => {
+      setShowAuthDialog(true);
+    };
+    window.addEventListener('openAuthDialog', handleOpenAuthDialog);
+    
+    const handleOpenSignupDialog = () => {
+      setShowSignupDialog(true);
+    };
+    window.addEventListener('openSignupDialog', handleOpenSignupDialog);
+    
     return () => {
       window.removeEventListener('activatePhoneInput', handleActivatePhoneInput);
+      window.removeEventListener('openAuthDialog', handleOpenAuthDialog);
+      window.removeEventListener('openSignupDialog', handleOpenSignupDialog);
     };
   }, []);
 
@@ -76,7 +62,11 @@ const Hero = () => {
   };
 
   const handlePhoneInput = () => {
-    setIsPhoneInputActive(true);
+    // Instead of showing the auth dialog, directly show the signup dialog
+    setShowSignupDialog(true);
+    //setIsPhoneInputActive(true)
+    // Dispatch a custom event to notify other components
+    window.dispatchEvent(new CustomEvent('openSignupDialog'));
   };
 
   const handleCancel = () => {
@@ -84,14 +74,46 @@ const Hero = () => {
     setPhoneNumber('');
   };
 
-  const handleSubmit = () => {
-    if (selectedCountryCode.code !== "+1") {
-      setShowWaitlistDialog(true);
+  const handleSubmit = async () => {
+    const fullPhoneNumber = `${selectedCountryCode.code}${phoneNumber}`.replace(/[\s()-]/g, '');
+
+    // if (selectedCountryCode.code !== "+1") {
+    //   setShowWaitlistDialog(true);
+    //   return;
+    // }
+    if (user) {
+      // Already logged in — make the AI call
+      try {
+        const callResponse = await makeAICall(
+          fullPhoneNumber,
+          "agent_f6f715fe18971f95067744e49d",
+          user.id
+        );
+  
+        if (callResponse.success) {
+          toast({
+            title: "Call on its way!",
+            description: `Your AI coach is calling ${fullPhoneNumber}`,
+          });
+          setIsPhoneInputActive(false);
+        } else {
+          throw new Error(callResponse.error || "Call failed.");
+        }
+      } catch (err: any) {
+        toast({
+          title: "Call Error",
+          description: err.message || "Unable to place call.",
+          variant: "destructive"
+        });
+      }
     } else {
-      console.log("Phone number submitted:", selectedCountryCode.code + phoneNumber);
-      setIsPhoneInputActive(false);
+      // Not logged in — trigger AuthDialog with OTP step
+      setShowAuthDialog(true);
     }
   };
+
+    
+      
 
   const handleSelectCountry = country => {
     setSelectedCountryCode(country);
@@ -110,56 +132,33 @@ const Hero = () => {
   // Render the phone input form (visible or invisible based on state)
   const renderPhoneInput = (visible: boolean) => {
     return (
-      <div className={`${visible ? 'opacity-100 h-auto' : 'opacity-0 h-0 overflow-hidden'} transition-opacity duration-300 w-full`}>
-        <div className="flex items-center w-full">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button className="bg-white border border-gray-300 text-gray-700 px-3 py-6 rounded-l-full hover:bg-gray-50 flex items-center min-w-[90px] justify-center gap-1">
-                {selectedCountryCode.flag} {selectedCountryCode.code} <ChevronDown className="h-4 w-4" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0 max-h-[300px] overflow-y-auto bg-white">
-              <div className="grid">
-                {countryCodes.map(country => (
-                  <div 
-                    key={country.code} 
-                    className="flex items-center p-2 hover:bg-gray-100 cursor-pointer" 
-                    onClick={() => handleSelectCountry(country)}
-                  >
-                    <span className="mr-2 text-lg">{country.flag}</span>
-                    <span className="font-medium">{country.code}</span>
-                    <span className="ml-2 text-sm text-gray-600">{country.name}</span>
-                  </div>
-                ))}
-              </div>
-            </PopoverContent>
-          </Popover>
-          
-          <Input 
-            type="tel" 
-            value={visible ? phoneNumber : ''}
-            onChange={e => visible && setPhoneNumber(e.target.value)} 
-            className={`py-6 rounded-none border-l-0 border-r-0 flex-1
-                shadow-[0_0_15px_rgba(178,107,202,0.7)] focus:shadow-[0_0_25px_rgba(178,107,202,0.9)]
-                border-commitify-purple/30 focus:border-commitify-purple/50 
-                outline-none ring-2 ring-commitify-yellow/30 focus:ring-commitify-yellow/50`} 
-            placeholder={visible ? "Phone number" : ""} 
-          />
-          
-          <div className="flex">
-            <Button 
-              onClick={visible ? handleSubmit : undefined} 
-              className="bg-commitify-yellow text-commitify-text hover:bg-commitify-yellow/90 px-4 py-6 rounded-none shadow-[0_0_10px_rgba(252,192,27,0.5)]"
-            >
-              <Check className="w-5 h-5" />
-            </Button>
-            <Button 
-              onClick={visible ? handleCancel : undefined} 
-              className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-6 rounded-r-full"
-            >
-              <X className="w-5 h-5" />
-            </Button>
-          </div>
+      <div className="flex items-stretch w-full h-14">
+        <CountryCodeSelector onSelect={handleSelectCountry} />
+
+        <Input
+          type="tel"
+          value={visible ? phoneNumber : ''}
+          onChange={e => visible && setPhoneNumber(e.target.value)}
+          className={`h-full rounded-none border-l-0 border-r-0 flex-1 box-border
+            shadow-[0_0_15px_rgba(178,107,202,0.7)] focus:shadow-[0_0_25px_rgba(178,107,202,0.9)]
+            border-commitify-purple/30 focus:border-commitify-purple/50
+            outline-none ring-2 ring-commitify-yellow/30 focus:ring-commitify-yellow/50`}
+          placeholder={visible ? "Phone number" : ""}
+        />
+
+        <div className="flex">
+          <Button
+            onClick={visible ? handleSubmit : undefined}
+            className="h-full bg-commitify-yellow text-commitify-text hover:bg-commitify-yellow/90 px-4 rounded-none box-border shadow-[0_0_10px_rgba(252,192,27,0.5)]"
+          >
+            <Check className="w-5 h-5" />
+          </Button>
+          <Button
+            onClick={visible ? handleCancel : undefined}
+            className="h-full bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 rounded-r-full box-border"
+          >
+            <X className="w-5 h-5" />
+          </Button>
         </div>
       </div>
     );
@@ -203,7 +202,7 @@ const Hero = () => {
                           className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all w-full" 
                           onClick={handlePhoneInput}
                         >
-                          Try it for $0
+                          Get Started
                         </Button>
                         {/* Hidden space placeholder - renders the same dimensions but invisible */}
                         <div className="invisible h-0 absolute">
@@ -232,7 +231,7 @@ const Hero = () => {
                         className="bg-commitify-yellow hover:bg-commitify-yellow/90 text-commitify-text font-medium text-lg px-8 py-6 rounded-full shadow-md hover:shadow-lg transition-all w-[168px]" 
                         onClick={handlePhoneInput}
                       >
-                        Try it for $0
+                        Get Started
                       </Button>
                     )}
                   </div>
@@ -277,6 +276,44 @@ const Hero = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <AuthDialog
+        open={showAuthDialog}
+        onOpenChange={setShowAuthDialog}
+        onAuthSuccess={async () => {
+          const fullPhoneNumber = `${selectedCountryCode.code}${phoneNumber}`.replace(/[\s()-]/g, '');
+          const { data: { session } } = await supabase.auth.getSession();
+
+          if (session?.user) {
+            const callResponse = await makeAICall(
+              fullPhoneNumber,
+              "agent_f6f715fe18971f95067744e49d",
+              session.user.id
+            );
+
+            if (callResponse.success) {
+              toast({
+                title: "Call on its way!",
+                description: `Your AI coach is calling ${fullPhoneNumber}`,
+              });
+              setIsPhoneInputActive(false);
+            } else {
+              toast({
+                title: "Call Failed",
+                description: callResponse.error || "Unable to place call.",
+                variant: "destructive",
+              });
+            }
+          }
+        }}
+        initialPhoneNumber={phoneNumber}
+        initialCountryCode={selectedCountryCode.code}
+      />
+      
+      {/* Add Signup Dialog */}
+      <SignupDialog
+        isOpen={showSignupDialog}
+        setIsOpen={setShowSignupDialog}
+      />
     </section>;
 };
 export default Hero;

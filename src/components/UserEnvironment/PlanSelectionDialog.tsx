@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from "@/components/ui/button";
 
 interface Plan {
+  id: string;
   name: string;
   emoji: string;
   description: string;
@@ -44,7 +45,7 @@ const PlanSelectionDialog: React.FC<PlanSelectionDialogProps> = ({
             <button 
               key={plan.name} 
               className={`p-4 rounded-lg ${plan.color} flex items-center justify-between hover:opacity-90 transition-opacity ${selectedPlan === plan.name ? 'ring-2 ring-primary' : ''}`} 
-              onClick={() => handleSelectPlan(plan.name)}
+              onClick={() => handleSelectPlan(plan.id)}
             >
               <div className="flex items-center">
                 <span className="text-2xl mr-3">{plan.emoji}</span>

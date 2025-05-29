@@ -1,33 +1,44 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Phone } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const FixedCTA = () => {
-  const [visible, setVisible] = useState(false);
   const isMobile = useIsMobile();
+  const [visible, setVisible] = useState(!isMobile);
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
-    // Dispatch a custom event that the Hero component will listen for
+    // Dispatch a custom event that will trigger the signup dialog instead of auth dialog
     setTimeout(() => {
-      window.dispatchEvent(new Event('activatePhoneInput'));
+      // Use the custom event to directly open the signup dialog
+      window.dispatchEvent(new CustomEvent('openSignupDialog'));
     }, 800); // Add a slight delay to ensure the scroll completes first
   };
   
   useEffect(() => {
-    const handleScroll = () => {
-      // Show CTA after scrolling 70% of the first viewport
-      const shouldShow = window.scrollY > window.innerHeight * 0.7;
-      setVisible(shouldShow);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    // Only add scroll listener for mobile devices
+    if (isMobile) {
+      const handleScroll = () => {
+        // Show CTA after scrolling 70% of the first viewport
+        const shouldShow = window.scrollY > window.innerHeight * 0.7;
+        setVisible(shouldShow);
+      };
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    } else {
+      // Always visible for non-mobile
+      setVisible(true);
+    }
+  }, [isMobile]);
+  
+  // Update visibility when mobile status changes
+  useEffect(() => {
+    setVisible(!isMobile || (isMobile && window.scrollY > window.innerHeight * 0.7));
+  }, [isMobile]);
   
   if (!visible) return null;
 
@@ -42,7 +53,7 @@ const FixedCTA = () => {
           onClick={scrollToTop}
         >
           <Phone className="w-4 h-4" />
-          <span>Get a Call (FREE)</span>
+          <span>Get Started</span>
         </Button>
       </div>
     </div>

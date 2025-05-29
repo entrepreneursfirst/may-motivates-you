@@ -1,4 +1,4 @@
-
+//callScheduleCard.tsx
 import React, { useState } from 'react';
 import { Clock } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,11 +6,13 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { ScheduledCall } from "@/components/ScheduledCall";
-import { TimeSelector } from "@/components/TimeSelector";
+import { TimeSelector } from "@/components/selectors/TimeSelector";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { convertToTimestamp } from "@/utils/dateConverter"
+
 
 interface CallScheduleCardProps {
   selectedDate: Date | undefined;
@@ -130,12 +132,12 @@ const CallScheduleCard: React.FC<CallScheduleCardProps> = ({
         <div className="mt-6 border rounded-md p-4">
           <h4 className="font-medium mb-3">Scheduled calls</h4>
           <p className="text-muted-foreground text-sm mb-4">
-            Lock in your calls to send them to your AI agent. Once locked, calls cannot be modified.
+            All scheduled calls are automatically sent to your AI agent.
           </p>
           {scheduledCalls.length === 0 ? <p className="text-muted-foreground text-center py-4">
               No calls scheduled yet. Select a date above to schedule a call.
             </p> : <div className="space-y-2">
-              {scheduledCalls.map((call, index) => <ScheduledCall key={index} call={call} onLockIn={() => handleLockInCall(index)} onDelete={!call.locked ? () => handleDeleteCall(index) : undefined} />)}
+              {scheduledCalls.map((call, index) => <ScheduledCall key={index} call={call} onDelete={() => handleDeleteCall(index)} />)}
             </div>}
         </div>
       </CardContent>
